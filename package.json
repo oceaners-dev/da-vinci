@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "description": "Next.js UI kit written with TailwindCSS and   cript.",
-  "main": "lib/index.js",
+  "main": "index.js",
+  "files": [
+    "lib/**/*"
+  ],
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "clean": "rm -rf lib",
-    "build": "npm run clean && tsc && cp package.json README.md ./lib",
+    "build": "pnpm run clean && tsc && cp package.json README.md ./lib",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir lib/cjs",
     "start": "next start",
     "export": "next build && next export",
     "lint": "eslint --fix . --ext .ts,.tsx,.js,.jsx",
@@ -60,6 +65,10 @@
     "yargs": "^17.6.2",
     "yup": "^0.32.11",
     "zustand": "^4.1.3"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^6.5.13",

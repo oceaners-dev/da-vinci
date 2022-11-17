@@ -75,7 +75,8 @@
     "postcss.config.js",
     "extract-css.js",
     "utils/db/google-provider.js",
-    "packages/*"
+    "packages/*",
+    "./lib"
   ],
   "settings": {
     "react": {

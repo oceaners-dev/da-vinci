@@ -4,7 +4,7 @@ const cookies = Cookie()
 import { createRoot } from 'react-dom/client'
 import { useIsomorphicEffect } from '../../hooks/useIsomorphicEffect'
 import uuid from 'react-uuid'
-import NotificationCard from './notification'
+import NotificationCard from './Notification'
 
 // TODO: add jsx support: https://stackoverflow.com/a/70464490
 export default function NotificationProvider({

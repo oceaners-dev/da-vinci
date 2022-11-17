@@ -101,7 +101,7 @@ export function SvgX(props: SVGProps<SVGSVGElement>) {
       <path
         fill="currentColor"
         d="M18.3 5.71a.996.996 0 0 0-1.41 0L12 10.59L7.11 5.7A.996.996 0 1 0 5.7 7.11L10.59 12L5.7 16.89a.996.996 0 1 0 1.41 1.41L12 13.41l4.89 4.89a.996.996 0 1 0 1.41-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"
-      ></path>
+      />
     </svg>
   )
 }
@@ -112,7 +112,7 @@ export function SvgLeftArrow(props: SVGProps<SVGSVGElement>) {
       <path
         fill="currentColor"
         d="M13.5 8.5a.5.5 0 0 0 0-1H3.803l4.031-3.628a.5.5 0 1 0-.668-.744l-5 4.5a.5.5 0 0 0 0 .744l5 4.5a.5.5 0 1 0 .668-.744L3.803 8.5H13.5Z"
-      ></path>
+      />
     </svg>
   )
 }
@@ -123,7 +123,7 @@ export function SvgRightArrow(props: SVGProps<SVGSVGElement>) {
       <path
         fill="currentColor"
         d="M2.5 7.5a.5.5 0 1 0 0 1h9.697l-4.031 3.628a.5.5 0 1 0 .668.744l5-4.5a.5.5 0 0 0 0-.744l-5-4.5a.5.5 0 0 0-.668.744L12.197 7.5H2.5Z"
-      ></path>
+      />
     </svg>
   )
 }

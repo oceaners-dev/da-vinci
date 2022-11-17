@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useState } from 'react'
 import { SvgLeftArrow, SvgRightArrow } from '../../utils/svg'
-import Button from '../button'
+import Button from '../button/Button'
 
 // TODO: seo optimization
 // TODO: add siblings

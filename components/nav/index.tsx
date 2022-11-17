@@ -1,10 +1,10 @@
 import { PanelLeftExpand24Filled } from '@fluentui/react-icons'
 import React, { useCallback, useEffect, useState } from 'react'
 import uuid from 'react-uuid'
-import Button from '../button'
+import Button from '../button/Button'
 import { navigationStore } from '../../utils/stores/nav-store'
 import { DaVinciLogo } from '../../utils/svg'
-import { Card } from '../card-UNFINISHED'
+import { Card } from '../card-UNFINISHED/Card'
 import { Link } from '../link'
 
 export default function Nav(props: NavProps) {

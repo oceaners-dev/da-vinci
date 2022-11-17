@@ -1,5 +1,4 @@
 import React from 'react'
-import Link, { LinkProps } from 'next/link'
 
 export default function Button(props: ButtonProps) {
   // TODO: create themes > solid, dark, borderless,

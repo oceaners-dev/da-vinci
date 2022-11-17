@@ -1,12 +1,12 @@
 import { forwardRef, useCallback, useEffect, useState } from 'react'
 import { useClickOutside } from '../../hooks/useClickOutside'
 import { useEventListener } from '../../hooks/useEventListener'
-import { Card } from '../card-UNFINISHED'
+import { Card } from '../card-UNFINISHED/Card'
 import { Portal } from '../portal'
 import theme from '../../../../tailwind.config'
 import { SvgX } from '../../utils/svg'
 import Space from '../space'
-import Button from '../button'
+import Button from '../button/Button'
 
 // Or Drawer
 export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(

@@ -12,20 +12,23 @@ export const TagGroup = forwardRef<HTMLDivElement, TagGroupType>(
       showMore, // 🚨 TODO: implement
     } = props
 
-    const customChildren = React.Children.map(children, (child) => {
-      if (React.isValidElement(child)) {
-        return React.cloneElement(child, {
-          key: child.props?.tagKey,
-          avatarShape,
-          className: classNames,
-        })
-      }
-    })
+    const customChildren = React.Children.map(
+      children as ReactElement<TagProps>[],
+      (child) => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child, {
+            key: child.props?.tagKey,
+            avatarShape,
+            className: classNames,
+          })
+        }
+      },
+    ) as ReactElement<TagProps>[]
 
     console.log({ maxTagCount })
 
-    const allowedTags = customChildren?.slice(0, maxTagCount)
-    const hiddenTags = customChildren?.slice(maxTagCount, customChildren.length)
+    const allowedTags = customChildren.slice(0, maxTagCount)
+    const hiddenTags = customChildren.slice(maxTagCount, customChildren.length)
     console.log({ allowedTags, hiddenTags })
 
     return (
@@ -46,7 +49,7 @@ export const TagGroup = forwardRef<HTMLDivElement, TagGroupType>(
 
 export interface TagGroupType {
   // children with TagProps
-  children: ReactElement<TagProps>[]
+  children: React.ReactNode
   /**
    * @description className for `tag group`
    */

@@ -70,7 +70,7 @@ export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
             clickedOutside.current = ref
           }}
           className={`absolute  
-          ${calculateClasses(placement, withSideSpace, size)}
+          ${calculateClasses({ placement, withSideSpace, size })}
           ${className || ''}`}
         >
           <div className="w-full h-full relative flex flex-col">
@@ -163,7 +163,15 @@ export interface SideSheetProps {
   }[]
 }
 
-const calculateClasses = (placement, withSideSpace, size) => {
+const calculateClasses = ({
+  placement,
+  withSideSpace,
+  size,
+}: {
+  placement?: 'left' | 'right' | 'top' | 'bottom'
+  withSideSpace?: boolean
+  size?: 'small' | 'medium' | 'large'
+}) => {
   const positions = {
     left: `${
       withSideSpace
@@ -210,7 +218,7 @@ const calculateClasses = (placement, withSideSpace, size) => {
         : 'h-full')
     }`,
   }
-  return `${positions[placement]} ${
+  return `${positions[placement!]} ${
     sizes[
       placement === 'left' || placement === 'right' ? 'leftRight' : 'topBottom'
     ]

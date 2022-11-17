@@ -6,7 +6,8 @@
   "main": "lib/index.js",
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
-    "build": "tsc --noEmit",
+    "clean": "rm -rf lib",
+    "build": "npm run clean && tsc && cp package.json README.md ./lib",
     "start": "next start",
     "export": "next build && next export",
     "lint": "eslint --fix . --ext .ts,.tsx,.js,.jsx",

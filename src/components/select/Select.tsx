@@ -203,15 +203,17 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
                     showMore
                   >
                     {/* TODO: #1 Layout shifting on adding `Tags` to `Select` */}
-                    {selected.map((item) => {
+                    {selected.map((item: SingleSelect | string) => {
                       const selectedType =
                         typeof item === 'string' ? 'string' : 'object'
-                      const tagLabel =
-                        selectedType === 'string' ? item : item.label
+                      const tagLabel: string =
+                        selectedType === 'string'
+                          ? (item as string)
+                          : (item as SingleSelect).label
                       return (
                         item && (
                           <Tag
-                            tagKey={item}
+                            tagKey={tagLabel as string}
                             key={uuid()}
                             closable
                             removeNodeOnClose={false}

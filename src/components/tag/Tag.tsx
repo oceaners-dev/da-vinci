@@ -15,7 +15,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>((props, ref) => {
     color, // 🚨
     onClose, // ✅
     removeNodeOnClose, // ✅
-    tagKey = uuid(),
+    tagKey,
   } = props
   const tagRef = useRef<HTMLDivElement>(null)
 
@@ -57,7 +57,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>((props, ref) => {
           className="leading-none ml-[2px]"
           onClick={() => {
             if (onClose) {
-              onClose(tagKey)
+              onClose()
             }
             if (removeNodeOnClose) {
               if (!tagRef) return
@@ -94,9 +94,9 @@ export interface TagProps {
    */
   size?: 'small' | 'large' | 'default'
   type?: 'light' | 'solid' | 'ghost'
-  tagKey?: string | number
+  tagKey?: string
   onClick?: (e: MouseEvent) => void
-  onClose?: (tagKey: string | number) => void
+  onClose?: () => void
   /**
    * @description Disables removing node on closing tag. Needs for `Select` component.
    */

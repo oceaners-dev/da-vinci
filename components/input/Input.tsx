@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useClickOutside } from '../../hooks/useClickOutside'
 import { SvgClear, SvgEyeOff, SvgEyeOn } from '../../utils/svg'
+import Space from '../space'
 import { renderDefaultIcon } from './render-default-icon'
 import { renderUserInputIcon } from './render-param-icon'
 
@@ -14,6 +15,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       rightIcon,
       password,
       showClear,
+      leftComponent,
       ...rest
     } = props
     const [isActive, setIsActive] = useState<boolean>(false)
@@ -25,8 +27,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <div
         ref={ref}
         className={
-          `w-fit relative flex flex-row items-center justify-between input-classes cursor-text` +
-          ` ` +
+          'w-fit relative flex flex-row items-center justify-between input-classes cursor-text' +
+          ' ' +
           `${isActive ? 'hover:!bg-gray-200 !outline-gray-300' : ''} 
     `
         }
@@ -39,6 +41,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         />
 
         {leftIcon && renderUserInputIcon('before', leftIcon)}
+        {leftComponent && leftComponent}
+        {leftComponent && <Space direction="horizontal" spacing={10} />}
 
         <input
           onFocus={() => setIsActive(true)}
@@ -47,8 +51,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           data-size={size}
           type={password ? (showPassword ? 'text' : 'password') : 'text'}
           className={
-            `data-[size=large]:!py-3 data-[size=small]:!py-0 relative bg-transparent outline-none border-none pointer-events-auto z-10` +
-            ` ` +
+            'data-[size=large]:!py-3 data-[size=small]:!py-0 relative bg-transparent outline-none border-none pointer-events-auto z-10' +
+            ' ' +
             `${className || ''} ${props.disabled ? 'text-gray-600' : ''}`
           }
           {...rest}
@@ -118,5 +122,6 @@ interface InputProps
    */
   rightIcon?: JSX.Element
   showClear?: boolean
+  leftComponent?: React.ReactNode
   password?: boolean
 }

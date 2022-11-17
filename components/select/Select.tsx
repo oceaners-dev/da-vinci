@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
+import uuid from 'react-uuid'
 // import tailwind max-height types
 import { useClickOutside } from '../../hooks/useClickOutside'
 import { useEventListener } from '../../hooks/useEventListener'
@@ -14,6 +15,8 @@ import { Card } from '../card-UNFINISHED'
 import { CheckBox } from '../checkbox/CheckBox'
 import { Input } from '../input/Input'
 import { Portal } from '../portal'
+import { TagGroup } from '../tag/Group'
+import { Tag } from '../tag/Tag'
 
 // TODO: show/list selected items
 
@@ -53,10 +56,14 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
     const [selected, setSelected] = useState<ISingleSelect[] | string[]>(
       defaultValue ? defaultValue : [],
     )
+    const [inputWidth, setInputWidth] = useState<number>()
+    const [tagGroupWidth, setTagGroupWidth] = useState<number>()
+    const [maxTagCount, setMaxTagCount] = useState<number>(999)
 
     // refs
     const inputRef = useRef<HTMLInputElement>(null)
     const inputId = useId().replaceAll(':', '') + '-input'
+    const tagGroupRef = useRef<HTMLInputElement>(null)
 
     // callbacks
     const openDropdown = useCallback(() => {
@@ -67,10 +74,17 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
       setIsDropdownOpened(false)
     }, [])
 
-    const getInputHeight = useCallback(() => {
+    const getInputSizes = useCallback(() => {
+      if (tagGroupRef) {
+        if (tagGroupRef.current) {
+          console.log(tagGroupRef.current)
+          setTagGroupWidth(tagGroupRef.current.offsetWidth)
+        }
+      }
       if (!inputRef.current) return
       if (inputRef.current.offsetHeight === inputHeight) return
       setInputHeight(inputRef.current.offsetHeight)
+      setInputWidth(inputRef.current.offsetWidth)
     }, [inputHeight])
 
     const selectHandler = useCallback(
@@ -121,17 +135,17 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
           closeDropdown()
         }
       },
-      [multiple, selected],
+      [multiple, selected, onChange, closeDropdown],
     )
 
     // custom hooks
-    if (closeOnEsc) {
-      useEventListener('keyup', (e) => {
+    useEventListener('keyup', (e) => {
+      if (closeOnEsc) {
         if (e.key === 'Escape') {
           closeDropdown()
         }
-      })
-    }
+      }
+    })
 
     const portalRef = useClickOutside(() => {
       closeDropdown()
@@ -140,10 +154,24 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
     // useeffects
     useEffect(() => {
       if (!inputRef.current) return
-      getInputHeight()
+      getInputSizes()
     }, [inputRef.current])
 
-    console.log({ selected })
+    console.log({ inputWidth, tagGroupWidth })
+
+    useEffect(() => {
+      if (!tagGroupRef || !tagGroupRef.current) return
+      getInputSizes()
+    }, [selected, tagGroupRef])
+
+    useEffect(() => {
+      if (!tagGroupWidth || !inputWidth) return
+      if (inputWidth - 150 >= tagGroupWidth) {
+        // overflows
+        setMaxTagCount(selected.length)
+      }
+    }, [tagGroupWidth, inputWidth, selected])
+
     return (
       <div className="w-fit h-fit relative flex flex-col">
         {label && typeof label === 'string' ? (
@@ -161,9 +189,51 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
           description
         )}
         <div className={`${inputId} w-fit h-fit relative flex flex-col`}>
+          {/* tags start */}
+
+          {/* tags end */}
           <Input
             type="text"
             ref={inputRef}
+            leftComponent={
+              selected &&
+              selected.length > 0 && (
+                <div className="z-50 ">
+                  <TagGroup
+                    ref={tagGroupRef}
+                    // maxTagCount={maxTagCount}
+                    showMore
+                  >
+                    {/* TODO: #1 Layout shifting on adding `Tags` to `Select` */}
+                    {selected.map((item) => {
+                      const selectedType =
+                        typeof item === 'string' ? 'string' : 'object'
+                      const tagLabel =
+                        selectedType === 'string' ? item : item.label
+                      return (
+                        item && (
+                          <Tag
+                            tagKey={item}
+                            key={uuid()}
+                            closable
+                            removeNodeOnClose={false}
+                            onClose={() => {
+                              if (typeof item === 'string') {
+                                selectHandler(tagLabel)
+                              } else {
+                                selectHandler(item)
+                              }
+                            }}
+                          >
+                            {tagLabel}
+                          </Tag>
+                        )
+                      )
+                    })}
+                  </TagGroup>
+                </div>
+              )
+            }
             leftIcon={leftIcon}
             rightIcon={
               selected.length === 0 ? (
@@ -181,7 +251,7 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
                 <SvgLeftArrow className="rotate-[270deg] w-3 h-3" />
               )
             }
-            placeholder={placeholder}
+            placeholder={!selected ? placeholder : ''}
             disabled={disabled}
             onClick={() => {
               openDropdown()

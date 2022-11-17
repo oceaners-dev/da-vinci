@@ -14,6 +14,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>((props, ref) => {
     closable, // ✅
     color, // 🚨
     onClose, // ✅
+    removeNodeOnClose, // ✅
     tagKey = uuid(),
   } = props
   const tagRef = useRef<HTMLDivElement>(null)
@@ -23,10 +24,8 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>((props, ref) => {
   return (
     <div
       ref={mergedRef}
-      key={tagKey}
       className={
-        `w-fit px-1 py-px text-xs rounded-sm cursor-default leading-none flex flex-row items-center ` +
-        ` ` +
+        'w-fit px-1 py-px text-xs rounded-sm cursor-default leading-none flex flex-row items-center ' +
         `${
           type === 'light'
             ? 'bg-gray-300'
@@ -34,15 +33,15 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>((props, ref) => {
             ? 'bg-primary'
             : 'bg-gray-100 border-gray-700'
         }` +
-        ` ` +
+        ' ' +
         `${className || ''}`
       }
     >
       {avatarSrc && (
         <Image
           className={
-            `inline leading-none mr-[2px]` +
-            ` ` +
+            'inline leading-none mr-[2px]' +
+            ' ' +
             `${avatarShape === 'square' ? 'rounded-xs' : 'rounded-full'}`
           }
           src={avatarSrc}
@@ -60,7 +59,11 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>((props, ref) => {
             if (onClose) {
               onClose(tagKey)
             }
-            tagRef.current?.remove()
+            if (removeNodeOnClose) {
+              if (!tagRef) return
+              if (!tagRef.current) return
+              tagRef.current?.remove()
+            }
           }}
         >
           <SvgX />
@@ -73,6 +76,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>((props, ref) => {
 Tag.defaultProps = {
   type: 'light',
   avatarShape: 'circle',
+  removeNodeOnClose: true,
 }
 
 export interface TagProps {
@@ -92,5 +96,9 @@ export interface TagProps {
   type?: 'light' | 'solid' | 'ghost'
   tagKey?: string | number
   onClick?: (e: MouseEvent) => void
-  onClose?: (tagKey: string | number) => boolean
+  onClose?: (tagKey: string | number) => void
+  /**
+   * @description Disables removing node on closing tag. Needs for `Select` component.
+   */
+  removeNodeOnClose?: boolean
 }

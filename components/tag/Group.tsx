@@ -30,7 +30,9 @@ export const TagGroup = forwardRef<HTMLDivElement, TagGroup>((props, ref) => {
   return (
     <div
       ref={ref}
-      className={`flex flex-row items-center gap-1 ${className || ''}`}
+      className={`flex flex-row items-center flex-wrap gap-1 ${
+        className || ''
+      }`}
     >
       {allowedTags}
       {maxTagCount && showMore && hiddenTags && hiddenTags.length !== 0 && (

@@ -1,6 +1,7 @@
 {
   "name": "da-vinci-ui",
   "version": "1.0.0",
+  "private": true,
   "description": "Next.js UI kit written with TailwindCSS and TypeScript.",
   "main": "index.js",
   "scripts": {

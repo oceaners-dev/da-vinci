@@ -2,11 +2,12 @@ import { forwardRef, useCallback, useEffect, useState } from 'react'
 import { useClickOutside } from '../../hooks/useClickOutside'
 import { useEventListener } from '../../hooks/useEventListener'
 import { Card } from '../card-UNFINISHED/Card'
-import { Portal } from '../portal'
-import theme from '../../../../tailwind.config'
+import { Portal } from '../portal/Portal'
+
 import { SvgX } from '../../utils/svg'
-import Space from '../space'
+import Space from '../space/Space'
 import Button from '../button/Button'
+import uuid from 'react-uuid'
 
 // Or Drawer
 export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
@@ -40,13 +41,13 @@ export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
       }
     })
 
-    if (closeOnEsc) {
-      useEventListener('keyup', (e) => {
+    useEventListener('keyup', (e) => {
+      if (closeOnEsc) {
         if (e.key === 'Escape') {
           closeModal()
         }
-      })
-    }
+      }
+    })
 
     useEffect(() => {
       if (!document) return
@@ -106,6 +107,7 @@ export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
                   {footerButtons.map((button) => {
                     return (
                       <Button
+                        key={uuid()}
                         className={`${button.buttonClasses || ''}`}
                         onClick={button.onClick}
                       >
@@ -187,7 +189,7 @@ const calculateClasses = (placement, withSideSpace, size) => {
   const sizes = {
     topBottom: `${
       (size === 'medium'
-        ? `h-[30vw]`
+        ? 'h-[30vw]'
         : size === 'large'
         ? 'h-[50vw]'
         : 'h-[20vw]') +
@@ -204,7 +206,7 @@ const calculateClasses = (placement, withSideSpace, size) => {
         : 'w-[25vw]') +
       ' max-w-[600px] ' +
       (withSideSpace
-        ? `h-[-webkit-fill-available] my-hf-side-padding`
+        ? 'h-[-webkit-fill-available] my-hf-side-padding'
         : 'h-full')
     }`,
   }

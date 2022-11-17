@@ -1,5 +1,4 @@
-import dynamic from 'next/dynamic'
-import { forwardRef, useContext, useId } from 'react'
+import { forwardRef, useId } from 'react'
 import { ForwardRefWithStaticComponents } from '../../utils/ts/forward-ref-with-static-component'
 import { CheckboxGroup } from './group'
 
@@ -25,8 +24,8 @@ export const CheckBox: CheckboxComponent = forwardRef<
     hideCheckbox, // ✅
     defaultChecked, // ✅
     selectableLabel, // ✅
-    customIcon, //🚨 TODO
-    type, //🚨 TODO
+    customIcon, // 🚨 TODO
+    type, // 🚨 TODO
   } = props
 
   if (!label && !name) {

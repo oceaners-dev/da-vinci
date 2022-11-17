@@ -14,7 +14,7 @@ import { SvgClear, SvgLeftArrow } from '../../utils/svg'
 import { Card } from '../card-UNFINISHED/Card'
 import { CheckBox } from '../checkbox/CheckBox'
 import { Input } from '../input/Input'
-import { Portal } from '../portal'
+import { Portal } from '../portal/Portal'
 import { TagGroup } from '../tag/Group'
 import { Tag } from '../tag/Tag'
 
@@ -53,7 +53,7 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
       !disabled ? (initiallyOpened === true ? true : false) : false,
     )
     const [inputHeight, setInputHeight] = useState<number>()
-    const [selected, setSelected] = useState<ISingleSelect[] | string[]>(
+    const [selected, setSelected] = useState<SingleSelect[] | string[]>(
       defaultValue ? defaultValue : [],
     )
     const [inputWidth, setInputWidth] = useState<number>()
@@ -88,7 +88,7 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
     }, [inputHeight])
 
     const selectHandler = useCallback(
-      (value: ISingleSelect | string) => {
+      (value: SingleSelect | string) => {
         const selectedType = typeof value === 'string' ? 'string' : 'object'
         if (multiple) {
           if (selectedType === 'string') {
@@ -110,19 +110,17 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
               }
             }
           } else {
-            if (
-              (selected as ISingleSelect[]).includes(value as ISingleSelect)
-            ) {
+            if ((selected as SingleSelect[]).includes(value as SingleSelect)) {
               setSelected(
-                (selected as ISingleSelect[]).filter(
-                  (item: ISingleSelect) =>
-                    item.label !== (value as ISingleSelect).label,
+                (selected as SingleSelect[]).filter(
+                  (item: SingleSelect) =>
+                    item.label !== (value as SingleSelect).label,
                 ),
               )
             } else {
               setSelected([
-                ...(selected as ISingleSelect[]),
-                value as ISingleSelect,
+                ...(selected as SingleSelect[]),
+                value as SingleSelect,
               ])
             }
           }
@@ -287,7 +285,7 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
                     defaultSelected = (selected as string[]).includes(item)
                   } else {
                     defaultSelected =
-                      (selected as ISingleSelect[]).filter(
+                      (selected as SingleSelect[]).filter(
                         (a) => a.value === optionValue,
                       ).length !== 0
                   }
@@ -324,7 +322,7 @@ export interface SelectProps {
    * @param data - data to be displayed in the dropdown
    * @description If you want to pass array of objects, `label` and `value` params are required.
    */
-  data: ISingleSelect[] | string[]
+  data: SingleSelect[] | string[]
   clearable?: boolean
   creatable?: boolean
   /**
@@ -332,12 +330,12 @@ export interface SelectProps {
    * @description If you want to pass array of objects, `label` and `value` params are required. Otherwise, you can pass array strings.
    * @description If you want to `pass multiple values`, you need to pass `multiple` prop as `true`. Otherwise, it will be overridden on select.
    */
-  defaultValue?: string[] | ISingleSelect[]
+  defaultValue?: string[] | SingleSelect[]
   label?: ReactNode
   description?: ReactNode
   placeholder?: string
   disabled?: boolean
-  filter?: (value: string, item: ISingleSelect) => boolean
+  filter?: (value: string, item: SingleSelect) => boolean
   leftIcon?: JSX.Element
   /**
    * @description whether the dropdown is opened by default
@@ -350,9 +348,7 @@ export interface SelectProps {
    * @default max-h-[200px]
    */
   maxDropdownHeight?: string
-  onChange?: (
-    value: string | string[] | ISingleSelect | ISingleSelect[],
-  ) => void
+  onChange?: (value: string | string[] | SingleSelect | SingleSelect[]) => void
   onSearchChange?: (query: string) => void
   searchValue?: string
   searchable?: boolean
@@ -367,7 +363,7 @@ export interface SelectProps {
   closeOnEsc?: boolean
 }
 
-export interface ISingleSelect {
+export interface SingleSelect {
   label: string
   value: string
   [key: string]: any

@@ -4,8 +4,8 @@ import { SvgX } from '../../utils/svg'
 import Button from '../button/Button'
 import { Card } from '../card-UNFINISHED/Card'
 import { Input } from '../input/Input'
-import { Pagination } from '../pagination'
-import Space from '../space'
+import { Pagination } from '../pagination/Pagination'
+import Space from '../space/Space'
 import { SvgSearch, SvgSort } from './svg'
 
 export const Table = forwardRef<HTMLDivElement, TableProps>((props, ref) => {
@@ -156,9 +156,9 @@ export const Table = forwardRef<HTMLDivElement, TableProps>((props, ref) => {
                   key={row.name}
                   className={
                     `${cols[0].width ? 'flex flex-row items-center' : ''}` +
-                    ` ` +
+                    ' ' +
                     `${stripedVertical ? 'odd:bg-gray-100' : ''}` +
-                    ` ` +
+                    ' ' +
                     `${
                       highlightOnHover
                         ? stripedHorizontal
@@ -174,8 +174,8 @@ export const Table = forwardRef<HTMLDivElement, TableProps>((props, ref) => {
                         <td
                           key={col.title}
                           className={
-                            `p-2 ` +
-                            ` ` +
+                            'p-2 ' +
+                            ' ' +
                             `${stripedHorizontal ? ' odd:bg-gray-200 ' : ''} ${
                               col.width || ''
                             }`
@@ -227,7 +227,7 @@ export interface Column extends Pick<Row, any> {
   search?: boolean // ✅
 }
 
-interface TableProps {
+export interface TableProps {
   /**
    * Horizontal borders between lines
    */

@@ -23,8 +23,8 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>(
       hideRadio, // ✅
       defaultChecked, // ✅
       selectableLabel, // ✅
-      customIcon, //🚨 TODO
-      type, //🚨 TODO
+      customIcon, // 🚨 TODO
+      type, // 🚨 TODO
     } = props
 
     if (!label && !name) {

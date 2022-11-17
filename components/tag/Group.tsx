@@ -1,48 +1,50 @@
 import React, { forwardRef, ReactElement, useEffect, useState } from 'react'
 import { TagProps } from './Tag'
 
-export const TagGroup = forwardRef<HTMLDivElement, TagGroup>((props, ref) => {
-  const {
-    children, // ✅
-    maxTagCount, // ✅
-    avatarShape, // ✅
-    classNames, // ✅
-    className, // ✅
-    showMore, // 🚨 TODO: implement
-  } = props
+export const TagGroup = forwardRef<HTMLDivElement, TagGroupType>(
+  (props, ref) => {
+    const {
+      children, // ✅
+      maxTagCount, // ✅
+      avatarShape, // ✅
+      classNames, // ✅
+      className, // ✅
+      showMore, // 🚨 TODO: implement
+    } = props
 
-  const customChildren = React.Children.map(children, (child) => {
-    if (React.isValidElement(child)) {
-      return React.cloneElement(child, {
-        key: child.props?.tagKey,
-        avatarShape,
-        className: classNames,
-      })
-    }
-  })
+    const customChildren = React.Children.map(children, (child) => {
+      if (React.isValidElement(child)) {
+        return React.cloneElement(child, {
+          key: child.props?.tagKey,
+          avatarShape,
+          className: classNames,
+        })
+      }
+    })
 
-  console.log({ maxTagCount })
+    console.log({ maxTagCount })
 
-  const allowedTags = customChildren?.slice(0, maxTagCount)
-  const hiddenTags = customChildren?.slice(maxTagCount, customChildren.length)
-  console.log({ allowedTags, hiddenTags })
+    const allowedTags = customChildren?.slice(0, maxTagCount)
+    const hiddenTags = customChildren?.slice(maxTagCount, customChildren.length)
+    console.log({ allowedTags, hiddenTags })
 
-  return (
-    <div
-      ref={ref}
-      className={`flex flex-row items-center flex-wrap gap-1 ${
-        className || ''
-      }`}
-    >
-      {allowedTags}
-      {maxTagCount && showMore && hiddenTags && hiddenTags.length !== 0 && (
-        <button className="text-xs">+{hiddenTags.length}</button>
-      )}
-    </div>
-  )
-})
+    return (
+      <div
+        ref={ref}
+        className={`flex flex-row items-center flex-wrap gap-1 ${
+          className || ''
+        }`}
+      >
+        {allowedTags}
+        {maxTagCount && showMore && hiddenTags && hiddenTags.length !== 0 && (
+          <button className="text-xs">+{hiddenTags.length}</button>
+        )}
+      </div>
+    )
+  },
+)
 
-export interface TagGroup {
+export interface TagGroupType {
   // children with TagProps
   children: ReactElement<TagProps>[]
   /**

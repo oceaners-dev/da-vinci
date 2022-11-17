@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
+import uuid from 'react-uuid'
 import { useClickOutside } from '../../hooks/useClickOutside'
 import { useEventListener } from '../../hooks/useEventListener'
 import { SvgX } from '../../utils/svg'
 import Button from '../button/Button'
 import { Card } from '../card-UNFINISHED/Card'
-import { Portal } from '../portal'
-import Space from '../space'
+import { Portal } from '../portal/Portal'
+import Space from '../space/Space'
 
 // TODO: forward the ref
 export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
@@ -41,13 +42,13 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
       }
     })
 
-    if (closeOnEsc) {
-      useEventListener('keyup', (e) => {
+    useEventListener('keyup', (e) => {
+      if (closeOnEsc) {
         if (e.key === 'Escape') {
           closeModal()
         }
-      })
-    }
+      }
+    })
 
     useEffect(() => {
       if (!document) return
@@ -121,6 +122,7 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
                 {footerButtons.map((button) => {
                   return (
                     <Button
+                      key={uuid()}
                       className={`${button.buttonClasses || ''}`}
                       onClick={button.onClick}
                     >

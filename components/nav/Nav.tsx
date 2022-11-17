@@ -1,11 +1,10 @@
-import { PanelLeftExpand24Filled } from '@fluentui/react-icons'
 import React, { useCallback, useEffect, useState } from 'react'
 import uuid from 'react-uuid'
-import Button from '../button/Button'
 import { navigationStore } from '../../utils/stores/nav-store'
 import { DaVinciLogo } from '../../utils/svg'
 import { Card } from '../card-UNFINISHED/Card'
-import { Link } from '../link'
+import { Link } from '../link/Link'
+import { SvgExpandToRight } from './Svg'
 
 export default function Nav(props: NavProps) {
   const {
@@ -44,7 +43,7 @@ export default function Nav(props: NavProps) {
   }, [isExpandedStore])
 
   return (
-    <nav className={``}>
+    <nav className={''}>
       <Card
         className={
           'w-[-webkit-fill-available] flex gap-[6px] text-gray-600 ' +
@@ -92,9 +91,7 @@ export default function Nav(props: NavProps) {
                 handleExpanded()
               }}
             >
-              <PanelLeftExpand24Filled
-                className={isExpanded ? 'rotate-180' : ''}
-              />
+              <SvgExpandToRight className={isExpanded ? 'rotate-180' : ''} />
             </button>
           </>
         )}

@@ -4,7 +4,6 @@ import React, {
   useEffect,
   useState,
 } from 'react'
-import ReactDOM from 'react-dom/server'
 
 /**
  * @typedef {object} OverflowListProps
@@ -46,6 +45,7 @@ export const OverflowList = React.forwardRef<HTMLDivElement, OverflowListProps>(
       <div>
         <div
           ref={(ref) => {
+            // @ts-ignore
             wrapperRef.current = ref
           }}
           className={`flex flex-row items-center ${

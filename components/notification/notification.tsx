@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { SvgX } from '../../utils/svg'
 import { Card } from '../card-UNFINISHED/Card'
-import { NotificationSettings, ToastProps } from './provider'
+import { ToastProps } from './provider'
 import { NotificationIcons } from './svg'
 
 export default function NotificationCard({

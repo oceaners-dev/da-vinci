@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import Cookie from 'cookie-universal'
 const cookies = Cookie()
 import { createRoot } from 'react-dom/client'
-import NotificationCard from './notification'
 import { useIsomorphicEffect } from '../../hooks/useIsomorphicEffect'
 import uuid from 'react-uuid'
+import NotificationCard from './notification'
 
 // TODO: add jsx support: https://stackoverflow.com/a/70464490
 export default function NotificationProvider({
@@ -87,25 +87,25 @@ export default function NotificationProvider({
       // TODO: add default styles setting to wrapper
       // TODO: optimize css 👇🏻 (take normal css classes, parse it with position)
       innerWrapper.className =
-        `flex flex-col gap-5 fixed w-fit z-100` +
-        ` ` +
-        `data-[position=bottom]:bottom-hf-side-padding data-[position=bottom]:left-1/2 data-[position=bottom]:-translate-x-1/2` +
-        ` ` +
-        `data-[position=top]:top-hf-side-padding data-[position=top]:left-1/2 data-[position=top]:-translate-x-1/2` +
-        ` ` +
-        `data-[position=topLeft]:top-hf-side-padding data-[position=topLeft]:left-hf-side-padding` +
-        ` ` +
-        `data-[position=bottomLeft]:bottom-hf-side-padding data-[position=bottomLeft]:left-hf-side-padding` +
-        ` ` +
-        `data-[position=topRight]:top-hf-side-padding data-[position=topRight]:right-hf-side-padding` +
-        ` ` +
-        `data-[position=bottomRight]:bottom-hf-side-padding data-[position=bottomRight]:right-hf-side-padding`
+        'flex flex-col gap-5 fixed w-fit z-100' +
+        ' ' +
+        'data-[position=bottom]:bottom-hf-side-padding data-[position=bottom]:left-1/2 data-[position=bottom]:-translate-x-1/2' +
+        ' ' +
+        'data-[position=top]:top-hf-side-padding data-[position=top]:left-1/2 data-[position=top]:-translate-x-1/2' +
+        ' ' +
+        'data-[position=topLeft]:top-hf-side-padding data-[position=topLeft]:left-hf-side-padding' +
+        ' ' +
+        'data-[position=bottomLeft]:bottom-hf-side-padding data-[position=bottomLeft]:left-hf-side-padding' +
+        ' ' +
+        'data-[position=topRight]:top-hf-side-padding data-[position=topRight]:right-hf-side-padding' +
+        ' ' +
+        'data-[position=bottomRight]:bottom-hf-side-padding data-[position=bottomRight]:right-hf-side-padding'
       wrapperRef.current.appendChild(innerWrapper)
     }
 
     const id = uuid()
     const notification = document.createElement('div')
-    notification.setAttribute('class', `da-vinci-notification-single`)
+    notification.setAttribute('class', 'da-vinci-notification-single')
     notification.setAttribute('role', 'alert')
     notification.setAttribute('data-id', id)
     innerWrapper.appendChild(notification)
@@ -121,7 +121,7 @@ export default function NotificationProvider({
     }
   }, [latestCookie, isWrapperCreated])
 
-  return (<div ref={wrapperRef} id="da-vinci-notification"></div>) as any
+  return (<div ref={wrapperRef} id="da-vinci-notification" />) as any
 }
 
 const toastNotification = (settings: ToastProps) => {

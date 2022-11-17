@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useClickOutside } from '../../hooks/useClickOutside'
 import { SvgClear, SvgEyeOff, SvgEyeOn } from '../../utils/svg'
-import Space from '../space'
+import Space from '../space/Space'
 import { renderDefaultIcon } from './render-default-icon'
 import { renderUserInputIcon } from './render-param-icon'
 
@@ -105,7 +105,7 @@ Input.defaultProps = {
   size: 'default',
 }
 
-interface InputProps
+export interface InputProps
   extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
     'size' | 'rightIcon'

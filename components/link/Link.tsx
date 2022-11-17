@@ -1,5 +1,4 @@
-import { LinkProps } from 'next/link'
-import { default as CustomLink } from 'next/link'
+import { default as CustomLink, LinkProps } from 'next/link'
 import { forwardRef } from 'react'
 
 // TODO: active classname is not logical

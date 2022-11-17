@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { ReactPortal, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useIsomorphicEffect } from '@mantine/hooks'
 
 export interface PortalProps {
   /** Portal children, for example, modal or popover */

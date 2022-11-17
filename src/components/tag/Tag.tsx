@@ -25,7 +25,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>((props, ref) => {
     <div
       ref={mergedRef}
       className={
-        'w-fit px-1 py-px text-xs rounded-sm cursor-default leading-none flex flex-row items-center ' +
+        'w-fit px-1 py-px text-xs rounded-sm cursor-default leading-none flex flex-row items-center relative z-[53] ' +
         `${
           type === 'light'
             ? 'bg-gray-300'

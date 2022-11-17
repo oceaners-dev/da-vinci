@@ -8,6 +8,7 @@ export const TagGroup = forwardRef<HTMLDivElement, TagGroupType>(
       maxTagCount, // ✅
       avatarShape, // ✅
       classNames, // ✅
+      focusFn, // ✅
       className, // ✅
       showMore, // 🚨 TODO: implement
     } = props
@@ -25,19 +26,25 @@ export const TagGroup = forwardRef<HTMLDivElement, TagGroupType>(
       },
     ) as ReactElement<TagProps>[]
 
-    console.log({ maxTagCount })
-
     const allowedTags = customChildren.slice(0, maxTagCount)
     const hiddenTags = customChildren.slice(maxTagCount, customChildren.length)
-    console.log({ allowedTags, hiddenTags })
 
     return (
       <div
         ref={ref}
-        className={`flex flex-row items-center flex-wrap gap-1 ${
+        className={`flex flex-row items-center flex-wrap gap-1 relative ${
           className || ''
         }`}
       >
+        {focusFn && (
+          <div
+            data-name="select-focus-helper"
+            className="absolute inset-0 z-0 w-full h-full"
+            onClick={() => {
+              focusFn()
+            }}
+          />
+        )}
         {allowedTags}
         {maxTagCount && showMore && hiddenTags && hiddenTags.length !== 0 && (
           <button className="text-xs">+{hiddenTags.length}</button>
@@ -64,4 +71,9 @@ export interface TagGroupType {
    * @description Display other tags on hover count of hidden tags.
    */
   showMore?: boolean
+
+  /**
+   * @description Function to open dropdown or trigger what you want on click of div above tags. Useful when you want to open dropdown on clicking div above tags.
+   */
+  focusFn?: () => void
 }

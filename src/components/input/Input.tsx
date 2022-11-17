@@ -9,13 +9,15 @@ import { renderUserInputIcon } from './render-param-icon'
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (props, ref) => {
     const {
-      className,
-      size,
-      leftIcon,
+      className, // ✅
+      size, // ✅
+      leftIcon, // ✅
       rightIcon,
-      password,
-      showClear,
+      password, // ✅
+      hideInput, // ✅
+      showClear, // ✅
       leftComponent,
+      wrapperClasses, // ✅
       ...rest
     } = props
     const [isActive, setIsActive] = useState<boolean>(false)
@@ -26,38 +28,48 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div
         ref={ref}
+        data-name="input-wrapper"
         className={
-          'w-fit relative flex flex-row items-center justify-between input-classes cursor-text' +
+          '!w-full relative flex flex-row items-center justify-between input-classes cursor-text max-h-full' +
           ' ' +
-          `${isActive ? 'hover:!bg-gray-200 !outline-gray-300' : ''} 
-    `
+          `${isActive ? 'hover:!bg-gray-200 !outline-gray-300' : ''}
+    ` +
+          ' ' +
+          `${wrapperClasses || ''}`
         }
       >
         <div
+          data-name="input-focus-helper"
           className="absolute inset-0 z-0 w-full h-full"
           onClick={() => {
             clickTracker.current.focus()
+            if (hideInput) {
+              // @ts-ignore
+              rest.onClick()
+            }
           }}
         />
 
-        {leftIcon && renderUserInputIcon('before', leftIcon)}
-        {leftComponent && leftComponent}
-        {leftComponent && <Space direction="horizontal" spacing={10} />}
+        <div className="flex flex-row flex-wrap" data-name="input-left-side">
+          {leftIcon && renderUserInputIcon('before', leftIcon)}
+          {leftComponent && leftComponent}
+          {leftComponent && <Space direction="horizontal" spacing={10} />}
 
-        <input
-          onFocus={() => setIsActive(true)}
-          autoFocus={isActive}
-          ref={clickTracker}
-          data-size={size}
-          type={password ? (showPassword ? 'text' : 'password') : 'text'}
-          className={
-            'data-[size=large]:!py-3 data-[size=small]:!py-0 relative bg-transparent outline-none border-none pointer-events-auto z-10' +
-            ' ' +
-            `${className || ''} ${props.disabled ? 'text-gray-600' : ''}`
-          }
-          {...rest}
-        />
-
+          <input
+            onFocus={() => setIsActive(true)}
+            autoFocus={isActive}
+            ref={clickTracker}
+            data-size={size}
+            type={password ? (showPassword ? 'text' : 'password') : 'text'}
+            className={
+              'data-[size=large]:!py-3 data-[size=small]:!py-0 relative bg-transparent outline-none border-none pointer-events-auto z-10 w-fit ' +
+              ' ' +
+              `${className || ''} ${props.disabled ? 'text-gray-600' : ''} ` +
+              `${hideInput ? 'hidden' : ''}`
+            }
+            {...rest}
+          />
+        </div>
         {rightIcon && renderUserInputIcon('after', rightIcon)}
 
         {showClear &&
@@ -111,7 +123,18 @@ export interface InputProps
     'size' | 'rightIcon'
   > {
   defaultValue?: string
+  /**
+   * @description className for `<input>` directly.
+   * @type {React.HTMLAttributes<HTMLInputElement>['className']}
+   * @memberof InputProps
+   *
+   */
   className?: React.HTMLAttributes<HTMLInputElement>['className']
+  /**
+   * @description If you want to add classes for size prop, use `className` prop with `data-[size=*]` selector. Eg: `data-[size=large]:px-10`
+   * @type {('small' | 'default' | 'large')}
+   * @memberof InputProps
+   */
   size?: 'small' | 'default' | 'large'
   /**
    * You can pass a React component or string
@@ -124,4 +147,12 @@ export interface InputProps
   showClear?: boolean
   leftComponent?: React.ReactNode
   password?: boolean
+  /**
+   * @description If you need to hide the input, you can use this prop. But `think again`. Probably you are doing something `wrong`.
+   */
+  readonly hideInput?: boolean
+  /**
+   * @description className for parent div
+   */
+  wrapperClasses?: string
 }

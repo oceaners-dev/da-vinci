@@ -15,6 +15,7 @@ import { Card } from '../card-UNFINISHED/Card'
 import { CheckBox } from '../checkbox/CheckBox'
 import { Input } from '../input/Input'
 import { Portal } from '../portal/Portal'
+import Space from '../space/Space'
 import { TagGroup } from '../tag/Group'
 import { Tag } from '../tag/Tag'
 
@@ -77,7 +78,6 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
     const getInputSizes = useCallback(() => {
       if (tagGroupRef) {
         if (tagGroupRef.current) {
-          console.log(tagGroupRef.current)
           setTagGroupWidth(tagGroupRef.current.offsetWidth)
         }
       }
@@ -155,8 +155,6 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
       getInputSizes()
     }, [inputRef.current])
 
-    console.log({ inputWidth, tagGroupWidth })
-
     useEffect(() => {
       if (!tagGroupRef || !tagGroupRef.current) return
       getInputSizes()
@@ -171,7 +169,7 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
     }, [tagGroupWidth, inputWidth, selected])
 
     return (
-      <div className="w-fit h-fit relative flex flex-col">
+      <div className="w-full max-w-[250px] h-fit relative flex flex-col">
         {label && typeof label === 'string' ? (
           <div className="font-medium mb-[2px] leading-none text-sm">
             {label}
@@ -186,18 +184,21 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
         ) : (
           description
         )}
-        <div className={`${inputId} w-fit h-fit relative flex flex-col`}>
+        <div className={`${inputId} w-full h-fit relative flex flex-col`}>
           {/* tags start */}
 
           {/* tags end */}
           <Input
             type="text"
             ref={inputRef}
+            leftIcon={leftIcon}
+            hideInput={selected && selected.length > 0}
             leftComponent={
               selected &&
               selected.length > 0 && (
-                <div className="z-50 ">
+                <div className="z-50 w-full relative">
                   <TagGroup
+                    focusFn={openDropdown}
                     ref={tagGroupRef}
                     // maxTagCount={maxTagCount}
                     showMore
@@ -216,6 +217,7 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
                             tagKey={tagLabel as string}
                             key={uuid()}
                             closable
+                            className="z-[52] relative"
                             removeNodeOnClose={false}
                             onClose={() => {
                               if (typeof item === 'string') {
@@ -234,7 +236,6 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
                 </div>
               )
             }
-            leftIcon={leftIcon}
             rightIcon={
               selected.length === 0 ? (
                 <SvgLeftArrow className="rotate-[270deg] w-3 h-3" />
@@ -274,7 +275,7 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
                 className={`shadow-sm px-0 py-0 ${
                   maxDropdownHeight ? maxDropdownHeight : 'max-h-[200px]'
                 }
-                overflow-hidden overflow-y-auto
+                overflow-hidden overflow-y-auto relative
               `}
               >
                 {data.map((item) => {
@@ -311,6 +312,8 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
                   )
                 })}
               </Card>
+              <Space spacing={10} />
+              {selected && selected.length > 0 && <Input />}
             </Portal>
           )}
         </div>

@@ -36,7 +36,7 @@ specifiers:
   eslint-plugin-prettier: ^4.2.1
   eslint-plugin-react: ^7.31.10
   fs-extra: ^10.1.0
-  inspx: ^0.0.1-alpha.6
+  inspx: 0.0.1-alpha.6
   next: 13.0.0
   postcss: ^8.4.18
   prettier: ^2.7.1

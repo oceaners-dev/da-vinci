@@ -10,7 +10,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (props, ref) => {
     const {
       className, // ✅
-      size, // ✅
+      sizing: size, // ✅
       leftIcon, // ✅
       rightIcon,
       password, // ✅
@@ -30,10 +30,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         ref={ref}
         data-name="input-wrapper"
         className={
-          '!w-full relative flex flex-row items-center justify-between input-classes cursor-text max-h-full' +
+          '!w-full max-w-[250px] relative flex flex-row items-center justify-between input-classes cursor-text max-h-full' +
           ' ' +
           `${isActive ? 'hover:!bg-gray-200 !outline-gray-300' : ''}
     ` +
+          `${rest.type === 'time' ? '!w-fit max-w-none' : ''}` +
           ' ' +
           `${wrapperClasses || ''}`
         }
@@ -114,14 +115,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 )
 
 Input.defaultProps = {
-  size: 'default',
+  sizing: 'default',
 }
 
 export interface InputProps
-  extends Omit<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    'size' | 'rightIcon'
-  > {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'defaultValue'> {
   defaultValue?: string
   /**
    * @description className for `<input>` directly.
@@ -135,7 +133,7 @@ export interface InputProps
    * @type {('small' | 'default' | 'large')}
    * @memberof InputProps
    */
-  size?: 'small' | 'default' | 'large'
+  sizing?: 'small' | 'default' | 'large'
   /**
    * You can pass a React component or string
    */
@@ -143,7 +141,7 @@ export interface InputProps
   /**
    * You can pass a React component or string
    */
-  rightIcon?: JSX.Element
+  rightIcon?: JSX.Element | null
   showClear?: boolean
   leftComponent?: React.ReactNode
   password?: boolean

@@ -4,9 +4,6 @@
   "private": true,
   "description": "Next.js UI kit written with TailwindCSS and   cript.",
   "main": "index.js",
-  "files": [
-    "lib/**/*"
-  ],
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "clean": "rm -rf lib",

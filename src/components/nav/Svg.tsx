@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import React, { SVGProps } from 'react';
 
 export function SvgExpandToRight(props: SVGProps<SVGSVGElement>) {
   return (
@@ -20,5 +20,5 @@ export function SvgExpandToRight(props: SVGProps<SVGSVGElement>) {
       </mask>
       <path fill="currentColor" d="M0 0h48v48H0z" mask="url(#svgIDa)" />
     </svg>
-  )
+  );
 }

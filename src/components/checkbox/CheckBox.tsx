@@ -1,6 +1,6 @@
-import { forwardRef, useId } from 'react'
-import { ForwardRefWithStaticComponents } from '../../utils/ts/forward-ref-with-static-component'
-import { CheckboxGroup } from './group'
+import React, { forwardRef, useId } from 'react';
+import { ForwardRefWithStaticComponents } from '../../utils/ts/forward-ref-with-static-component';
+import { CheckboxGroup } from './group';
 
 // TODO: style improvement
 // TODO: card component
@@ -12,7 +12,7 @@ export const CheckBox: CheckboxComponent = forwardRef<
   HTMLInputElement,
   CheckboxProps
 >((props, ref) => {
-  const id = useId()
+  const id = useId();
   const {
     className, // ✅
     checked, // ✅
@@ -26,10 +26,10 @@ export const CheckBox: CheckboxComponent = forwardRef<
     selectableLabel, // ✅
     customIcon, // 🚨 TODO
     type, // 🚨 TODO
-  } = props
+  } = props;
 
   if (!label && !name) {
-    throw new Error('You must provide a label or name to checkbox')
+    throw new Error('You must provide a label or name to checkbox');
   }
 
   return (
@@ -50,10 +50,10 @@ export const CheckBox: CheckboxComponent = forwardRef<
         } ${hideCheckbox ? 'hidden' : ''}`}
         onChange={(e) => {
           if (onChangeEvent) {
-            onChangeEvent(e)
+            onChangeEvent(e);
           }
           if (onChangeChecked) {
-            onChangeChecked(e.target.checked)
+            onChangeChecked(e.target.checked);
           }
           // TODO: test these with group
         }}
@@ -69,65 +69,66 @@ export const CheckBox: CheckboxComponent = forwardRef<
         </label>
       )}
     </div>
-  )
-}) as any
+  );
+}) as any;
 
 CheckBox.defaultProps = {
   selectableLabel: false,
-}
+};
 
 export type CheckboxComponent = ForwardRefWithStaticComponents<
   CheckboxProps,
   { Group: typeof CheckboxGroup }
->
+>;
 
 /**
  * Layers are `unselectable`. by default. If you want to make it selectable, you can use the `selectable` prop.
  */
 export interface CheckboxProps {
   /**
-   * For wrapper div.
-   */
-  className?: string
-  /**
    * This prop is uncontrollable. If you set it true, you can't change it with click.
    * This is `defualt` input behavior.
    * If you want to change it with click, use `defaultChecked` prop.
    */
-  checked?: boolean
+  checked?: boolean;
+  /**
+   * For wrapper div.
+   */
+  className?: string;
+  /**
+   * Custom tick box icon. Use tailwind classes for style `selected` and `unselected` states.
+   */
+  customIcon?: React.ReactNode;
+  /**
+   * @type boolean
+   */
+  defaultChecked?: boolean;
+  // 🚨
+  disabled?: boolean;
+  extraInfo?: React.ReactNode;
+  /**
+   * Just `hides` the tick box between the label. If you use `customIcon` it's hiding automatically.
+   */
+  hideCheckbox?: boolean;
+  label?: React.ReactNode;
   /**
    * We don't know why but some of UI libraries lets name optional. We do not want to
    * compare labels or some hacky things. Please provide a name.
    */
-  name: string
-  /**
-   * @type boolean
-   */
-  defaultChecked?: boolean
-  type?: 'default' | 'radio' | 'card' | 'pureCard' // 🚨
-  disabled?: boolean
-  /**
-   * @returns event directly. if you want to get `booleam` value, use `onChangeChecked`
-   */
-  onChangeEvent?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  name: string;
   /**
    * @returns `true` if checked, `false` if unchecked.
    */
-  onChangeChecked?: (checked: boolean) => void
-  extraInfo?: React.ReactNode
-  label?: React.ReactNode
+  onChangeChecked?: (checked: boolean) => void;
   /**
-   * Custom tick box icon. Use tailwind classes for style `selected` and `unselected` states.
+   * @returns event directly. if you want to get `booleam` value, use `onChangeChecked`
    */
-  customIcon?: React.ReactNode
-  /**
-   * Just `hides` the tick box between the label. If you use `customIcon` it's hiding automatically.
-   */
-  hideCheckbox?: boolean
+  onChangeEvent?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   /**
    * Layers are `unselectable`. by default. If you want to make it selectable, you can use the `selectable` prop.
    */
-  selectableLabel?: boolean
+  selectableLabel?: boolean;
+  type?: 'default' | 'radio' | 'card' | 'pureCard';
 }
 
-CheckBox.Group = CheckboxGroup
+CheckBox.Group = CheckboxGroup;

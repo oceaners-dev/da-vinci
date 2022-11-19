@@ -1,19 +1,19 @@
-import React, { useCallback } from 'react'
-import { SvgX } from '../../utils/svg'
-import { Card } from '../card-UNFINISHED/Card'
-import { ToastProps } from './Provider'
-import { NotificationIcons } from './svg'
+import React, { useCallback } from 'react';
+import { SvgX } from '../../utils/svg';
+import { Card } from '../card-UNFINISHED/Card';
+import { ToastProps } from './Provider';
+import { NotificationIcons } from './svg';
 
-export default function NotificationCard({
+export function NotificationCard({
   data,
   id,
 }: {
-  data: ToastProps
-  id: string
+  data: ToastProps;
+  id: string;
 }) {
   const closeNotification = useCallback(() => {
-    return document.querySelector('[data-id="' + id + '"]')?.remove()
-  }, [])
+    return document.querySelector('[data-id="' + id + '"]')?.remove();
+  }, []);
 
   return (
     <Card className={`min-w-[300px] ${data.className}`}>
@@ -28,7 +28,7 @@ export default function NotificationCard({
             </div>
             <button
               onClick={() => {
-                closeNotification()
+                closeNotification();
               }}
             >
               <SvgX className="w-4 h-4" />
@@ -38,5 +38,5 @@ export default function NotificationCard({
         </div>
       </div>
     </Card>
-  )
+  );
 }

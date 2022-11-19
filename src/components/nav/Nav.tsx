@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import uuid from 'react-uuid'
-import { navigationStore } from '../../utils/stores/nav-store'
-import { DaVinciLogo } from '../../utils/svg'
-import { Card } from '../card-UNFINISHED/Card'
-import { Link } from '../link/Link'
-import { SvgExpandToRight } from './Svg'
+import React, { useCallback, useEffect, useState } from 'react';
+import uuid from 'react-uuid';
+import { navigationStore } from '../../utils/stores/nav-store';
+import { DaVinciLogo } from '../../utils/svg';
+import { Card } from '../card-UNFINISHED/Card';
+import { Link } from '../link/Link';
+import { SvgExpandToRight } from './Svg';
 
-export default function Nav(props: NavProps) {
+export function Nav(props: NavProps) {
   const {
     children,
     className,
@@ -16,31 +16,31 @@ export default function Nav(props: NavProps) {
     activeItem,
     logo,
     vertical,
-  } = props
+  } = props;
   // store
-  const isExpandedStore = navigationStore((state) => state.isExpanded)
-  const setIsExpanded = navigationStore((state) => state.setIsExpanded)
+  const isExpandedStore = navigationStore((state) => state.isExpanded);
+  const setIsExpanded = navigationStore((state) => state.setIsExpanded);
 
   // states
-  const [isExpanded, setIsExpandedState] = useState<boolean>(expanded === true)
+  const [isExpanded, setIsExpandedState] = useState<boolean>(expanded === true);
 
   // useeffects
   useEffect(() => {
     if (expanded !== undefined) {
-      setIsExpandedState(expanded)
+      setIsExpandedState(expanded);
     }
-  }, [expanded])
+  }, [expanded]);
 
   useEffect(() => {
     if (isExpandedStore !== undefined) {
-      setIsExpandedState(isExpandedStore)
+      setIsExpandedState(isExpandedStore);
     }
-  }, [isExpandedStore])
+  }, [isExpandedStore]);
 
   // callbacks
   const handleExpanded = useCallback(() => {
-    setIsExpanded(!isExpandedStore)
-  }, [isExpandedStore])
+    setIsExpanded(!isExpandedStore);
+  }, [isExpandedStore]);
 
   return (
     <nav className={''}>
@@ -79,7 +79,7 @@ export default function Nav(props: NavProps) {
                 >
                   {vertical ? (isExpanded ? item.label : '') : item.label}
                 </Link>
-              )
+              );
             })}
 
         {hasExpandButton && vertical && (
@@ -88,7 +88,7 @@ export default function Nav(props: NavProps) {
             <button
               className="w-fit ml-3"
               onClick={() => {
-                handleExpanded()
+                handleExpanded();
               }}
             >
               <SvgExpandToRight className={isExpanded ? 'rotate-180' : ''} />
@@ -97,43 +97,43 @@ export default function Nav(props: NavProps) {
         )}
       </Card>
     </nav>
-  )
+  );
 }
 
 Nav.defaultProps = {
   expanded: true,
   hasExpandButton: true,
   vertical: true,
-}
+};
 
 export interface NavPropHorizontal {
-  children?: React.ReactNode
-  className?: React.HTMLAttributes<HTMLElement>['className']
-  items?: NavItem[]
-  vertical?: false
-  expanded?: false
-  hasExpandButton?: false
   // user must compare something with one of NavItem's param
-  activeItem?: NavItem
-  logo?: React.ReactNode
+  activeItem?: NavItem;
+  children?: React.ReactNode;
+  className?: React.HTMLAttributes<HTMLElement>['className'];
+  expanded?: false;
+  hasExpandButton?: false;
+  items?: NavItem[];
+  logo?: React.ReactNode;
+  vertical?: false;
 }
 
 export interface NavVerticalProps {
-  children?: React.ReactNode
-  className?: React.HTMLAttributes<HTMLElement>['className']
-  items?: NavItem[]
-  vertical?: true
-  expanded?: true
-  hasExpandButton?: true
   // user must compare something with one of NavItem's param
-  activeItem?: NavItem
-  logo?: React.ReactNode
+  activeItem?: NavItem;
+  children?: React.ReactNode;
+  className?: React.HTMLAttributes<HTMLElement>['className'];
+  expanded?: true;
+  hasExpandButton?: true;
+  items?: NavItem[];
+  logo?: React.ReactNode;
+  vertical?: true;
 }
 
-export type NavProps = NavPropHorizontal | NavVerticalProps
+export type NavProps = NavPropHorizontal | NavVerticalProps;
 
 export interface NavItem {
-  label: string
-  icon?: React.ReactNode
-  link: string
+  icon?: React.ReactNode;
+  label: string;
+  link: string;
 }

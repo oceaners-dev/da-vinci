@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 // TODO: https://ui.mantine.dev/category/navbars copy something
 export function Layout(props: LayoutProps) {
-  const { children, className, hasSidebar, fullHeight } = props
+  const { children, className, hasSidebar, fullHeight } = props;
   return (
     <div
       className={`
@@ -14,16 +14,16 @@ export function Layout(props: LayoutProps) {
     >
       {children}
     </div>
-  )
+  );
 }
 
 Layout.defaultProps = {
   hasSidebar: false,
-}
+};
 
 export interface LayoutProps {
-  children: React.ReactNode
-  hasSidebar?: boolean
-  className?: React.HTMLAttributes<HTMLElement>['className']
-  fullHeight?: boolean
+  children: React.ReactNode;
+  className?: React.HTMLAttributes<HTMLElement>['className'];
+  fullHeight?: boolean;
+  hasSidebar?: boolean;
 }

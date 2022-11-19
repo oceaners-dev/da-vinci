@@ -1,10 +1,10 @@
-import { default as CustomLink, LinkProps } from 'next/link'
-import { forwardRef } from 'react'
+import { default as CustomLink, LinkProps } from 'next/link';
+import React, { forwardRef } from 'react';
 
 // TODO: active classname is not logical
 export const Link = forwardRef<HTMLAnchorElement, CustomLinkProps>(
   (props, ref) => {
-    const { children, className, icon, isActive, ...rest } = props
+    const { children, className, icon, isActive, ...rest } = props;
     return (
       <CustomLink
         {...rest}
@@ -20,15 +20,15 @@ export const Link = forwardRef<HTMLAnchorElement, CustomLinkProps>(
         )}
         <div className="w-full max-w-[150px] font-medium">{children}</div>
       </CustomLink>
-    )
+    );
   },
-)
+);
 
 export interface CustomLinkProps extends LinkProps {
-  children: React.ReactNode /* as prop can be Link or Button */
-  icon?: React.ReactNode
+  children: React.ReactNode /* as prop can be Link or Button */;
   className?:
     | React.HTMLAttributes<HTMLButtonElement>['className']
-    | React.HTMLAttributes<HTMLAnchorElement>['className']
-  isActive?: boolean // ?
+    | React.HTMLAttributes<HTMLAnchorElement>['className'];
+  icon?: React.ReactNode;
+  isActive?: boolean; // ?
 }

@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 
-export default function Button(props: ButtonProps) {
+export function Button(props: ButtonProps) {
   // TODO: create themes > solid, dark, borderless,
   // TODO: create types > primary, secondary, tertiary, ghost, link
 
-  const { children, icon, isActive, className, ...rest } = props
+  const { children, icon, isActive, className, ...rest } = props;
 
   /* It's a string of classes that are applied to the button when it's hovered over or if it's active etc.. */
 
@@ -20,22 +20,22 @@ export default function Button(props: ButtonProps) {
       )}
       <div className="w-full max-w-[150px] font-medium">{children}</div>
     </button>
-  )
+  );
 }
 
 Button.defaultProps = {
   isActive: true,
-}
+};
 
 export interface HtmlButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode /* as prop can be Link or Button */
-  icon?: React.ReactNode
+  children: React.ReactNode /* as prop can be Link or Button */;
   className?:
     | React.HTMLAttributes<HTMLButtonElement>['className']
-    | React.HTMLAttributes<HTMLAnchorElement>['className']
-  onClick: React.HTMLAttributes<HTMLButtonElement>['onClick']
-  isActive?: boolean
+    | React.HTMLAttributes<HTMLAnchorElement>['className'];
+  icon?: React.ReactNode;
+  isActive?: boolean;
+  onClick: React.HTMLAttributes<HTMLButtonElement>['onClick'];
 }
 
 /**
@@ -44,4 +44,4 @@ export interface HtmlButtonProps
  * @param className - The className of the button.
  * @param isActive - You can set "active" the button. It will seems like it's hovered. Useful in navigation.
  */
-export type ButtonProps = HtmlButtonProps
+export type ButtonProps = HtmlButtonProps;

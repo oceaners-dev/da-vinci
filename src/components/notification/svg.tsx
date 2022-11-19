@@ -1,4 +1,4 @@
-import { SVGProps } from 'react'
+import React, { SVGProps } from 'react';
 
 export function SvgSuccess(props: SVGProps<SVGSVGElement>) {
   return (
@@ -8,7 +8,7 @@ export function SvgSuccess(props: SVGProps<SVGSVGElement>) {
         fill="currentColor"
       ></path>
     </svg>
-  )
+  );
 }
 
 export function SvgError(props: SVGProps<SVGSVGElement>) {
@@ -19,7 +19,7 @@ export function SvgError(props: SVGProps<SVGSVGElement>) {
         fill="currentColor"
       ></path>
     </svg>
-  )
+  );
 }
 
 export function SvgWarning(props: SVGProps<SVGSVGElement>) {
@@ -30,7 +30,7 @@ export function SvgWarning(props: SVGProps<SVGSVGElement>) {
         fill="currentColor"
       ></path>
     </svg>
-  )
+  );
 }
 
 export function SvgInfo(props: SVGProps<SVGSVGElement>) {
@@ -41,7 +41,7 @@ export function SvgInfo(props: SVGProps<SVGSVGElement>) {
         fill="currentColor"
       ></path>
     </svg>
-  )
+  );
 }
 
 export const NotificationIcons = {
@@ -49,4 +49,4 @@ export const NotificationIcons = {
   error: <SvgError className="text-red-600 w-5 h-5" />,
   warning: <SvgWarning className="text-[#FFCC00] w-5 h-5" />,
   info: <SvgInfo className="text-sky-600 w-5 h-5" />,
-}
+};

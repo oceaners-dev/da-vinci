@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 // TODO: #134 UI Avatar component in used next image
 
-export default function Avatar(props: AvatarProps) {
+export function Avatar(props: AvatarProps) {
   const {
     children,
     className,
@@ -14,8 +14,8 @@ export default function Avatar(props: AvatarProps) {
     textColor,
     randomColor,
     style,
-  } = props
-  const avatarSize = AvatarSize(size as string)
+  } = props;
+  const avatarSize = AvatarSize(size as string);
 
   return (
     <div
@@ -38,7 +38,7 @@ export default function Avatar(props: AvatarProps) {
         />
       )}
     </div>
-  )
+  );
 }
 /**
  * @typedef {Object} AvatarProps
@@ -55,18 +55,18 @@ Avatar.defaultProps = {
   shape: 'square',
   color: 'bg-gray-700',
   textColor: 'text-white',
-}
+};
 export interface AvatarProps {
-  children?: React.ReactNode
-  className?: React.HTMLAttributes<HTMLElement>['className']
-  size?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'default'
-  shape: 'square' | 'circle'
-  color?: string
-  name?: string
-  textColor?: string
-  srcImg?: string
-  randomColor?: number
-  style?: React.CSSProperties
+  children?: React.ReactNode;
+  className?: React.HTMLAttributes<HTMLElement>['className'];
+  color?: string;
+  name?: string;
+  randomColor?: number;
+  shape: 'square' | 'circle';
+  size?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'default';
+  srcImg?: string;
+  style?: React.CSSProperties;
+  textColor?: string;
 }
 
 // Todo: Color palete uygun hale getirilecek
@@ -96,25 +96,25 @@ const avatarColor = [
   'bg-purple-300',
   'bg-pink-300',
   'bg-gray-300',
-]
+];
 function AvatarSize(value: string) {
   switch (value) {
     case '2xl':
-      return ' w-24 h-24 text-[32px]'
+      return ' w-24 h-24 text-[32px]';
     case 'xl':
-      return ' w-20 h-20 text-[32px]'
+      return ' w-20 h-20 text-[32px]';
     case 'lg':
-      return ' w-16 h-16 text-[24px]'
+      return ' w-16 h-16 text-[24px]';
     case 'md':
-      return ' w-12 h-12 text-[20px]'
+      return ' w-12 h-12 text-[20px]';
     case 'sm':
-      return ' w-8 h-8 text-[16px]'
+      return ' w-8 h-8 text-[16px]';
     case 'xs':
-      return ' w-6 h-6 text-[14px]'
+      return ' w-6 h-6 text-[14px]';
     case 'xxs':
-      return ' w-5 h-5 text-[12px]'
+      return ' w-5 h-5 text-[12px]';
     default:
-      return ' w-10 h-10 text-[18px]'
+      return ' w-10 h-10 text-[18px]';
   }
 }
 function NameFirstandLastName(name: string) {
@@ -122,12 +122,12 @@ function NameFirstandLastName(name: string) {
     .split(' ')
     .map((n) => n[0])
     .join('')
-    .toUpperCase()
+    .toUpperCase();
 }
 function colorKey(value: number) {
-  const arrayLength = avatarColor.length - 1
+  const arrayLength = avatarColor.length - 1;
   if (value > arrayLength) {
-    return value % arrayLength
+    return value % arrayLength;
   }
-  return value
+  return value;
 }

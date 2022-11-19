@@ -1,10 +1,10 @@
-import { forwardRef, useCallback, useState } from 'react'
-import uuid from 'react-uuid'
-import { useClickOutside } from '../../hooks'
-import { useMergedRef } from '../../hooks/use-merged-ref'
-import { Card } from '../card-UNFINISHED'
-import { Input } from '../input'
-import { SvgClock } from './Svg'
+import React, { forwardRef, useCallback, useState } from 'react';
+import uuid from 'react-uuid';
+import { useClickOutside } from '../../hooks';
+import { useMergedRef } from '../../hooks/use-merged-ref';
+import { Card } from '../card-UNFINISHED/Card';
+import { Input } from '../input/Input';
+import { SvgClock } from './Svg';
 
 /**
  * @param {string} defaultValue - default value of the input
@@ -18,38 +18,38 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
       defaultValue, // ✅
       onChange, // ✅
       ...rest
-    } = props
+    } = props;
 
     // states
-    const [isDropdownOpened, setIsDropdownOpened] = useState<boolean>(false)
+    const [isDropdownOpened, setIsDropdownOpened] = useState<boolean>(false);
     const [timeValue, setTimeValue] = useState<string>(
       defaultValue ? defaultValue : '00:00',
-    )
+    );
 
-    console.log({ timeValue })
+    console.log({ timeValue });
 
     // callbacks
     const openDropdown = useCallback(() => {
-      setIsDropdownOpened(true)
-    }, [])
+      setIsDropdownOpened(true);
+    }, []);
 
     const closeDropdown = useCallback(() => {
-      setIsDropdownOpened(false)
-    }, [])
+      setIsDropdownOpened(false);
+    }, []);
 
     // refs
-    const refs = useMergedRef(ref)
+    const refs = useMergedRef(ref);
     const outsideRef = useClickOutside(() => {
-      closeDropdown()
-    })
+      closeDropdown();
+    });
 
     const hours = new Array(24)
       .fill(0)
-      .map((_, i) => (i < 10 ? `0${i}` : `${i}`))
+      .map((_, i) => (i < 10 ? `0${i}` : `${i}`));
 
     const minutes = new Array(60)
       .fill(0)
-      .map((_, i) => (i < 10 ? `0${i}` : `${i}`))
+      .map((_, i) => (i < 10 ? `0${i}` : `${i}`));
 
     return (
       <div
@@ -69,8 +69,8 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
           ref={refs}
           value={timeValue}
           onChange={(e) => {
-            setTimeValue(e.target.value)
-            onChange && onChange(e)
+            setTimeValue(e.target.value);
+            onChange && onChange(e);
           }}
           className="hide-indicator"
           type={'time'}
@@ -86,8 +86,8 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
               className="overflow-y-auto !h-40 flex items-center flex-col scrollbar-hide"
             >
               {hours.map((hour) => {
-                const minute = timeValue?.split(':')[1]
-                const currentHour = timeValue?.split(':')[0]
+                const minute = timeValue?.split(':')[1];
+                const currentHour = timeValue?.split(':')[0];
                 return (
                   <button
                     className={`py-1 hover:bg-gray-100 w-full text-sm rounded-r ${
@@ -95,15 +95,15 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
                     }`}
                     key={uuid()}
                     onClick={() => {
-                      setTimeValue(`${hour}:${minute}`)
-                      var event = new Event('input', { bubbles: true })
+                      setTimeValue(`${hour}:${minute}`);
+                      const event = new Event('input', { bubbles: true });
                       // TODO: Trigger onChange event at `TimePicker`.
                       // refs?.current.dispatchEvent(event)
                     }}
                   >
                     {hour}
                   </button>
-                )
+                );
               })}
             </div>
             <div
@@ -111,8 +111,8 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
               className="overflow-y-auto !h-40 flex items-center flex-col scrollbar-hide"
             >
               {minutes.map((minute) => {
-                const hour = timeValue?.split(':')[0]
-                const currentMinute = timeValue?.split(':')[1]
+                const hour = timeValue?.split(':')[0];
+                const currentMinute = timeValue?.split(':')[1];
                 return (
                   <button
                     className={`py-1 hover:bg-gray-100 w-full text-sm rounded-l ${
@@ -120,37 +120,37 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
                     }`}
                     key={uuid()}
                     onClick={() => {
-                      setTimeValue(`${hour}:${minute}`)
-                      var event = new Event('input', { bubbles: true })
+                      setTimeValue(`${hour}:${minute}`);
+                      const event = new Event('input', { bubbles: true });
                       // TODO: Trigger onChange event at `TimePicker`.
                       // element.dispatchEvent(event)
                     }}
                   >
                     {minute}
                   </button>
-                )
+                );
               })}
             </div>
           </Card>
         )}
       </div>
-    )
+    );
   },
-)
+);
 
 TimePicker.defaultProps = {
   withIcon: true,
-}
+};
 
 export interface TimePickerProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   /**
-   * @description Adds clock icon to the right side of the input
-   */
-  withIcon?: boolean
-  /**
    * @description Eg. `"14:30"`
    */
-  defaultValue?: string
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  defaultValue?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  /**
+   * @description Adds clock icon to the right side of the input
+   */
+  withIcon?: boolean;
 }

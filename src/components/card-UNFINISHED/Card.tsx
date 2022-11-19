@@ -1,19 +1,19 @@
-import React from 'react'
+import React from 'react';
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   (props, ref) => {
-    const { children, className } = props
+    const { children, className } = props;
     return (
       <div ref={ref} className={`card-classes ${className || ''}`}>
         {children}
       </div>
-    )
+    );
   },
-)
+);
 
 Card.defaultProps = {
   hasBorders: true,
-}
+};
 
 /**
  * @param children - The content of the card.
@@ -26,12 +26,12 @@ Card.defaultProps = {
  * @param header - Header component if headerText does not meet your needs
  */
 export interface CardProps extends React.HTMLAttributes<HTMLElement> {
-  children: React.ReactNode
-  className?: React.HTMLAttributes<HTMLElement>['className']
-  cover?: React.ReactNode
-  hasBorders?: boolean
-  headerText?: string
-  headerLine?: boolean
-  header?: React.ReactNode
-  ref?: React.Ref<HTMLDivElement>
+  children: React.ReactNode;
+  className?: React.HTMLAttributes<HTMLElement>['className'];
+  cover?: React.ReactNode;
+  hasBorders?: boolean;
+  header?: React.ReactNode;
+  headerLine?: boolean;
+  headerText?: string;
+  ref?: React.Ref<HTMLDivElement>;
 }

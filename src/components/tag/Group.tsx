@@ -1,5 +1,5 @@
-import React, { forwardRef, ReactElement, useEffect, useState } from 'react'
-import { TagProps } from './Tag'
+import React, { forwardRef, ReactElement } from 'react';
+import { TagProps } from './Tag';
 
 export const TagGroup = forwardRef<HTMLDivElement, TagGroupType>(
   (props, ref) => {
@@ -11,7 +11,7 @@ export const TagGroup = forwardRef<HTMLDivElement, TagGroupType>(
       focusFn, // ✅
       className, // ✅
       showMore, // 🚨 TODO: implement
-    } = props
+    } = props;
 
     const customChildren = React.Children.map(
       children as ReactElement<TagProps>[],
@@ -21,13 +21,13 @@ export const TagGroup = forwardRef<HTMLDivElement, TagGroupType>(
             key: child.props?.tagKey,
             avatarShape,
             className: classNames,
-          })
+          });
         }
       },
-    ) as ReactElement<TagProps>[]
+    ) as ReactElement<TagProps>[];
 
-    const allowedTags = customChildren.slice(0, maxTagCount)
-    const hiddenTags = customChildren.slice(maxTagCount, customChildren.length)
+    const allowedTags = customChildren.slice(0, maxTagCount);
+    const hiddenTags = customChildren.slice(maxTagCount, customChildren.length);
 
     return (
       <div
@@ -41,7 +41,7 @@ export const TagGroup = forwardRef<HTMLDivElement, TagGroupType>(
             data-name="select-focus-helper"
             className="absolute inset-0 z-0 w-full h-full"
             onClick={() => {
-              focusFn()
+              focusFn();
             }}
           />
         )}
@@ -50,30 +50,30 @@ export const TagGroup = forwardRef<HTMLDivElement, TagGroupType>(
           <button className="text-xs">+{hiddenTags.length}</button>
         )}
       </div>
-    )
+    );
   },
-)
+);
 
 export interface TagGroupType {
+  avatarShape?: 'square' | 'circle';
   // children with TagProps
-  children: React.ReactNode
+  children: React.ReactNode;
   /**
    * @description className for `tag group`
    */
-  className?: string
-  maxTagCount?: number
+  className?: string;
   /**
    * @description classNames for `each tag`.
    */
-  classNames?: string
-  avatarShape?: 'square' | 'circle'
-  /**
-   * @description Display other tags on hover count of hidden tags.
-   */
-  showMore?: boolean
-
+  classNames?: string;
   /**
    * @description Function to open dropdown or trigger what you want on click of div above tags. Useful when you want to open dropdown on clicking div above tags.
    */
-  focusFn?: () => void
+  focusFn?: () => void;
+  maxTagCount?: number;
+
+  /**
+   * @description Display other tags on hover count of hidden tags.
+   */
+  showMore?: boolean;
 }

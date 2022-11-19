@@ -1,13 +1,12 @@
-import React from 'react'
-
+import React from 'react';
 export function Space(props: SpaceProps) {
-  const { spacing, direction } = props
+  const { spacing, direction } = props;
 
   const spaceStyle = spacing
     ? direction === 'vertical'
       ? { height: `${spacing}px` }
       : { width: `${spacing}px` }
-    : {}
+    : {};
 
   return (
     <div
@@ -20,14 +19,14 @@ export function Space(props: SpaceProps) {
       }`}
       style={spaceStyle}
     />
-  )
+  );
 }
 
 Space.defaultProps = {
   direction: 'vertical',
-}
+};
 
 interface SpaceProps {
-  direction?: 'horizontal' | 'vertical'
-  spacing?: number
+  direction?: 'horizontal' | 'vertical';
+  spacing?: number;
 }

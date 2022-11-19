@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-export default function Spin(props: SpinProps) {
-  const { size, className, style, children, spinColor, circleColor } = props
+export function Spin(props: SpinProps) {
+  const { size, className, style, children, spinColor, circleColor } = props;
   return (
     <div className="flex flex-row items-center gap-4">
       <svg
@@ -16,7 +16,7 @@ export default function Spin(props: SpinProps) {
       </svg>
       {children}
     </div>
-  )
+  );
 }
 
 Spin.defaultProps = {
@@ -25,12 +25,12 @@ Spin.defaultProps = {
   type: 'light',
   spinColor: 'brand',
   circleColor: 'text-oceaner-blue-100',
-}
+};
 interface SpinProps {
-  children?: React.ReactNode
-  className?: React.HTMLAttributes<HTMLElement>['className']
-  size?: 'sm' | 'md' | 'lg' | 'xl'
-  circleColor?: string
+  children?: React.ReactNode;
+  circleColor?: string;
+  className?: React.HTMLAttributes<HTMLElement>['className'];
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   spinColor?:
     | 'brand'
     | 'danger'
@@ -39,42 +39,42 @@ interface SpinProps {
     | 'severe'
     | 'subtle'
     | 'success'
-    | 'warning'
-  style?: React.CSSProperties
+    | 'warning';
+  style?: React.CSSProperties;
 }
 
 const SpinSize = (value: string) => {
   switch (value) {
     case 'sm':
-      return 'h-4 w-4 '
+      return 'h-4 w-4 ';
     case 'lg':
-      return 'w-8 h-8'
+      return 'w-8 h-8';
     case 'xl':
-      return 'w-10 h-10'
+      return 'w-10 h-10';
     default:
-      return 'w-6 h-6 '
+      return 'w-6 h-6 ';
   }
-}
+};
 const SpinTheme = (value: string) => {
   switch (value) {
     case 'danger':
-      return 'fill-error'
+      return 'fill-error';
     case 'important':
-      return 'fill-odin-gray-900'
+      return 'fill-odin-gray-900';
     case 'informative':
-      return 'fill-odin-gray-300'
+      return 'fill-odin-gray-300';
     case 'severe':
-      return 'fill-valhala-orange-800'
+      return 'fill-valhala-orange-800';
     case 'subtle':
-      return 'fill-ui-black'
+      return 'fill-ui-black';
     case 'success':
-      return 'fill-success'
+      return 'fill-success';
     case 'warning':
-      return ' fill-alert '
+      return ' fill-alert ';
     default:
-      return 'fill-oceaner-blue-700'
+      return 'fill-oceaner-blue-700';
   }
-}
+};
 const svgPath = () => {
   return (
     <>
@@ -87,5 +87,5 @@ const svgPath = () => {
         fill="currentFill"
       />
     </>
-  )
-}
+  );
+};

@@ -1,9 +1,11 @@
-const plugin = require('tailwindcss/plugin')
-const spacing = require('tailwindcss/defaultTheme').spacing
+const plugin = require('tailwindcss/plugin');
+const spacing = require('tailwindcss/defaultTheme').spacing;
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
+    './src/stories/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -117,4 +119,4 @@ module.exports = {
       },
     },
   },
-}
+};

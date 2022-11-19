@@ -1,5 +1,5 @@
-import React, { forwardRef, useEffect, useState } from 'react'
-import { CheckboxProps } from './CheckBox'
+import React, { forwardRef, useEffect, useState } from 'react';
+import { CheckboxProps } from './CheckBox';
 
 export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
   (props, ref) => {
@@ -12,42 +12,42 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
       orientation, // ✅
       required, // TODO 🚨
       listClassName, // ✅
-    } = props
+    } = props;
 
     const [values, setValues] = useState<{ name: string; value: boolean }[]>(
       defaultValue ? defaultValue : [],
-    )
+    );
 
     useEffect(() => {
-      if (!values) return
+      if (!values) return;
       if (onChange) {
-        onChange(values)
+        onChange(values);
       }
-    }, [values])
+    }, [values]);
 
     const customChildren = React.Children.map(children, (child) => {
       if (React.isValidElement(child)) {
         return React.cloneElement(
-          child as { props: CheckboxProps; type: string; key: string },
+          child as { key: string; props: CheckboxProps; type: string },
           {
             defaultChecked: defaultValue
               ? defaultValue.find((e) => e.name === child.props.name)?.value
               : values.find((e) => e.name === child.props.name)?.value,
             onChangeEvent: (e: React.ChangeEvent<HTMLInputElement>) => {
-              const name = e.target.name
-              const value = e.target.checked
+              const name = e.target.name;
+              const value = e.target.checked;
               if (e.target.checked) {
-                setValues((prev) => [...prev, { name, value }])
+                setValues((prev) => [...prev, { name, value }]);
               } else {
-                setValues((prev) => prev.filter((v) => v.name !== name))
+                setValues((prev) => prev.filter((v) => v.name !== name));
               }
             },
             // TODO: complete other functions
           },
-        )
+        );
       }
-      return child
-    })
+      return child;
+    });
 
     return (
       <div ref={ref} className="flex flex-col gap-2">
@@ -73,28 +73,28 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
           {customChildren}
         </div>
       </div>
-    )
+    );
   },
-)
+);
 
 CheckboxGroup.defaultProps = {
   orientation: 'vertical',
-}
+};
 
 export interface CheckboxGroupProps {
-  listClassName?: React.HTMLAttributes<HTMLDivElement>['className']
-  children: React.ReactNode
+  children: React.ReactNode;
   /**
    * The default value of the checkbox group.
    * This value overrides the default value of the checkbox.
    */
-  defaultValue?: { name: string; value: boolean }[]
-  description?: React.ReactNode
-  label?: React.ReactNode
-  onChange?: (value: { name: string; value: boolean }[]) => void
+  defaultValue?: { name: string; value: boolean }[];
+  description?: React.ReactNode;
+  label?: React.ReactNode;
+  listClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
+  onChange?: (value: { name: string; value: boolean }[]) => void;
   /**
    * If vertical, gap is 2px. If horizontal, gap is 4.
    */
-  orientation?: 'horizontal' | 'vertical'
-  required?: boolean
+  orientation?: 'horizontal' | 'vertical';
+  required?: boolean;
 }

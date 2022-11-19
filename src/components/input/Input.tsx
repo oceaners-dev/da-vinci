@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useMergedRef } from '../../hooks'
-import { useClickOutside } from '../../hooks/useClickOutside'
-import { SvgClear, SvgEyeOff, SvgEyeOn } from '../../utils/svg'
-import Space from '../space/Space'
-import { renderDefaultIcon } from './render-default-icon'
-import { renderUserInputIcon } from './render-param-icon'
+import React, { useState } from 'react';
+import { useMergedRef } from '../../hooks';
+import { useClickOutside } from '../../hooks/useClickOutside';
+import { SvgClear, SvgEyeOff, SvgEyeOn } from '../../utils/svg';
+import { Space } from '../space/Space';
+import { renderDefaultIcon } from './render-default-icon';
+import { renderUserInputIcon } from './render-param-icon';
 
 // TODO: add leftComponent and rightComponent
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -21,13 +21,13 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       leftComponent,
       wrapperClasses, // ✅
       ...rest
-    } = props
-    const [isActive, setIsActive] = useState<boolean>(false)
-    const [showPassword, setShowPassword] = useState<boolean>(false)
+    } = props;
+    const [isActive, setIsActive] = useState<boolean>(false);
+    const [showPassword, setShowPassword] = useState<boolean>(false);
 
-    const clickTracker = useClickOutside(() => setIsActive(false))
+    const clickTracker = useClickOutside(() => setIsActive(false));
 
-    const refs = useMergedRef(ref, clickTracker)
+    const refs = useMergedRef(ref, clickTracker);
     return (
       <div
         data-name="input-wrapper"
@@ -45,10 +45,10 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           data-name="input-focus-helper"
           className="absolute inset-0 z-0 w-full h-full"
           onClick={() => {
-            clickTracker.current.focus()
+            clickTracker.current.focus();
             if (hideInput) {
               // @ts-ignore
-              rest.onClick()
+              rest.onClick();
             }
           }}
         />
@@ -80,8 +80,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           renderDefaultIcon(
             <button
               onClick={() => {
-                clickTracker.current.value = ''
-                clickTracker.current.focus()
+                clickTracker.current.value = '';
+                clickTracker.current.focus();
               }}
             >
               <SvgClear className="w-5 h-5" />
@@ -94,8 +94,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 <button
                   className="relative z-20"
                   onClick={() => {
-                    setShowPassword(false)
-                    clickTracker.current.type === 'password'
+                    setShowPassword(false);
+                    clickTracker.current.type === 'password';
                   }}
                 >
                   <SvgEyeOn className="w-5 h-5" />
@@ -105,56 +105,56 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 <button
                   className="relative z-20"
                   onClick={() => {
-                    setShowPassword(true)
-                    clickTracker.current.type === 'text'
+                    setShowPassword(true);
+                    clickTracker.current.type === 'text';
                   }}
                 >
                   <SvgEyeOff className="w-5 h-5" />
                 </button>,
               ))}
       </div>
-    )
+    );
   },
-)
+);
 
 Input.defaultProps = {
   sizing: 'default',
-}
+};
 
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'defaultValue'> {
-  defaultValue?: string
   /**
    * @description className for `<input>` directly.
    * @type {React.HTMLAttributes<HTMLInputElement>['className']}
    * @memberof InputProps
    *
    */
-  className?: React.HTMLAttributes<HTMLInputElement>['className']
+  className?: React.HTMLAttributes<HTMLInputElement>['className'];
+  defaultValue?: string;
+  /**
+   * @description If you need to hide the input, you can use this prop. But `think again`. Probably you are doing something `wrong`.
+   */
+  readonly hideInput?: boolean;
+  leftComponent?: React.ReactNode;
+  /**
+   * You can pass a React component or string
+   */
+  leftIcon?: JSX.Element;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  password?: boolean;
+  /**
+   * You can pass a React component or string
+   */
+  rightIcon?: JSX.Element | null;
+  showClear?: boolean;
   /**
    * @description If you want to add classes for size prop, use `className` prop with `data-[size=*]` selector. Eg: `data-[size=large]:px-10`
    * @type {('small' | 'default' | 'large')}
    * @memberof InputProps
    */
-  sizing?: 'small' | 'default' | 'large'
-  /**
-   * You can pass a React component or string
-   */
-  leftIcon?: JSX.Element
-  /**
-   * You can pass a React component or string
-   */
-  rightIcon?: JSX.Element | null
-  showClear?: boolean
-  leftComponent?: React.ReactNode
-  password?: boolean
-  /**
-   * @description If you need to hide the input, you can use this prop. But `think again`. Probably you are doing something `wrong`.
-   */
-  readonly hideInput?: boolean
+  sizing?: 'small' | 'default' | 'large';
   /**
    * @description className for parent div
    */
-  wrapperClasses?: string
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  wrapperClasses?: string;
 }

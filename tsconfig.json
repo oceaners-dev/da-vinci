@@ -1,23 +1,11 @@
 {
   "compilerOptions": {
-    "outDir": "./lib",
-    "target": "ES2015",
-    "lib": ["DOM", "ESNext"],
-    "strict": true,
-    "jsx": "preserve",
-    "declaration": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "jsx": "react-jsx",
+    "module": "ESNext",
     "moduleResolution": "node",
-    "allowUmdGlobalAccess": true,
-    "allowJs": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "incremental": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true
-  },
-  "include": ["src", "index.ts"],
-  "exclude": ["node_modules", "**/__tests__/*"]
+    "strict": true,
+    "lib": ["ESNext", "DOM", "ES2021"]
+  }
 }

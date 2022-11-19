@@ -1,13 +1,13 @@
-import { forwardRef, useCallback, useEffect, useState } from 'react'
-import { useClickOutside } from '../../hooks/useClickOutside'
-import { useEventListener } from '../../hooks/useEventListener'
-import { Card } from '../card-UNFINISHED/Card'
-import { Portal } from '../portal/Portal'
+import React, { forwardRef, useCallback, useEffect, useState } from 'react';
+import { useClickOutside } from '../../hooks/useClickOutside';
+import { useEventListener } from '../../hooks/useEventListener';
+import { Card } from '../card-UNFINISHED/Card';
+import { Portal } from '../portal/Portal';
 
-import { SvgX } from '../../utils/svg'
-import Space from '../space/Space'
-import Button from '../button/Button'
-import uuid from 'react-uuid'
+import { SvgX } from '../../utils/svg';
+import { Space } from '../space/Space';
+import { Button } from '../button/Button';
+import uuid from 'react-uuid';
 
 // Or Drawer
 export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
@@ -27,37 +27,37 @@ export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
       closeOnOverlayClick,
       overlayClasses,
       footerButtons,
-    } = props
-    const [isOpened, setIsOpened] = useState(isOpen)
+    } = props;
+    const [isOpened, setIsOpened] = useState(isOpen);
 
     const closeModal = useCallback(() => {
-      setIsOpened(false)
-      onClose
-    }, [])
+      setIsOpened(false);
+      onClose;
+    }, []);
 
     const clickedOutside = useClickOutside(() => {
       if (closeOnOverlayClick) {
-        closeModal()
+        closeModal();
       }
-    })
+    });
 
     useEventListener('keyup', (e) => {
       if (closeOnEsc) {
         if (e.key === 'Escape') {
-          closeModal()
+          closeModal();
         }
       }
-    })
+    });
 
     useEffect(() => {
-      if (!document) return
-      setIsOpened(isOpen)
+      if (!document) return;
+      setIsOpened(isOpen);
       if (isOpen) {
-        onOpen
+        onOpen;
       }
-    }, [isOpen])
+    }, [isOpen]);
 
-    if (!isOpened) return null
+    if (!isOpened) return null;
 
     return (
       <Portal
@@ -67,7 +67,7 @@ export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
       >
         <Card
           ref={(ref) => {
-            clickedOutside.current = ref
+            clickedOutside.current = ref;
           }}
           className={`absolute  
           ${calculateClasses({ placement, withSideSpace, size })}
@@ -113,7 +113,7 @@ export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
                       >
                         {button.text}
                       </Button>
-                    )
+                    );
                   })}
                 </div>
               </>
@@ -121,9 +121,9 @@ export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
           </div>
         </Card>
       </Portal>
-    )
+    );
   },
-)
+);
 
 SideSheet.defaultProps = {
   withSideSpace: true,
@@ -132,35 +132,46 @@ SideSheet.defaultProps = {
   closeOnOverlayClick: true,
   closeOnEsc: true,
   closeIcon: true,
-}
+};
 
 export interface SideSheetProps {
-  children: React.ReactNode
+  children: React.ReactNode;
   /**
    * `Card` classes. You can change card design by passing tailwind classes here.
    */
-  className?: React.HTMLAttributes<HTMLElement>['className'] // ✅
-  placement?: 'left' | 'right' | 'top' | 'bottom' // ✅
+  className?: React.HTMLAttributes<HTMLElement>['className'];
+  // ✅
+  closeIcon?: boolean | JSX.Element;
+  // ✅
+  closeOnEsc?: boolean;
+  // ✅
+  closeOnOverlayClick?: boolean;
+  // ✅
+  footerButtons?: {
+    buttonClasses?: string;
+    onClick?: () => void;
+    // ✅
+    text?: string;
+  }[];
+  // ✅
+  isOpen?: boolean;
+  // ✅
+  onClose?: () => void;
+  // ✅
+  onOpen?: () => void;
+  // ✅
+  overlayClasses?: string;
+  // ✅
+  placement?: 'left' | 'right' | 'top' | 'bottom';
+  // ✅
   /**
    * You can modify the `size` of the SideSheet with `className` prop. `Don't forget` to
    * add `max-width` for extra large uber super sonic monitors 🖥️ max-width is `600px` by default.
    */
-  size?: 'small' | 'medium' | 'large' // ✅
-  isOpen?: boolean // ✅
-  onClose?: () => void // ✅
-  onOpen?: () => void // ✅
-  closeIcon?: boolean | JSX.Element // ✅
-  closeOnEsc?: boolean // ✅
-  closeOnOverlayClick?: boolean // ✅
-  overlayClasses?: string // ✅
-  withSideSpace?: boolean // ✅
-  title?: string | JSX.Element // ✅
-  footerButtons?: {
-    // ✅
-    text?: string
-    buttonClasses?: string
-    onClick?: () => void
-  }[]
+  size?: 'small' | 'medium' | 'large'; // ✅
+  title?: string | JSX.Element;
+  // ✅
+  withSideSpace?: boolean;
 }
 
 const calculateClasses = ({
@@ -168,9 +179,9 @@ const calculateClasses = ({
   withSideSpace,
   size,
 }: {
-  placement?: 'left' | 'right' | 'top' | 'bottom'
-  withSideSpace?: boolean
-  size?: 'small' | 'medium' | 'large'
+  placement?: 'left' | 'right' | 'top' | 'bottom';
+  size?: 'small' | 'medium' | 'large';
+  withSideSpace?: boolean;
 }) => {
   const positions = {
     left: `${
@@ -193,7 +204,7 @@ const calculateClasses = ({
         ? 'left-hf-side-padding/2 bottom-hf-side-padding'
         : 'left-0 bottom-0'
     }`,
-  }
+  };
   const sizes = {
     topBottom: `${
       (size === 'medium'
@@ -217,10 +228,10 @@ const calculateClasses = ({
         ? 'h-[-webkit-fill-available] my-hf-side-padding'
         : 'h-full')
     }`,
-  }
+  };
   return `${positions[placement!]} ${
     sizes[
       placement === 'left' || placement === 'right' ? 'leftRight' : 'topBottom'
     ]
-  }`
-}
+  }`;
+};

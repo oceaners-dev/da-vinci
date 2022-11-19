@@ -1,7 +1,7 @@
 import React from 'react'
 
 // TODO: https://ui.mantine.dev/category/navbars copy something
-export default function Layout(props: LayoutProps) {
+export function Layout(props: LayoutProps) {
   const { children, className, hasSidebar, fullHeight } = props
   return (
     <div

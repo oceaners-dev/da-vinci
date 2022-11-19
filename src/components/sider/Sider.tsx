@@ -1,7 +1,7 @@
 import React from 'react'
 import { navigationStore } from '../../utils/stores/nav-store'
 
-export default function Sider(props: SiderProps) {
+export function Sider(props: SiderProps) {
   const { children, className } = props
   const isExpandedStore = navigationStore((state) => state.isExpanded)
 

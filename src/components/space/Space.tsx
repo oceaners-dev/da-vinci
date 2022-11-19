@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Space(props: SpaceProps) {
+export function Space(props: SpaceProps) {
   const { spacing, direction } = props
 
   const spaceStyle = spacing

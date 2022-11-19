@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useMergedRef } from '../../hooks'
 import { useClickOutside } from '../../hooks/useClickOutside'
 import { SvgClear, SvgEyeOff, SvgEyeOn } from '../../utils/svg'
 import Space from '../space/Space'
@@ -14,6 +15,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       leftIcon, // ✅
       rightIcon,
       password, // ✅
+      onChange,
       hideInput, // ✅
       showClear, // ✅
       leftComponent,
@@ -25,9 +27,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const clickTracker = useClickOutside(() => setIsActive(false))
 
+    const refs = useMergedRef(ref, clickTracker)
     return (
       <div
-        ref={ref}
         data-name="input-wrapper"
         className={
           '!w-full max-w-[250px] relative flex flex-row items-center justify-between input-classes cursor-text max-h-full' +
@@ -59,8 +61,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <input
             onFocus={() => setIsActive(true)}
             autoFocus={isActive}
-            ref={clickTracker}
+            ref={refs}
             data-size={size}
+            onChange={onChange}
             type={password ? (showPassword ? 'text' : 'password') : 'text'}
             className={
               'data-[size=large]:!py-3 data-[size=small]:!py-0 relative bg-transparent outline-none border-none pointer-events-auto z-10 w-fit ' +
@@ -153,4 +156,5 @@ export interface InputProps
    * @description className for parent div
    */
   wrapperClasses?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }

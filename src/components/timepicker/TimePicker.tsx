@@ -6,13 +6,27 @@ import { Card } from '../card-UNFINISHED'
 import { Input } from '../input'
 import { SvgClock } from './Svg'
 
+/**
+ * @param {string} defaultValue - default value of the input
+ * @param {boolean} withIcon- displays clock at the end of the input
+ * @description - Don't forget to define a width for the input for preventing the input from expanding
+ */
 export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
   (props, ref) => {
-    const { withIcon, defaultValue, ...rest } = props
+    const {
+      withIcon, // ✅
+      defaultValue, // ✅
+      onChange, // ✅
+      ...rest
+    } = props
 
     // states
     const [isDropdownOpened, setIsDropdownOpened] = useState<boolean>(false)
-    console.log({ isDropdownOpened })
+    const [timeValue, setTimeValue] = useState<string>(
+      defaultValue ? defaultValue : '00:00',
+    )
+
+    console.log({ timeValue })
 
     // callbacks
     const openDropdown = useCallback(() => {
@@ -45,6 +59,7 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
       >
         <Input
           onFocus={openDropdown}
+          wrapperClasses="font-mono"
           rightIcon={
             withIcon ? (
               <SvgClock className="-ml-[5px] pointer-events-none text-gray-600" />
@@ -52,6 +67,11 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
           }
           // onClick={openDropdown}
           ref={refs}
+          value={timeValue}
+          onChange={(e) => {
+            setTimeValue(e.target.value)
+            onChange && onChange(e)
+          }}
           className="hide-indicator"
           type={'time'}
           {...rest}
@@ -66,10 +86,20 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
               className="overflow-y-auto !h-40 flex items-center flex-col scrollbar-hide"
             >
               {hours.map((hour) => {
+                const minute = timeValue?.split(':')[1]
+                const currentHour = timeValue?.split(':')[0]
                 return (
                   <button
-                    className="py-1 hover:bg-gray-100 w-full text-sm rounded-r"
+                    className={`py-1 hover:bg-gray-100 w-full text-sm rounded-r ${
+                      currentHour === hour ? 'bg-gray-100' : ''
+                    }`}
                     key={uuid()}
+                    onClick={() => {
+                      setTimeValue(`${hour}:${minute}`)
+                      var event = new Event('input', { bubbles: true })
+                      // TODO: Trigger onChange event at `TimePicker`.
+                      // refs?.current.dispatchEvent(event)
+                    }}
                   >
                     {hour}
                   </button>
@@ -81,10 +111,20 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
               className="overflow-y-auto !h-40 flex items-center flex-col scrollbar-hide"
             >
               {minutes.map((minute) => {
+                const hour = timeValue?.split(':')[0]
+                const currentMinute = timeValue?.split(':')[1]
                 return (
                   <button
-                    className="py-1 hover:bg-gray-100 w-full text-sm rounded-l"
+                    className={`py-1 hover:bg-gray-100 w-full text-sm rounded-l ${
+                      currentMinute === hour ? 'bg-gray-100' : ''
+                    }`}
                     key={uuid()}
+                    onClick={() => {
+                      setTimeValue(`${hour}:${minute}`)
+                      var event = new Event('input', { bubbles: true })
+                      // TODO: Trigger onChange event at `TimePicker`.
+                      // element.dispatchEvent(event)
+                    }}
                   >
                     {minute}
                   </button>
@@ -108,5 +148,9 @@ export interface TimePickerProps
    * @description Adds clock icon to the right side of the input
    */
   withIcon?: boolean
+  /**
+   * @description Eg. `"14:30"`
+   */
   defaultValue?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }

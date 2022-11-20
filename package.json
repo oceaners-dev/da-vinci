@@ -3,7 +3,7 @@
   "description": "Next.js UI kit written with TailwindCSS and TypeScript.",
   "version": "0.0.2",
   "author": "oceaners-dev",
-  "license": "",
+  "license": "ISC",
   "keywords": [],
   "repository": {
     "type": "git",
@@ -157,5 +157,10 @@
     "prettier": "2.7.1",
     "react-uuid": "2.0.0",
     "zustand": "4.1.4"
+  },
+  "main": "dist/index.js",
+  "directories": {
+    "example": "example",
+    "test": "tests"
   }
 }

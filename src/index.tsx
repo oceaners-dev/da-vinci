@@ -1,6 +1,5 @@
 export * from './components/avatar/Avatar';
 export type { AvatarProps } from './components/avatar/Avatar';
-export * from './components/badge/Badge';
 export * from './components/button/Button';
 export * from './components/card-UNFINISHED/Card';
 export * from './components/checkbox/CheckBox';

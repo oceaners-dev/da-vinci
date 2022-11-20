@@ -73,7 +73,10 @@
     },
     "npm": {
       "publish": true,
-      "access": "public"
+      "access": "public",
+      "publishArgs": {
+        "registry": "https://registry.npmjs.org"
+      }
     }
   },
   "engines": {

@@ -10,20 +10,20 @@
     "url": ""
   },
   "scripts": {
-    "dev": "concurrently \"yarn build --watch\" \"yarn storybook\"",
+    "dev": "concurrently \"pnpm build --watch\" \"pnpm storybook\"",
     "build": "tsup",
     "type-check": "tsc --noEmit",
     "lint": "eslint --ignore-path .gitignore \"{src,tests}/**/*.+(ts|js|tsx)\"",
-    "lint:fix": "yarn lint --fix",
+    "lint:fix": "pnpm lint --fix",
     "test": "jest --coverage",
-    "test:ci": "yarn test --ci",
+    "test:ci": "pnpm test --ci",
     "test:watch": "jest --watch",
     "prepare": "husky install",
     "commit": "cz",
     "storybook": "start-storybook -p 6006 --quiet",
     "build-storybook": "build-storybook",
     "deploy-storybook": "storybook-to-ghpages",
-    "release": "yarn release-it"
+    "release": "pnpm release-it"
   },
   "tsup": {
     "entry": [

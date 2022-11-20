@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "description": "",
+  "name": "da-vinci-ui",
+  "description": "Next.js UI kit written with TailwindCSS and TypeScript.",
   "version": "0.0.1",
-  "author": "",
+  "author": "oceaners-dev",
   "license": "",
   "keywords": [],
   "repository": {

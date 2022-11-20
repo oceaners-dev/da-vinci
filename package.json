@@ -74,9 +74,7 @@
     "npm": {
       "publish": true,
       "access": "public",
-      "publishArgs": {
-        "registry": "https://registry.npmjs.org"
-      }
+      "publishPath": "--registry https://registry.npmjs.org"
     }
   },
   "engines": {

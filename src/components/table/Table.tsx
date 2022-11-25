@@ -47,9 +47,6 @@ export const Table = forwardRef<HTMLDivElement, TableProps>((props, ref) => {
 
   return (
     <div className="flex flex-col">
-      <header className="px-5 py-4 border-b border-gray-100">
-        <h2 className="font-semibold text-gray-800">Customers</h2>
-      </header>
       <table className="table-auto w-full">
         <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
           <tr

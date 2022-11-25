@@ -4,7 +4,7 @@ import React__default, { forwardRef, useState, useEffect, useId, useCallback, us
 import uuid from 'react-uuid';
 import { createPortal } from 'react-dom';
 import CustomLink from 'next/link';
-import create from 'zustand';
+import create from 'zustand/vanilla';
 import Cookie from 'cookie-universal';
 import { createRoot } from 'react-dom/client';
 import Image from 'next/image';
@@ -1013,8 +1013,8 @@ function SvgExpandToRight(props) {
 function Nav(props) {
     var children = props.children, className = props.className, items = props.items, expanded = props.expanded, hasExpandButton = props.hasExpandButton, activeItem = props.activeItem, logo = props.logo, vertical = props.vertical;
     // store
-    var isExpandedStore = navigationStore(function (state) { return state.isExpanded; });
-    var setIsExpanded = navigationStore(function (state) { return state.setIsExpanded; });
+    var isExpandedStore = navigationStore.getState().isExpanded;
+    var setIsExpanded = navigationStore.getState().setIsExpanded;
     // states
     var _a = useState(expanded === true), isExpanded = _a[0], setIsExpandedState = _a[1];
     // useeffects
@@ -1711,7 +1711,7 @@ var Select = React__default.forwardRef(function (props, ref) {
 
 function Sider(props) {
     var children = props.children, className = props.className;
-    var isExpandedStore = navigationStore(function (state) { return state.isExpanded; });
+    var isExpandedStore = navigationStore.getState().isExpanded;
     return (React__default.createElement("div", { className: 'block' +
             ' ' +
             'max-w-[240px]' +

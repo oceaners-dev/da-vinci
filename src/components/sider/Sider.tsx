@@ -1,9 +1,9 @@
-import React from 'react'
-import { navigationStore } from '../../utils/stores/nav-store'
+import React from 'react';
+import { navigationStore } from '../../utils/stores/nav-store';
 
 export function Sider(props: SiderProps) {
-  const { children, className } = props
-  const isExpandedStore = navigationStore((state) => state.isExpanded)
+  const { children, className } = props;
+  const isExpandedStore = navigationStore.getState().isExpanded;
 
   return (
     <div
@@ -21,10 +21,10 @@ export function Sider(props: SiderProps) {
     >
       {children}
     </div>
-  )
+  );
 }
 
 export interface SiderProps {
-  children: React.ReactNode
-  className?: React.HTMLAttributes<HTMLElement>['className']
+  children: React.ReactNode;
+  className?: React.HTMLAttributes<HTMLElement>['className'];
 }

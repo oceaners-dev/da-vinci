@@ -1,12 +1,12 @@
-import create from 'zustand'
+import create from 'zustand/vanilla';
 
 const navigationStore = create<{
-  isExpanded: boolean
+  isExpanded: boolean;
   // eslint-disable-next-line func-call-spacing
-  setIsExpanded: (isExpanded: boolean) => void
+  setIsExpanded: (isExpanded: boolean) => void;
 }>((set) => ({
   isExpanded: true,
   setIsExpanded: (isExpanded: boolean) => set({ isExpanded }),
-}))
+}));
 
-export { navigationStore }
+export { navigationStore };

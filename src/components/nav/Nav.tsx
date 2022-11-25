@@ -18,8 +18,8 @@ export function Nav(props: NavProps) {
     vertical,
   } = props;
   // store
-  const isExpandedStore = navigationStore((state) => state.isExpanded);
-  const setIsExpanded = navigationStore((state) => state.setIsExpanded);
+  const isExpandedStore = navigationStore.getState().isExpanded;
+  const setIsExpanded = navigationStore.getState().setIsExpanded;
 
   // states
   const [isExpanded, setIsExpandedState] = useState<boolean>(expanded === true);

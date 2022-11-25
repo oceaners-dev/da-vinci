@@ -12,6 +12,7 @@
   "scripts": {
     "dev": "concurrently \"pnpm build --watch\" \"pnpm storybook\"",
     "build": "NODE_ENV=production rm -rf ./dist && rollup -c && npx tailwindcss -o ./dist/index.css --minify && cp ./dist/index.css ./example/components/da-vinci-ui/index.css",
+    "watch": "NODE_ENV=production rollup -c -w",
     "make:docs": "typedoc",
     "type-check": "tsc --noEmit",
     "lint": "eslint --ignore-path .gitignore \"{src,tests}/**/*.+(ts|js|tsx)\"",
@@ -25,30 +26,6 @@
     "build-storybook": "build-storybook",
     "deploy-storybook": "storybook-to-ghpages",
     "release": "pnpm release-it"
-  },
-  "tsup": {
-    "entry": [
-      "src/index.ts"
-    ],
-    "treeshake": true,
-    "sourcemap": true,
-    "minify": true,
-    "clean": true,
-    "dts": true,
-    "splitting": false,
-    "format": [
-      "cjs",
-      "esm"
-    ],
-    "external": [
-      "react",
-      "react-dom",
-      "cookie-universal",
-      "tailwindcss",
-      "react-uuid",
-      "next",
-      "zustand"
-    ]
   },
   "lint-staged": {
     "./{src,tests}/**/*.{ts,js,jsx,tsx}": [
@@ -136,8 +113,16 @@
     "typescript": "4.8.4"
   },
   "peerDependencies": {
-    "react": ">=17",
-    "react-dom": ">=17"
+    "react": ">=18",
+    "react-dom": ">=18",
+    "next/link": ">=11",
+    "react-uuid": ">=2",
+    "zustand": ">=4",
+    "zustand/vanilla": ">=4",
+    "tailwindcss": "3.2.4",
+    "cookie-universal": ">=2",
+    "react-dom/client": ">=18",
+    "next/image": ">=11"
   },
   "resolutions": {
     "glob-parent": ">=5.1.2",

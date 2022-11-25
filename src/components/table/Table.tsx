@@ -62,8 +62,14 @@ export const Table = forwardRef<HTMLDivElement, TableProps>((props, ref) => {
                     key={col.title}
                     className={`p-2 whitespace-nowrap ${col.width || ''}`}
                   >
-                    <div className="flex flex-row items-center gap-px">
-                      <div className="font-semibold text-left">{col.title}</div>
+                    <div className="flex flex-row items-center gap-[2px]">
+                      {!col.render && col.title && (
+                        <div className="font-semibold text-left">
+                          {col.title}
+                        </div>
+                      )}
+                      {col.render && col.render()}
+
                       {col.sorter && (
                         <button
                           className="leading-none"
@@ -218,6 +224,7 @@ Table.defaultProps = {
 type Row = { [key: string]: any };
 
 export interface Column extends Pick<Row, any> {
+  render?: (col?: Column) => React.ReactNode;
   // ✅
   search?: boolean;
   // ✅

@@ -51,12 +51,7 @@ const students = Array.from({ length: 100 }, () => ({
 }));
 
 Default.args = {
-  rows: Array.from({ length: 100 }, () => ({
-    name: faker.name.fullName(),
-    age: faker.random.numeric(2),
-    grade: faker.random.numeric(1),
-    email: faker.internet.email(),
-  })),
+  rows: students,
   cols: Object.keys(students[0]).map((x) => {
     if (x === 'age') {
       return {

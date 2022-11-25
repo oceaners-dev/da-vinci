@@ -6,7 +6,7 @@ export function Layout(props: LayoutProps) {
   return (
     <div
       className={`
-        w-[-webkit-fill-available] max-w-[100vw] flex box-border ${
+        w-[-webkit-fill-available]  max-w-[100vw] flex box-border ${
           className || ''
         } ${hasSidebar ? 'flex-row' : 'flex-col'} ${
         fullHeight ? 'h-full' : ''

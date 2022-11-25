@@ -11,10 +11,9 @@
   },
   "scripts": {
     "dev": "concurrently \"pnpm build --watch\" \"pnpm storybook\"",
-    "build": "NODE_ENV=production rm -rf ./dist && rollup -c && npx tailwindcss -o ./dist/index.css --minify && cp ./dist/index.css ./example/components/da-vinci-ui/index.css",
-    "watch": "concurrently \"pnpm watch:rollup\" \"pnpm watch:tailwind\"",
+    "build": "NODE_ENV=production rm -rf ./dist && rollup -c  && cp ./dist/styles.css ./example/components/da-vinci-ui/styles.css",
+    "watch": "concurrently \"pnpm watch:rollup\"",
     "watch:rollup": "NODE_ENV=production rollup -c -w",
-    "watch:tailwind": "NODE_ENV=production npx tailwindcss -o ./example/components/da-vinci-ui/index.css --minify --watch",
     "make:docs": "typedoc",
     "type-check": "tsc --noEmit",
     "lint": "eslint --ignore-path .gitignore \"{src,tests}/**/*.+(ts|js|tsx)\"",

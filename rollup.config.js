@@ -12,14 +12,18 @@ export default [
         typescript: require('typescript'),
       }),
       postcss({
-        // config: {
-        //   path: './postcss.config.js',
-        // },
-        extensions: ['.css'],
-        // minimize: true,
+        config: {
+          path: './postcss.config.js',
+        },
 
+        extensions: ['.css'],
+        minimize: true,
+        // generateScopedName: (name, filename, css) => {
+        //   console.log({ name, filename, css });
+        //   return name;
+        // },
         // modules: true,
-        // extract: true,
+        extract: 'styles.css',
       }),
     ],
     output: [

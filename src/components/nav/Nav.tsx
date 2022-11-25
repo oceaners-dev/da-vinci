@@ -13,6 +13,7 @@ export function Nav(props: NavProps) {
     items,
     expanded,
     hasExpandButton,
+    expandedLogo,
     activeItem,
     logo,
     vertical,
@@ -39,7 +40,15 @@ export function Nav(props: NavProps) {
               }
             >
               {logo ? (
-                logo
+                isExpanded ? (
+                  expandedLogo ? (
+                    expandedLogo
+                  ) : (
+                    logo
+                  )
+                ) : (
+                  logo
+                )
               ) : (
                 <div className="flex items-center gap-2 font-medium font-serif w-auto justify-center">
                   <DaVinciLogo className="w-6 h-6" />
@@ -102,6 +111,10 @@ export interface NavPropHorizontal {
   children?: React.ReactNode;
   className?: React.HTMLAttributes<HTMLElement>['className'];
   expanded?: boolean;
+  /**
+   * @description: There's two logo type: `expandedLogo` and `logo`. When `Nav` expanded, `expandedLogo` will be displayed. If your logo is small, you can use same logo.
+   */
+  expandedLogo?: React.ReactNode;
   hasExpandButton?: boolean;
   items?: NavItem[];
   logo?: React.ReactNode;
@@ -114,6 +127,10 @@ export interface NavVerticalProps {
   children?: React.ReactNode;
   className?: React.HTMLAttributes<HTMLElement>['className'];
   expanded?: boolean;
+  /**
+   * @description: There's two logo type: `expandedLogo` and `logo`. When `Nav` expanded, `expandedLogo` will be displayed. If your logo is small, you can use same logo.
+   */
+  expandedLogo?: React.ReactNode;
   hasExpandButton?: boolean;
   items?: NavItem[];
   logo?: React.ReactNode;

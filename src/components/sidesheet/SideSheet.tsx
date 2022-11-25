@@ -8,6 +8,7 @@ import { SvgX } from '../../utils/svg';
 import { Space } from '../space/Space';
 import { Button } from '../button/Button';
 import uuid from 'react-uuid';
+import { useMergedRef } from '../../hooks';
 
 // Or Drawer
 export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
@@ -41,6 +42,8 @@ export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
       }
     });
 
+    const refs = useMergedRef(clickedOutside, ref);
+
     useEventListener('keyup', (e) => {
       if (closeOnEsc) {
         if (e.key === 'Escape') {
@@ -66,9 +69,7 @@ export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
         }`}
       >
         <Card
-          ref={(ref) => {
-            clickedOutside.current = ref;
-          }}
+          ref={refs}
           className={`absolute  
           ${calculateClasses({ placement, withSideSpace, size })}
           ${className || ''}`}

@@ -4,7 +4,6 @@ import React__default, { forwardRef, useState, useEffect, useId, useCallback, us
 import uuid from 'react-uuid';
 import { createPortal } from 'react-dom';
 import CustomLink from 'next/link';
-import create from 'zustand/vanilla';
 import Cookie from 'cookie-universal';
 import { createRoot } from 'react-dom/client';
 import Image from 'next/image';
@@ -917,10 +916,26 @@ var colorKey = function (value) {
     return value;
 };
 
+var NavContext = createContext({
+    isExpanded: true,
+    setIsExpanded: function () {
+        console.log();
+    },
+});
+var NavProvider = function (_a) {
+    var children = _a.children;
+    var _b = useState(), isExpanded = _b[0], setIsExpanded = _b[1];
+    return (React__default.createElement(NavContext.Provider, { value: {
+            isExpanded: isExpanded,
+            setIsExpanded: setIsExpanded,
+        } }, children));
+};
+
 // TODO: https://ui.mantine.dev/category/navbars copy something
 function Layout(props) {
     var children = props.children, className = props.className, hasSidebar = props.hasSidebar, fullHeight = props.fullHeight;
-    return (React__default.createElement("div", { className: "\n        w-[-webkit-fill-available]  max-w-[100vw] flex box-border ".concat(className || '', " ").concat(hasSidebar ? 'flex-row' : 'flex-col', " ").concat(fullHeight ? 'h-full' : '') }, children));
+    return (React__default.createElement("div", { className: "\n        w-[-webkit-fill-available]  max-w-[100vw] flex box-border ".concat(className || '', " ").concat(hasSidebar ? 'flex-row' : 'flex-col', " ").concat(fullHeight ? 'h-full' : '') },
+        React__default.createElement(NavProvider, null, children)));
 }
 Layout.defaultProps = {
     hasSidebar: false,
@@ -996,11 +1011,6 @@ Modal.defaultProps = {
     closeIcon: true,
 };
 
-var navigationStore = create(function (set) { return ({
-    isExpanded: true,
-    setIsExpanded: function (isExpanded) { return set({ isExpanded: isExpanded }); },
-}); });
-
 function SvgExpandToRight(props) {
     return (React__default.createElement("svg", __assign({ width: "1em", height: "1em", viewBox: "0 0 48 48" }, props),
         React__default.createElement("mask", { id: "svgIDa" },
@@ -1013,47 +1023,36 @@ function SvgExpandToRight(props) {
 
 function Nav(props) {
     var children = props.children, className = props.className, items = props.items, expanded = props.expanded, hasExpandButton = props.hasExpandButton, activeItem = props.activeItem, logo = props.logo, vertical = props.vertical;
-    // store
-    var isExpandedStore = navigationStore.getState().isExpanded;
-    var setIsExpanded = navigationStore.getState().setIsExpanded;
-    // states
-    var _a = useState(expanded === true), isExpanded = _a[0], setIsExpandedState = _a[1];
-    // useeffects
+    var context = React__default.useContext(NavContext);
     useEffect(function () {
-        if (expanded !== undefined) {
-            setIsExpandedState(expanded);
-        }
+        if (!window)
+            return;
+        context.setIsExpanded(expanded);
     }, [expanded]);
-    useEffect(function () {
-        if (isExpandedStore !== undefined) {
-            setIsExpandedState(isExpandedStore);
-        }
-    }, [isExpandedStore]);
-    // callbacks
-    var handleExpanded = useCallback(function () {
-        setIsExpanded(!isExpandedStore);
-    }, [isExpandedStore]);
-    return (React__default.createElement("nav", { className: '' },
-        React__default.createElement(Card, { className: 'w-[-webkit-fill-available flex gap-[6px] text-gray-600 ' +
-                ' ' +
-                (vertical ? 'flex-col' : 'flex-row') +
-                ' ' +
-                (className || ' ') },
-            logo ? (logo) : (React__default.createElement("div", { className: "flex items-center gap-2 font-medium font-serif w-auto justify-center" },
-                React__default.createElement(DaVinciLogo, { className: "w-6 h-6" }),
-                isExpanded && 'DaVinci UI')),
-            vertical ? (React__default.createElement("div", { className: "w-full h-8" })) : (React__default.createElement("div", { className: "h-full w-8" })),
-            children
-                ? children
-                : items === null || items === void 0 ? void 0 : items.map(function (item) {
-                    return (React__default.createElement(Link, { key: uuid(), isActive: item.link === (activeItem === null || activeItem === void 0 ? void 0 : activeItem.link), href: item.link, className: "!justify-start", icon: item.icon }, vertical ? (isExpanded ? item.label : '') : item.label));
-                }),
-            hasExpandButton && vertical && (React__default.createElement(React__default.Fragment, null,
-                React__default.createElement("div", { className: "w-full h-8" }),
-                React__default.createElement("button", { className: "w-fit ml-3", onClick: function () {
-                        handleExpanded();
-                    } },
-                    React__default.createElement(SvgExpandToRight, { className: isExpanded ? 'rotate-180' : '' })))))));
+    return (React__default.createElement(NavContext.Consumer, null, function (_a) {
+        var isExpanded = _a.isExpanded, setIsExpanded = _a.setIsExpanded;
+        return (React__default.createElement("nav", { className: '' },
+            React__default.createElement(Card, { className: 'w-[-webkit-fill-available] flex gap-[6px] text-gray-600 ' +
+                    ' ' +
+                    (vertical ? 'flex-col' : 'flex-row') +
+                    ' ' +
+                    (className || ' ') },
+                logo ? (logo) : (React__default.createElement("div", { className: "flex items-center gap-2 font-medium font-serif w-auto justify-center" },
+                    React__default.createElement(DaVinciLogo, { className: "w-6 h-6" }),
+                    isExpanded && 'DaVinci UI')),
+                vertical ? (React__default.createElement("div", { className: "w-full h-8" })) : (React__default.createElement("div", { className: "h-full w-8" })),
+                children
+                    ? children
+                    : items === null || items === void 0 ? void 0 : items.map(function (item) {
+                        return (React__default.createElement(Link, { key: uuid(), isActive: item.link === (activeItem === null || activeItem === void 0 ? void 0 : activeItem.link), href: item.link, className: "!justify-start", icon: item.icon }, vertical ? (isExpanded ? item.label : '') : item.label));
+                    }),
+                hasExpandButton && vertical && (React__default.createElement(React__default.Fragment, null,
+                    React__default.createElement("div", { className: "w-full h-8" }),
+                    React__default.createElement("button", { className: "w-fit ml-3", onClick: function () {
+                            setIsExpanded(!isExpanded);
+                        } },
+                        React__default.createElement(SvgExpandToRight, { className: isExpanded ? 'rotate-180' : '' })))))));
+    }));
 }
 Nav.defaultProps = {
     expanded: true,
@@ -1132,8 +1131,8 @@ function NotificationProvider(_a) {
     var wrapperRef = useRef(null);
     var _d = useState(false), isWrapperCreated = _d[0], setIsWrapperCreated = _d[1];
     if (JSON.stringify(defaultSettings) !==
-        JSON.stringify(cookies.get('ulak-notification-settings'))) {
-        cookies.set('ulak-notification-settings', JSON.stringify(defaultSettings), {
+        JSON.stringify(cookies.get('da-vinci-notification-settings'))) {
+        cookies.set('da-vinci-notification-settings', JSON.stringify(defaultSettings), {
             path: '/',
             sameSite: true,
             encode: function (value) { return value; },
@@ -1142,7 +1141,7 @@ function NotificationProvider(_a) {
     useIsomorphicEffect(function () {
         document.addEventListener('cookiechange', function () {
             // TODO: trigger notif.
-            var currentCookie = cookies.get('ulak-notification', {
+            var currentCookie = cookies.get('da-vinci-notification', {
                 parseJSON: true,
             });
             setLatestCookie(currentCookie);
@@ -1207,10 +1206,10 @@ function NotificationProvider(_a) {
     return (React__default.createElement("div", { ref: wrapperRef, id: "da-vinci-notification" }));
 }
 var toastNotification = function (settings) {
-    var defaultSettings = cookies.get('ulak-notification-settings');
+    var defaultSettings = cookies.get('da-vinci-notification-settings');
     console.log({ settings: settings });
     var toastType = settings.type;
-    cookies.set('ulak-notification', JSON.stringify({
+    cookies.set('da-vinci-notification', JSON.stringify({
         type: settings.type || 'success',
         content: settings.content || 'All is done.',
         /* I couldn't pass 0 directly */
@@ -1712,14 +1711,15 @@ var Select = React__default.forwardRef(function (props, ref) {
 
 function Sider(props) {
     var children = props.children, className = props.className;
-    var isExpandedStore = navigationStore.getState().isExpanded;
+    var context = React__default.useContext(NavContext);
+    var isExpanded = context === null || context === void 0 ? void 0 : context.isExpanded;
     return (React__default.createElement("div", { className: 'block' +
             ' ' +
             'max-w-[240px]' +
             ' ' +
             (className || ' ') +
             ' ' +
-            (isExpandedStore ? 'w-full' : 'w-20') +
+            (isExpanded ? 'w-full' : 'w-20') +
             ' ' +
             ' transform transition-width ' }, children));
 }
@@ -1736,6 +1736,7 @@ var SideSheet = forwardRef(function (props, ref) {
             closeModal();
         }
     });
+    var refs = useMergedRef(clickedOutside, ref);
     useEventListener('keyup', function (e) {
         if (closeOnEsc) {
             if (e.key === 'Escape') {
@@ -1751,9 +1752,7 @@ var SideSheet = forwardRef(function (props, ref) {
     if (!isOpened)
         return null;
     return (React__default.createElement(Portal, { className: "fixed inset-0 bg-black/50 w-screen h-screen ".concat(overlayClasses || '') },
-        React__default.createElement(Card, { ref: function (ref) {
-                clickedOutside.current = ref;
-            }, className: "absolute  \n          ".concat(calculateClasses({ placement: placement, withSideSpace: withSideSpace, size: size }), "\n          ").concat(className || '') },
+        React__default.createElement(Card, { ref: refs, className: "absolute  \n          ".concat(calculateClasses({ placement: placement, withSideSpace: withSideSpace, size: size }), "\n          ").concat(className || '') },
             React__default.createElement("div", { className: "w-full h-full relative flex flex-col" },
                 typeof closeIcon === 'boolean' && closeIcon && (React__default.createElement("button", { className: "top-0 right-0 absolute", onClick: function () { return closeModal(); } },
                     React__default.createElement(SvgX, { className: "w-5 h-5" }))),

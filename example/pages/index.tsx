@@ -8,6 +8,7 @@ export default function Home() {
     <Layout hasSidebar className={'relative m-6 w-full gap-5 '}>
       <Sider className="sticky top-5 h-fit">
         <Nav
+          expanded={true}
           vertical={true}
           items={navLinks}
           activeItem={activeItem}

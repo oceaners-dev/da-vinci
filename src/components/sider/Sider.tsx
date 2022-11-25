@@ -1,9 +1,10 @@
 import React from 'react';
-import { navigationStore } from '../../utils/stores/nav-store';
+import { NavContext } from '../nav/Context';
 
 export function Sider(props: SiderProps) {
   const { children, className } = props;
-  const isExpandedStore = navigationStore.getState().isExpanded;
+  const context = React.useContext(NavContext);
+  const isExpanded = context?.isExpanded;
 
   return (
     <div
@@ -14,7 +15,7 @@ export function Sider(props: SiderProps) {
         ' ' +
         (className || ' ') +
         ' ' +
-        (isExpandedStore ? 'w-full' : 'w-20') +
+        (isExpanded ? 'w-full' : 'w-20') +
         ' ' +
         ' transform transition-width '
       }

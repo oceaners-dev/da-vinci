@@ -39,19 +39,23 @@ export function NotificationProvider({
 
   if (
     JSON.stringify(defaultSettings) !==
-    JSON.stringify(cookies.get('ulak-notification-settings'))
+    JSON.stringify(cookies.get('da-vinci-notification-settings'))
   ) {
-    cookies.set('ulak-notification-settings', JSON.stringify(defaultSettings), {
-      path: '/',
-      sameSite: true,
-      encode: (value) => value,
-    });
+    cookies.set(
+      'da-vinci-notification-settings',
+      JSON.stringify(defaultSettings),
+      {
+        path: '/',
+        sameSite: true,
+        encode: (value) => value,
+      },
+    );
   }
 
   useIsomorphicEffect(() => {
     document.addEventListener('cookiechange', () => {
       // TODO: trigger notif.
-      const currentCookie = cookies.get('ulak-notification', {
+      const currentCookie = cookies.get('da-vinci-notification', {
         parseJSON: true,
       });
       setLatestCookie(currentCookie);
@@ -126,13 +130,13 @@ export function NotificationProvider({
 
 const toastNotification = (settings: ToastProps) => {
   const defaultSettings = cookies.get(
-    'ulak-notification-settings',
+    'da-vinci-notification-settings',
   ) as NotificationTypeDefaults;
   console.log({ settings });
   const toastType = settings.type!;
 
   cookies.set(
-    'ulak-notification',
+    'da-vinci-notification',
     JSON.stringify({
       type: settings.type || 'success',
       content: settings.content || 'All is done.',

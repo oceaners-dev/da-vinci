@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavProvider } from '../nav/Context';
 
 // TODO: https://ui.mantine.dev/category/navbars copy something
 export function Layout(props: LayoutProps) {
@@ -12,7 +13,7 @@ export function Layout(props: LayoutProps) {
         fullHeight ? 'h-full' : ''
       }`}
     >
-      {children}
+      <NavProvider>{children}</NavProvider>
     </div>
   );
 }

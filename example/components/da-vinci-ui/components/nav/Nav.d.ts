@@ -11,21 +11,21 @@ export interface NavPropHorizontal {
     activeItem?: NavItem;
     children?: React.ReactNode;
     className?: React.HTMLAttributes<HTMLElement>['className'];
-    expanded?: false;
-    hasExpandButton?: false;
+    expanded?: boolean;
+    hasExpandButton?: boolean;
     items?: NavItem[];
     logo?: React.ReactNode;
-    vertical?: false;
+    vertical?: boolean;
 }
 export interface NavVerticalProps {
     activeItem?: NavItem;
     children?: React.ReactNode;
     className?: React.HTMLAttributes<HTMLElement>['className'];
-    expanded?: true;
-    hasExpandButton?: true;
+    expanded?: boolean;
+    hasExpandButton?: boolean;
     items?: NavItem[];
     logo?: React.ReactNode;
-    vertical?: true;
+    vertical?: boolean;
 }
 export declare type NavProps = NavPropHorizontal | NavVerticalProps;
 export interface NavItem {

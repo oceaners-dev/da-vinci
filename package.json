@@ -154,7 +154,8 @@
   },
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist/styles.css"
   ],
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",

@@ -12,11 +12,20 @@
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
+    "autoprefixer": "^10.4.12",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.10",
     "next": "13.0.4",
+    "postcss": "^8.4.18",
+    "prettier": "^2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.13",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "4.9.3"
+    "tailwindcss": "^3.2.1",
+    "typescript": "4.9.3",
+    "da-vinci-ui": "file:../dist"
   }
 }

@@ -1,0 +1,10 @@
+import React from 'react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { RadioComponent } from '../components/radio/Radio';
+declare const _default: ComponentMeta<RadioComponent>;
+export default _default;
+export declare const DefaultChecked: ComponentStory<RadioComponent>;
+export declare const SelectableLabel: ComponentStory<RadioComponent>;
+export declare const Group: ComponentStory<React.ForwardRefExoticComponent<import("../components/radio/group").RadioGroupProps & React.RefAttributes<HTMLDivElement>>>;
+export declare const GroupOrientation: ComponentStory<React.ForwardRefExoticComponent<import("../components/radio/group").RadioGroupProps & React.RefAttributes<HTMLDivElement>>>;
+export declare const GroupDefaultSelected: ComponentStory<React.ForwardRefExoticComponent<import("../components/radio/group").RadioGroupProps & React.RefAttributes<HTMLDivElement>>>;

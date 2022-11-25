@@ -11,7 +11,8 @@
   },
   "scripts": {
     "dev": "concurrently \"pnpm build --watch\" \"pnpm storybook\"",
-    "build": "tsup",
+    "build": "NODE_ENV=production rm -rf ./dist && rollup -c && npx tailwindcss -o ./dist/index.css --minify",
+    "make:docs": "typedoc",
     "type-check": "tsc --noEmit",
     "lint": "eslint --ignore-path .gitignore \"{src,tests}/**/*.+(ts|js|tsx)\"",
     "lint:fix": "pnpm lint --fix",
@@ -27,7 +28,7 @@
   },
   "tsup": {
     "entry": [
-      "src/index.tsx"
+      "src/index.ts"
     ],
     "treeshake": true,
     "sourcemap": true,
@@ -41,19 +42,14 @@
     ],
     "external": [
       "react",
-      "tailwindcss"
+      "react-dom",
+      "cookie-universal",
+      "tailwindcss",
+      "react-uuid",
+      "next",
+      "zustand"
     ]
   },
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
-    }
-  },
-  "files": [
-    "dist"
-  ],
   "lint-staged": {
     "./{src,tests}/**/*.{ts,js,jsx,tsx}": [
       "eslint --ignore-path .gitignore --fix"
@@ -153,12 +149,31 @@
   },
   "dependencies": {
     "@faker-js/faker": "7.6.0",
+    "@rollup/plugin-commonjs": "23.0.2",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "15.0.1",
+    "@rollup/plugin-typescript": "9.0.2",
     "@storybook/addon-postcss": "2.0.0",
     "prettier": "2.7.1",
     "react-uuid": "2.0.0",
+    "rollup": "^2.79.0",
+    "rollup-plugin-dts": "5.0.0",
+    "rollup-plugin-peer-deps-external": "2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-sourcemaps": "^0.6.3",
+    "rollup-plugin-tailwind": "1.0.0",
+    "rollup-plugin-terser": "7.0.2",
+    "rollup-plugin-typescript2": "^0.33.0",
+    "tslib": "2.4.1",
+    "typedoc": "0.23.21",
     "zustand": "4.1.4"
   },
-  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
   "directories": {
     "example": "example",
     "test": "tests"

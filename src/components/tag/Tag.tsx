@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import React, { forwardRef, useRef } from 'react';
+import Image from 'next/image';
 import { useMergedRef } from '../../hooks/use-merged-ref';
 import { SvgX } from '../../utils/svg';
 

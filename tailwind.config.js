@@ -119,4 +119,66 @@ module.exports = {
       },
     },
   },
+  plugins: [
+    plugin(function ({ addComponents, theme }) {
+      addComponents({
+        '.input-classes': {
+          padding: [
+            theme('spacing.hf-side-padding-extra-small'),
+            theme('spacing.hf-side-padding-small'),
+          ],
+          borderRadius: theme('borderRadius.hf-extra-small'),
+          boxSizing: 'border-box',
+          width: 'fit-content',
+          lineHeight: '1',
+          boxShadow: theme('boxShadow.xl'),
+          backgroundColor: theme('colors.gray.200'),
+          '&:hover': {
+            backgroundColor: theme('colors.gray.300'),
+            '&:focus': {
+              backgroundColor: theme('colors.gray.200'),
+            },
+          },
+          '&:active': {
+            outlineColor: theme('colors.gray.300'),
+          },
+          '&:focus': {
+            outlineColor: theme('colors.gray.300'),
+          },
+          outlineStyle: 'solid',
+          outlineWidth: '1px',
+          outlineColor: theme('colors.hf-light'),
+        },
+        '.card-classes': {
+          padding: theme('spacing.hf-side-padding'),
+          height: 'fit-content',
+          borderRadius: theme('borderRadius.hf-small'),
+          boxSizing: 'border-box',
+          width: '--webkit-fill-available',
+          backgroundColor: 'white',
+          boxShadow: theme('boxShadow.xl'),
+          outlineStyle: 'solid',
+          outlineWidth: '1px',
+          outlineColor: theme('colors.hf-light'),
+        },
+        '.button-classes': {
+          borderRadius: theme('borderRadius.hf-extra-small'),
+          outlineStyle: 'solid',
+          outlineWidth: '1px',
+          outlineColor: theme('colors.hf-light'),
+          backgroundColor: theme('colors.gray.100'),
+        },
+        '.border-classes': {
+          outlineStyle: 'solid',
+          outlineWidth: '1px',
+          outlineColor: theme('colors.hf-light'),
+        },
+        '.scrollbar-hide': {
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        },
+      });
+    }),
+  ],
 };

@@ -249,7 +249,7 @@ const CalButton: React.FC<{
 const Calendar: React.FC<CalendarProps> = React.forwardRef<
   HTMLDivElement,
   CalendarProps
->((props) => {
+>((props, ref) => {
   const { view } = useContext(DatepickerCtx);
 
   let selectionComponent = null;
@@ -266,11 +266,11 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<
     default:
   }
 
-  const isMobile =
-    navigator.userAgent.indexOf('iPhone') > 0 ||
-    navigator.userAgent.indexOf('iPad') > 0 ||
-    navigator.userAgent.indexOf('iPod') > 0 ||
-    navigator.userAgent.indexOf('Android') > 0;
+  const isMobile = true;
+  // navigator.userAgent.indexOf('iPhone') > 0 ||
+  // navigator.userAgent.indexOf('iPad') > 0 ||
+  // navigator.userAgent.indexOf('iPod') > 0 ||
+  // navigator.userAgent.indexOf('Android') > 0;
 
   return isMobile && props.portalAtMobile ? (
     <Portal className="fixed inset-0 w-full h-full flex items-center justify-center bg-black/40 backdrop-blur-sm z-40">
@@ -290,7 +290,7 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<
     </Card>
   );
 });
-export const RawDatePicker: React.FC<{
+const RawDatePicker: React.FC<{
   date: Date;
   onChange: (date: Date) => void;
   /**

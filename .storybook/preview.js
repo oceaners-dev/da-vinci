@@ -1,5 +1,4 @@
 import '../public/styles/globals.css';
-import '../public/styles/da-vinci-ui.css';
 import * as NextImage from 'next/image';
 import Inspect from 'inspx';
 import { addParameters } from '@storybook/client-api';

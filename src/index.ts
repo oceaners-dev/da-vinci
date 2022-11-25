@@ -1,3 +1,5 @@
+import '../public/styles/globals.css';
+
 export * from './components/avatar/Avatar';
 export type { AvatarProps } from './components/avatar/Avatar';
 export * from './components/button/Button';

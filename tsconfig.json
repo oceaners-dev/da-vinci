@@ -1,14 +1,19 @@
 {
   "compilerOptions": {
-    "target": "ES2015",
-    "lib": ["DOM", "ESNext"],
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "jsx": "react",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "noEmitOnError": true,
-    "allowJs": true
-  }
+    "declaration": true,
+    "declarationDir": "./dist",
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "noUnusedParameters": false,
+    "lib": ["ESNext", "DOM", "ES2021"],
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "outDir": "./dist",
+    "target": "es5",
+    "jsx": "react"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

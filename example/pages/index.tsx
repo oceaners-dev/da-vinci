@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router'
 import React from 'react'
-import { Layout, Nav, Sider, Space } from '../components/da-vinci-ui'
+import { Layout, Link, Nav, Sider, Space } from '../components/da-vinci-ui'
 export default function Home() {
   const router = useRouter()
   const activeItem = navLinks.find((item) => item.link === router.asPath)
   return (
-    <Layout hasSidebar className={' relative m-6 w-full gap-5 '}>
+    <Layout hasSidebar className={'relative m-6 w-full gap-5 '}>
       <Sider className="sticky top-5 h-fit">
         <Nav
           vertical={true}
@@ -16,7 +16,11 @@ export default function Home() {
         />
       </Sider>
       <Layout>
-        <div>yooo</div>
+        <div>
+          <Link href="/" icon={<div>yo</div>}>
+            eeey
+          </Link>
+        </div>
         {/* {orderTrackMemo} */}
         <Space />
         {/* <SiteFooter /> */}
@@ -28,7 +32,7 @@ const navLinks = [
   {
     label: 'Harita',
     link: '/',
-    // icon: <Map24Filled className="text-ui-white" />,
+    icon: <div>eyyy</div>,
   },
   {
     label: 'Siparişler',

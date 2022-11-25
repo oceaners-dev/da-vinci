@@ -46,7 +46,7 @@ export function Nav(props: NavProps) {
     <nav className={''}>
       <Card
         className={
-          'w-[-webkit-fill-available] flex gap-[6px] text-gray-600 ' +
+          'w-[-webkit-fill-available flex gap-[6px] text-gray-600 ' +
           ' ' +
           (vertical ? 'flex-col' : 'flex-row') +
           ' ' +

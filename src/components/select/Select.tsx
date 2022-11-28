@@ -24,28 +24,28 @@ import { Tag } from '../tag/Tag';
 export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
   (props, ref) => {
     const {
-      data, // ✅
-      clearable, // ✅
-      creatable, // 🚨
-      defaultValue, // ✅
-      label, // ✅
-      description, // ✅
-      disabled, // ✅
-      filter, // 🚨
-      leftIcon, // 🚨
-      initiallyOpened, // ✅
-      itemComponent, // 🚨
-      maxDropdownHeight, // ✅
-      onChange, // ✅
-      onSearchChange, // 🚨
-      searchValue, // 🚨
-      searchable, // 🚨
-      placeholder, // ✅
-      size, // 🚨
-      withAsterisk, // 🚨
-      dropdownZIndex, // ✅
-      multiple, // ✅
+      clearable,
       closeOnEsc, // ✅
+      creatable,
+      data, // ✅
+      defaultValue, // ✅ calculations done
+      description, // ✅ calculations done
+      disabled,
+      dropdownZIndex,
+      filter,
+      initiallyOpened,
+      itemComponent,
+      label, // ✅ calculations done
+      leftIcon,
+      maxDropdownHeight,
+      multiple,
+      onChange,
+      onSearchChange,
+      placeholder,
+      searchValue,
+      searchable,
+      size,
+      withAsterisk,
       ...rest
     } = props;
 
@@ -54,9 +54,10 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
       !disabled ? (initiallyOpened === true ? true : false) : false,
     );
     const [inputHeight, setInputHeight] = useState<number>();
-    const [selected, setSelected] = useState<SingleSelect[] | string[]>(
+    const [selected, setSelected] = useState<SingleSelect[]>(
       defaultValue ? defaultValue : [],
     );
+
     const [inputWidth, setInputWidth] = useState<number>();
     const [tagGroupWidth, setTagGroupWidth] = useState<number>();
     const [maxTagCount, setMaxTagCount] = useState<number>(999);
@@ -89,40 +90,19 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
 
     const selectHandler = useCallback(
       (value: SingleSelect | string) => {
-        const selectedType = typeof value === 'string' ? 'string' : 'object';
         if (multiple) {
-          if (selectedType === 'string') {
-            if ((selected as string[]).includes(value as string)) {
-              setSelected(
-                (selected as string[]).filter((item: string) => item !== value),
-              );
-              if (onChange) {
-                onChange(
-                  (selected as string[]).filter(
-                    (item: string) => item !== value,
-                  ),
-                );
-              }
-            } else {
-              setSelected((selected as string[]).concat([value as string]));
-              if (onChange) {
-                onChange((selected as string[]).concat([value as string]));
-              }
-            }
+          if ((selected as SingleSelect[]).includes(value as SingleSelect)) {
+            setSelected(
+              (selected as SingleSelect[]).filter(
+                (item: SingleSelect) =>
+                  item.label !== (value as SingleSelect).label,
+              ),
+            );
           } else {
-            if ((selected as SingleSelect[]).includes(value as SingleSelect)) {
-              setSelected(
-                (selected as SingleSelect[]).filter(
-                  (item: SingleSelect) =>
-                    item.label !== (value as SingleSelect).label,
-                ),
-              );
-            } else {
-              setSelected([
-                ...(selected as SingleSelect[]),
-                value as SingleSelect,
-              ]);
-            }
+            setSelected([
+              ...(selected as SingleSelect[]),
+              value as SingleSelect,
+            ]);
           }
         } else {
           // @ts-ignore
@@ -169,7 +149,13 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
     }, [tagGroupWidth, inputWidth, selected]);
 
     return (
-      <div className="w-full max-w-[250px] h-fit relative flex flex-col">
+      <div
+        className={
+          `w-full max-w-[250px] h-fit relative flex flex-col ` +
+          (disabled ? 'pointer-events-none' : '')
+        }
+      >
+        {/* TODO: Text here */}
         {label && typeof label === 'string' ? (
           <div className="font-medium mb-[2px] leading-none text-sm">
             {label}
@@ -177,6 +163,7 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
         ) : (
           label
         )}
+        {/* TODO: Text here */}
         {description && typeof description === 'string' ? (
           <div className="text-xs leading-none font-light mb-[6px]">
             {description}
@@ -283,15 +270,10 @@ export const Select = React.forwardRef<HTMLInputElement, SelectProps>(
                     typeof item === 'string' ? item : item.label;
                   const optionValue =
                     typeof item === 'string' ? item : item.value;
-                  let defaultSelected;
-                  if (typeof item === 'string') {
-                    defaultSelected = (selected as string[]).includes(item);
-                  } else {
-                    defaultSelected =
-                      (selected as SingleSelect[]).filter(
-                        (a) => a.value === optionValue,
-                      ).length !== 0;
-                  }
+                  const defaultSelected =
+                    selected.filter((a) => a.value === optionValue).length !==
+                    0;
+
                   return (
                     <CheckBox
                       key={optionValue}
@@ -330,13 +312,13 @@ export interface SelectProps {
    * @param data - data to be displayed in the dropdown
    * @description If you want to pass array of objects, `label` and `value` params are required.
    */
-  data: SingleSelect[] | string[];
+  data: SingleSelect[];
   /**
    * @param defaultValue - default value of the select
    * @description If you want to pass array of objects, `label` and `value` params are required. Otherwise, you can pass array strings.
    * @description If you want to `pass multiple values`, you need to pass `multiple` prop as `true`. Otherwise, it will be overridden on select.
    */
-  defaultValue?: string[] | SingleSelect[];
+  defaultValue?: SingleSelect[];
   description?: ReactNode;
   disabled?: boolean;
   /**

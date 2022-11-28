@@ -123,10 +123,8 @@ module.exports = {
     plugin(function ({ addComponents, theme }) {
       addComponents({
         '.input-classes': {
-          padding: [
-            theme('spacing.hf-side-padding-extra-small'),
-            theme('spacing.hf-side-padding-small'),
-          ],
+          paddingRight: theme('spacing.hf-side-padding-small'),
+          paddingLeft: theme('spacing.hf-side-padding-small'),
           borderRadius: theme('borderRadius.hf-extra-small'),
           boxSizing: 'border-box',
           width: 'fit-content',

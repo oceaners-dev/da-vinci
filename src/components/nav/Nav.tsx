@@ -19,21 +19,16 @@ export function Nav(props: NavProps) {
     vertical,
   } = props;
 
-  const [isSSR, setIsSSR] = useState(false);
+  const context = React.useContext(NavContext);
 
+  const [mounted, setMounted] = useState(false);
   useEffect(() => {
-    if (!window) return;
-    setIsSSR(true);
+    setMounted(true);
+    context.setIsExpanded(expanded as boolean);
   }, []);
 
-  const context = React.useContext(NavContext);
-  useEffect(() => {
-    if (!window) return;
-    context.setIsExpanded(expanded as boolean);
-  }, [expanded]);
-
   return (
-    isSSR && (
+    mounted && (
       <NavContext.Consumer>
         {({ isExpanded, setIsExpanded }) => {
           return (

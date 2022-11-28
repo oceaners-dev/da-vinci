@@ -4,7 +4,6 @@ import { useClickOutside } from '../../hooks';
 import { useMergedRef } from '../../hooks/use-merged-ref';
 import { Card } from '../card-UNFINISHED/Card';
 import { Input } from '../input/Input';
-import { SvgClock } from './Svg';
 
 /**
  * @param {string} defaultValue - default value of the input
@@ -60,11 +59,11 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
         <Input
           onFocus={openDropdown}
           wrapperClasses="font-mono"
-          rightIcon={
-            withIcon ? (
-              <SvgClock className="-ml-[5px] pointer-events-none text-gray-600" />
-            ) : null
-          }
+          // rightIcon={
+          //   withIcon ? (
+          //     <SvgClock className="-ml-[5px] pointer-events-none text-gray-600" />
+          //   ) : null
+          // }
           // onClick={openDropdown}
           ref={refs}
           value={timeValue}

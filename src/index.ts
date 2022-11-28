@@ -20,7 +20,6 @@ export * from './components/overflow-list-UNFINISHED/OverflowList';
 export * from './components/pagination/Pagination';
 export * from './components/portal/Portal';
 export * from './components/radio/Radio';
-export * from './components/select/Select';
 export * from './components/sider/Sider';
 export type { SiderProps } from './components/sider/Sider';
 export * from './components/sidesheet/SideSheet';

@@ -56,7 +56,7 @@ export const Table = forwardRef<HTMLDivElement, TableProps>((props, ref) => {
               cols.map((col) => {
                 return (
                   <th
-                    key={col.title}
+                    key={uuid()}
                     className={`p-2 whitespace-nowrap ${col.width || ''}`}
                   >
                     <div className="flex flex-row items-center gap-[2px]">
@@ -156,7 +156,7 @@ export const Table = forwardRef<HTMLDivElement, TableProps>((props, ref) => {
             showingRows.map((row) => {
               return (
                 <tr
-                  key={row.name}
+                  key={uuid()}
                   className={
                     `${cols[0].width ? 'flex flex-row items-center' : ''}` +
                     ' ' +
@@ -175,7 +175,7 @@ export const Table = forwardRef<HTMLDivElement, TableProps>((props, ref) => {
                     cols.map((col) => {
                       return (
                         <td
-                          key={col.title}
+                          key={uuid()}
                           className={
                             'p-2 ' +
                             ' ' +

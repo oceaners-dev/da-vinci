@@ -15,7 +15,6 @@ import {
   formattedDate,
   monthNames,
 } from './functions';
-import { SvgCalendarOutline } from './svg';
 
 export interface DatePickerProps {
   date: Date;
@@ -324,14 +323,14 @@ const RawDatePicker: React.FC<{
               : ''
           }
           readOnly
-          rightIcon={
-            <button
-              className="flex items-center justify-center text-sm  text-gray-700 px-2 focus:outline-none"
-              onClick={() => ctxValue.toggleCalendar()}
-            >
-              <SvgCalendarOutline className="w-5 h-5" color="#666" />
-            </button>
-          }
+          // rightIcon={
+          //   <button
+          //     className="flex items-center justify-center text-sm  text-gray-700 px-2 focus:outline-none"
+          //     onClick={() => ctxValue.toggleCalendar()}
+          //   >
+          //     <SvgCalendarOutline className="w-5 h-5" color="#666" />
+          //   </button>
+          // }
         />
         {showDatePicker && (
           <Calendar

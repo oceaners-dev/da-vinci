@@ -75,8 +75,7 @@ export function Nav(props: NavProps) {
                         className="!justify-start"
                         icon={item.icon}
                       >
-                        aa
-                        {/* {vertical ? (isExpanded ? item.label : '') : item.label} */}
+                        {vertical ? (isExpanded ? item.label : '') : item.label}
                       </Link>
                     );
                   })

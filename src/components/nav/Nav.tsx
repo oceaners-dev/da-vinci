@@ -27,83 +27,83 @@ export function Nav(props: NavProps) {
     context.setIsExpanded(expanded as boolean);
   }, []);
 
-  return (
-    mounted && (
-      <NavContext.Consumer>
-        {({ isExpanded, setIsExpanded }) => {
-          return (
-            <nav className={''}>
-              <Card
-                className={
-                  'w-[-webkit-fill-available] flex gap-[6px] text-gray-600 ' +
-                  ' ' +
-                  (vertical ? 'flex-col' : 'flex-row') +
-                  ' ' +
-                  (className || ' ')
-                }
-              >
-                {logo ? (
-                  isExpanded ? (
-                    expandedLogo ? (
-                      expandedLogo
-                    ) : (
-                      logo
-                    )
+  return mounted ? (
+    <NavContext.Consumer>
+      {({ isExpanded, setIsExpanded }) => {
+        return (
+          <nav className={''}>
+            <Card
+              className={
+                'w-[-webkit-fill-available] flex gap-[6px] text-gray-600 ' +
+                ' ' +
+                (vertical ? 'flex-col' : 'flex-row') +
+                ' ' +
+                (className || ' ')
+              }
+            >
+              {logo ? (
+                isExpanded ? (
+                  expandedLogo ? (
+                    expandedLogo
                   ) : (
                     logo
                   )
                 ) : (
-                  <div className="flex items-center gap-2 font-medium font-serif w-auto justify-center">
-                    <DaVinciLogo className="w-6 h-6" />
-                    {isExpanded && 'DaVinci UI'}
-                  </div>
-                )}
-                {vertical ? (
-                  <div className="w-full h-8" />
-                ) : (
-                  <div className="h-full w-8" />
-                )}
-                {children ? (
-                  children
-                ) : items ? (
-                  items.map((item) => {
-                    return (
-                      <Link
-                        key={uuid()}
-                        isActive={item.link === activeItem?.link}
-                        href={item.link}
-                        className="!justify-start"
-                        icon={item.icon}
-                      >
-                        {vertical ? (isExpanded ? item.label : '') : item.label}
-                      </Link>
-                    );
-                  })
-                ) : (
-                  <div />
-                )}
-
-                {hasExpandButton && vertical && (
-                  <>
-                    <div className="w-full h-8" />
-                    <button
-                      className="w-fit ml-3"
-                      onClick={() => {
-                        setIsExpanded(!isExpanded);
-                      }}
+                  logo
+                )
+              ) : (
+                <div className="flex items-center gap-2 font-medium font-serif w-auto justify-center">
+                  <DaVinciLogo className="w-6 h-6" />
+                  {isExpanded && 'DaVinci UI'}
+                </div>
+              )}
+              {vertical ? (
+                <div className="w-full h-8" />
+              ) : (
+                <div className="h-full w-8" />
+              )}
+              {children ? (
+                children
+              ) : items ? (
+                items.map((item) => {
+                  return (
+                    <Link
+                      key={uuid()}
+                      isActive={item.link === activeItem?.link}
+                      href={item.link}
+                      className="!justify-start"
+                      icon={item.icon}
                     >
-                      <SvgExpandToRight
-                        className={isExpanded ? 'rotate-180' : ''}
-                      />
-                    </button>
-                  </>
-                )}
-              </Card>
-            </nav>
-          );
-        }}
-      </NavContext.Consumer>
-    )
+                      {vertical ? (isExpanded ? item.label : '') : item.label}
+                    </Link>
+                  );
+                })
+              ) : (
+                <div />
+              )}
+
+              {hasExpandButton && vertical && (
+                <>
+                  <div className="w-full h-8" />
+                  <button
+                    className="w-fit ml-3"
+                    onClick={() => {
+                      setIsExpanded(!isExpanded);
+                    }}
+                  >
+                    <SvgExpandToRight
+                      className={isExpanded ? 'rotate-180' : ''}
+                    />
+                  </button>
+                </>
+              )}
+            </Card>
+          </nav>
+        );
+      }}
+    </NavContext.Consumer>
+  ) : (
+    <></>
   );
 }
 

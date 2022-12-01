@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import { useMergedRef } from '../../hooks';
 import { SvgClear, SvgEyeOff, SvgEyeOn } from '../../utils/svg';
-import { useId } from 'react-aria';
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (props, ref) => {
@@ -11,6 +10,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       bordered, // ✅
       className, // ✅
       disabled, // 🚨 TODO: finish this
+      disableMoving, // ✅
       sizing: size, // 🚨
       labelLeft, // ✅
       labelRight, // ✅
@@ -25,6 +25,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       labelPlaceholder, // ✅
       rounded, // ✅
       wrapperClasses, // ✅
+      wrapperOnClick,
       ...rest
     } = props;
 
@@ -63,29 +64,22 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       </div>
     );
 
-    const renderComponentBox = (component: React.ReactNode) => (
-      <div className={'h-full w-fit flex items-center justify-center'}>
-        {component}
-      </div>
-    );
-
-    // append a parent div to this function if there is a label
+    const renderComponentBox = (component: React.ReactNode) => component;
 
     return (
       <div
-        className={
-          'w-fit h-auto inline-flex box-border relative gap-[6px] flex-col'
-        }
+        className={'h-auto inline-flex box-border relative gap-[6px] flex-col'}
       >
         {label && (
-          <label htmlFor={inputId} className="text-sm">
+          <label htmlFor={inputId} className="text-sm ml-3">
             {label}
           </label>
         )}
         <div
           className={
-            'relative h-[40px] w-fit flex flex-row items-center box-border ' +
-            inputClasses +
+            'relative min-h-[40px] w-fit flex flex-row items-center box-border ' +
+            ' transform transition duration-200 text-sm ' +
+            (disableMoving ? '' : ' focus-within:-translate-y-[2px] ') +
             (rounded ? ' rounded-full' : ' rounded-lg') +
             (wrapperClasses ? ' ' + wrapperClasses : '') +
             (bordered
@@ -108,9 +102,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {/* click helper */}
           <div
             data-name="click-helper"
-            className="h-full w-full absolute top-0 left-0 box-border z-10"
+            className="h-full w-full absolute top-0 left-0 box-border"
             onClick={() => {
               inputRef.current?.focus();
+              if (wrapperOnClick) {
+                wrapperOnClick();
+              }
             }}
           />
 
@@ -129,7 +126,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
               setIsInputActive(false);
             }}
             className={
-              'relative z-20 w-fit h-full outline-none outline-0 outline-offset-0 bg-transparent pl-4' +
+              'relative z-20 w-fit h-full outline-none outline-0 outline-offset-0 bg-transparent pl-4 box-border ' +
               (className ? ' ' + className : '') +
               (disabled ? ' pointer-events-none' : '')
             }
@@ -196,74 +193,77 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 Input.defaultProps = {
   showClear: true,
   rounded: false,
+  bordered: false,
 };
 
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'defaultValue'> {
   /**
+   * Is input has borders
    * @default false
-   * @description Is input has borders
    */
   bordered?: boolean;
   /**
-   * @description className for `<input>` directly.
+   *  className for `<input>` directly.
    * @type {React.HTMLAttributes<HTMLInputElement>['className']}
    * @memberof InputProps
    *
    */
   className?: React.HTMLAttributes<HTMLInputElement>['className'];
   defaultValue?: string;
+  /**
+   * Disables translate-y animation for input
+   */
+  disableMoving?: boolean;
   disabled?: boolean;
   /**
-   * @description Display a informative small text above input
+   * Display a informative small text above input
    */
   helperText?: string;
   /**
-   * @description If you need to hide the input, you can use this prop. But `think again`. Probably you are doing something `wrong`.
+   * If you need to hide the input, you can use this prop. But `think again`. Probably you are doing something `wrong`.
    */
   readonly hideInput?: boolean;
   /**
-   * @description Text label for input
+   * Text label for input
    */
   label?: string;
   labelLeft?: string;
   /**
-   * @description The placeholder becomes a label
+   * The placeholder becomes a label
    */
   labelPlaceholder?: string;
   labelRight?: string;
   /**
-   * @description If you want to add a component to the left of the input, you can use this prop. We don't set `overflow hidden` for Input's wrapper. So if your component overflows, you can use `wrapperClasses` prop to set `overflow-hidden` for wrapper.
+   * If you want to add a component to the left of the input, you can use this prop. We don't set `overflow hidden` for Input's wrapper. So if your component overflows, you can use `wrapperClasses` prop to set `overflow-hidden` for wrapper.
    */
   leftComponent?: React.ReactNode;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   password?: boolean;
   /**
-   * @description If you want to add a component to the left of the input, you can use this prop. We don't set `overflow hidden` for Input's wrapper. So if your component overflows, you can use `wrapperClasses` prop to set `overflow-hidden` for wrapper.
+   * If you want to add a component to the left of the input, you can use this prop. We don't set `overflow hidden` for Input's wrapper. So if your component overflows, you can use `wrapperClasses` prop to set `overflow-hidden` for wrapper.
    */
   rightComponent?: React.ReactNode;
   /**
    * @default false
-   * @description Fully rounded input borders
+   * Fully rounded input borders
    */
   rounded?: boolean;
   /**
+   * Show clear button at right side of input when it's not empty.
    * @default true
-   * @description Show clear button at right side of input when it's not empty.
    */
   showClear?: boolean;
   /**
-   * @description If you want to add classes for size prop, use `className` prop with `data-[size=*]` selector. Eg: `data-[size=large]:px-10`
+   * If you want to add classes for size prop, use `className` prop with `data-[size=*]` selector. Eg: `data-[size=large]:px-10`
    * @type {('small' | 'default' | 'large')}
    * @memberof InputProps
    */
   sizing?: 'small' | 'default' | 'large';
   /**
-   * @description className for parent div
+   * className for parent div
    */
   wrapperClasses?: string;
+  wrapperOnClick?: () => void;
 }
-
-const inputClasses =
-  'focus-within:-translate-y-[2px] transform transition duration-200 text-sm';

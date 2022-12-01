@@ -24,6 +24,7 @@ export * from './components/sider/Sider';
 export type { SiderProps } from './components/sider/Sider';
 export * from './components/sidesheet/SideSheet';
 export * from './components/space/Space';
+export * from './components/select/Select';
 export * from './components/spin/Spin';
 export * from './components/table/Table';
 export * from './components/tag/Tag';

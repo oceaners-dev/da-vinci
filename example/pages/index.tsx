@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React from 'react'
-import { Layout, Link, Nav, Sider, Space } from '../components/da-vinci-ui'
+import { Button, Layout, Nav, Sider, Space } from '../components/da-vinci-ui'
 export default function Home() {
   const router = useRouter()
   const activeItem = navLinks.find((item) => item.link === router.asPath)
@@ -18,9 +18,13 @@ export default function Home() {
       </Sider>
       <Layout>
         <div>
-          <Link href="/" icon={<div>yo</div>}>
-            eeey
-          </Link>
+          <Button
+            onClick={() => {
+              console.log('test')
+            }}
+          >
+            Test
+          </Button>
         </div>
         {/* {orderTrackMemo} */}
         <Space />

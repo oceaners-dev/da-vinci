@@ -34,7 +34,7 @@ Default.args = {
 };
 
 Bordered.args = {
-  value: 'Fersat Ozcelik',
+  value: 'Fersat Test',
   withBorder: true,
 };
 Bordered.parameters = {

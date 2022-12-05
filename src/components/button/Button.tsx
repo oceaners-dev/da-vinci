@@ -1,47 +1,115 @@
-import React from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import chroma from 'chroma-js';
+import { useMergedRef } from '../../hooks';
 
-export function Button(props: ButtonProps) {
-  // TODO: create themes > solid, dark, borderless,
-  // TODO: create types > primary, secondary, tertiary, ghost, link
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (props, ref) => {
+    const {
+      btnType,
+      children,
+      icon,
+      isActive,
+      isHoverStylesDisabled,
+      className,
+      ...rest
+    } = props;
+    const btnRef = useRef<HTMLButtonElement>(null);
 
-  const { children, icon, isActive, className, ...rest } = props;
+    // hooks
+    const refs = useMergedRef(ref, btnRef);
 
-  /* It's a string of classes that are applied to the button when it's hovered over or if it's active etc.. */
+    // states
+    const [backgroundColorClass, setBackgroundColorClass] =
+      useState<string>(``);
+    const [textColor, setTextColor] = useState<string>(`text-white`);
 
-  return (
-    <button
-      className={`py-2 flex flex-row items-center justify-center text-gray-600 hover:bg-gray-200 hover:button-classes ${
-        !icon ? 'px-2' : ''
-      } ${isActive && 'button-classes'} ${className}`}
-      {...rest}
-    >
-      {icon && (
-        <div className="px-2 [&>svg]:w-6 [&>svg]:h-6 leading-none">{icon}</div>
-      )}
-      <div className="w-full max-w-[150px] font-medium">{children}</div>
-    </button>
-  );
-}
+    useEffect(() => {
+      if (!btnType) return;
+      switch (btnType) {
+        case 'primary':
+          setBackgroundColorClass(`bg-blue-500`);
+          break;
+        case 'secondary':
+          setBackgroundColorClass(`bg-gray-100`);
+          break;
+        case 'positive':
+          setBackgroundColorClass(`bg-lime-500`);
+          break;
+        case 'negative':
+          setBackgroundColorClass(`bg-red-500`);
+          break;
+        default:
+          break;
+      }
+    }, [btnType]);
+
+    useEffect(() => {
+      if (!btnRef.current || !backgroundColorClass || !window) return;
+      const element = btnRef.current;
+      const bgColor = window
+        .getComputedStyle(element, null)
+        .getPropertyValue('background-color');
+
+      const isLight = (chroma(bgColor).luminance() as number) > 0.5;
+
+      if (isLight) {
+        setTextColor(`text-gray-800`);
+      } else {
+        setTextColor(`text-gray-50`);
+      }
+
+      if (!isHoverStylesDisabled) {
+        const bgPalette = chroma.scale([bgColor, 'black']).colors(9);
+
+        element.addEventListener('mouseenter', () => {
+          element.style.backgroundColor = bgPalette[1];
+        });
+
+        element.addEventListener('mouseleave', () => {
+          element.style.backgroundColor = bgColor;
+        });
+      }
+    }, [btnRef, backgroundColorClass, isHoverStylesDisabled]);
+
+    return (
+      <button
+        ref={refs}
+        className={
+          `py-2 flex flex-row items-center rounded justify-center text-xs ` +
+          `${className} ${backgroundColorClass} ${textColor}`
+        }
+        {...rest}
+      >
+        {icon && (
+          <div className="pl-2 [&>svg]:w-5 [&>svg]:h-5 leading-none">
+            {icon}
+          </div>
+        )}
+        <div className="w-full max-w-[150px] font-medium px-2">{children}</div>
+      </button>
+    );
+  },
+);
 
 Button.defaultProps = {
-  isActive: true,
+  btnType: 'primary',
 };
 
 export interface HtmlButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * Colour type of button.
+   * @defaults 'primary'
+   */
+  btnType?: 'primary' | 'secondary' | 'negative' | 'positive';
   children: React.ReactNode /* as prop can be Link or Button */;
   className?:
     | React.HTMLAttributes<HTMLButtonElement>['className']
     | React.HTMLAttributes<HTMLAnchorElement>['className'];
   icon?: React.ReactNode;
   isActive?: boolean;
+  isHoverStylesDisabled?: boolean;
   onClick: React.HTMLAttributes<HTMLButtonElement>['onClick'];
 }
 
-/**
- * @param children - The content of the button.
- * @param icon - The icon of the button.
- * @param className - The className of the button.
- * @param isActive - You can set "active" the button. It will seems like it's hovered. Useful in navigation.
- */
 export type ButtonProps = HtmlButtonProps;

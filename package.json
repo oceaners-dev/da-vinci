@@ -11,7 +11,7 @@
   },
   "scripts": {
     "dev": "concurrently \"pnpm build --watch\" \"pnpm storybook\"",
-    "build": "NODE_ENV=production rm -rf ./dist && rollup -c  && cp ./dist/styles.css ./example/components/da-vinci-ui/styles.css",
+    "build": "NODE_ENV=production rm -rf ./dist && rollup -c && cp ./dist/styles.css ./example/components/components/styles.css",
     "watch": "concurrently \"pnpm watch:rollup\"",
     "watch:rollup": "NODE_ENV=production rollup -c -w",
     "make:docs": "typedoc",
@@ -117,9 +117,9 @@
     "cookie-universal": ">=2",
     "next": ">=13",
     "react": ">=18",
+    "react-aria": ">=3",
     "react-dom": ">=18",
     "react-uuid": ">=2",
-    "react-aria": ">=3",
     "tailwindcss": "3.2.4",
     "zustand": ">=4"
   },
@@ -141,8 +141,10 @@
     "@storybook/addon-postcss": "2.0.0",
     "@testing-library/dom": "8.19.0",
     "@testing-library/react": "13.4.0",
+    "@types/chroma-js": "2.1.4",
     "@types/enzyme": "3.10.12",
     "@wojtekmaj/enzyme-adapter-react-17": "0.8.0",
+    "chroma-js": "2.4.2",
     "enzyme": "3.11.0",
     "jest-environment-jsdom": "29.3.1",
     "prettier": "2.7.1",
@@ -157,6 +159,7 @@
     "rollup-plugin-tailwind": "1.0.0",
     "rollup-plugin-terser": "7.0.2",
     "rollup-plugin-typescript2": "^0.33.0",
+    "tailwindcss-classnames": "3.0.7",
     "tslib": "2.4.1",
     "typedoc": "0.23.21",
     "zustand": "4.1.4"

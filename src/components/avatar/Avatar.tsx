@@ -1,133 +1,161 @@
-import React from 'react';
+import chroma from 'chroma-js';
+import React, { useEffect, useState } from 'react';
+import colors from 'tailwindcss/colors';
 
-// TODO: #134 UI Avatar component in used next image
+// TODO: #134 Use Avatar with next/image or similar (Link)
+// TODO: Color calculations need contrast check.
 
 export function Avatar(props: AvatarProps) {
   const {
-    children,
-    className,
-    size,
-    shape,
-    srcImg,
-    color,
-    name,
-    textColor,
-    randomColor,
-    style,
+    alt, // ✅
+    bgClassName, // ✅
+    className, // 🚨
+    size, // ✅ / 🚨
+    radius, // ✅
+    imgSrc, // ✅
+    value, // ✅
+    randomColor, // 🚨
+    withBorder, // ✅
   } = props;
-  const avatarSize = AvatarSize(size as string);
+
+  // type checkings
+  if (value && imgSrc) {
+    throw new Error(
+      'You are using name and imgSrc props together. You can use only one of them.',
+    );
+  }
+
+  // states
+  const [bgHexColor, setBgHexColor] = useState<string>();
+  const [colorPalette, setColorPalette] = useState<string[]>();
+
+  // effects
+  useEffect(() => {
+    // get hex color
+    if (!bgClassName) return;
+    if (bgClassName.startsWith('#')) {
+      setBgHexColor(bgClassName.replace('#', ''));
+    }
+    if (bgClassName.includes('-')) {
+      const colorFamily = bgClassName.split('-')[0];
+      const colorNumber = bgClassName.split('-')[1];
+
+      // @ts-ignore
+      const hex = colors[colorFamily][colorNumber];
+      if (hex && hex.startsWith('#')) {
+        setBgHexColor(hex.replace('#', ''));
+      } else {
+        console.warn(
+          'Color not found. Please check your color name. (Example: green-500',
+        );
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    // create color palette to get right color for text. run only if it's text
+    if (!bgHexColor) return;
+    const isLight = (chroma('#' + bgHexColor).luminance() as number) > 0.5;
+    const palette = isLight
+      ? chroma.scale(['#' + bgHexColor, 'black']).colors(12)
+      : chroma.scale(['#' + bgHexColor, 'white']).colors(12);
+
+    setColorPalette(palette);
+  }, [bgHexColor]);
+
+  // classNames
+  const borderRadius = `rounded-${radius}`;
+  const avatarSize = `h-${size} w-${size}`;
+  const hasBorder = withBorder ? `outline` : '';
 
   return (
-    <div
-      className={`text-semibold box-content flex cursor-pointer items-center justify-center 
-      ${className || ' '}${avatarSize + ' '}${
-        shape === 'square' ? 'border-classes ' : 'rounded-full '
-      }${textColor + ' '}${
-        randomColor ? avatarColor[colorKey(randomColor)] : color
-      }`}
-      style={style}
-    >
-      {children}
-      {!srcImg && !children && name && NameFirstandLastName(name)}
-      {!children && srcImg && (
-        <img
-          src={srcImg}
-          alt="avatar"
-          className={`h-full w-full object-cover object-center 
-      ${shape === 'square' ? 'border-classes ' : 'rounded-full '}`}
-        />
-      )}
-    </div>
+    <>
+      {/* {colorPalette && (
+        <div className="flex flex-row items-center gap-1">
+          {colorPalette.map((color) => {
+            return (
+              <div
+                key={uuid()}
+                className="w-5 h-5 flex relative"
+                style={{
+                  backgroundColor: color,
+                }}
+              />
+            );
+          })}
+        </div>
+      )} */}
+      <div
+        className={
+          `text-semibold flex cursor-pointer items-center justify-center overflow-hidden box-border` +
+          (avatarSize ? ' ' + avatarSize : '') +
+          (borderRadius ? ' ' + borderRadius : '') +
+          (hasBorder ? ' ' + hasBorder : '') +
+          (className ? ' ' + className : '')
+        }
+        style={{
+          backgroundColor: bgHexColor && '#' + bgHexColor, // @ts-ignore
+          color: colorPalette && colorPalette[6],
+        }}
+      >
+        {value && getLetters(value)}
+        {imgSrc && (
+          <img
+            src={imgSrc}
+            alt={alt || 'avatar'}
+            className={`h-full w-full object-cover object-center ${borderRadius}`}
+          />
+        )}
+      </div>
+    </>
   );
 }
-/**
- * @typedef {Object} AvatarProps
- * @property {string} [size] - Size of the avatar (default: md)
- * @property {string} [shape] - Shape of the avatar (default: circle)
- * @property {string} [color] - Color of the avatar (default: bg-gray-700)
- * @property {string} [textColor] - Text color of the avatar (default: text-white)
- * @property {string} [srcImg] - Image source of the avatar
- * @property {string} [name] - Name of the avatar
- */
 
 Avatar.defaultProps = {
-  size: 'default',
-  shape: 'square',
-  color: 'bg-gray-700',
-  textColor: 'text-white',
+  bgClassName: 'green-500',
+  radius: 'lg',
+  size: '8',
 };
 export interface AvatarProps {
-  children?: React.ReactNode;
+  /**
+   * Enter value for `alt` attribute of `img` tag. Use it if you are using `imgSrc` prop.
+   */
+  alt?: string;
+  /**
+   * Enter value for `bg-*` class.
+   * Also, you can pass `HEX` value like `#000000` or `#fff`
+   * Example: `red-500
+   * @default "green-500"
+   */
+  bgClassName?: string;
   className?: React.HTMLAttributes<HTMLElement>['className'];
-  color?: string;
-  name?: string;
-  randomColor?: number;
-  shape: 'square' | 'circle';
-  size?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'default';
-  srcImg?: string;
-  style?: React.CSSProperties;
-  textColor?: string;
+  imgSrc?: string;
+  /**
+   * Enter value for `rounded-*` class. Default value is `md`. You can't add px values.
+   * @default "md"
+   */
+  radius?: string;
+  randomColor?: boolean;
+  /**
+   * Enter value for `h-*` and `w-*` class.
+   * @default "8"
+   */
+  size?: string;
+  /**
+   * We will parse the string and get the `first letter of first two words`. If it's only one word, `we will get the first two letters`.
+   */
+  value?: string;
+  /**
+   * Adds a border to the avatar with the same color as the text's color
+   */
+  withBorder?: boolean;
 }
 
-// Todo: Color palete uygun hale getirilecek
-
-const avatarColor = [
-  'bg-pink-500',
-  'bg-gray-800',
-  'bg-yellow-800',
-  'bg-purple-500',
-  'bg-green-800',
-  'bg-indigo-500',
-  'bg-pink-800',
-  'bg-indigo-800',
-  'bg-purple-800',
-  'bg-red-500',
-  'bg-green-500',
-  'bg-gray-500',
-  'bg-blue-800',
-  'bg-yellow-500',
-  'bg-blue-500',
-  'bg-red-800',
-  'bg-red-300',
-  'bg-yellow-300',
-  'bg-green-300',
-  'bg-blue-300',
-  'bg-indigo-300',
-  'bg-purple-300',
-  'bg-pink-300',
-  'bg-gray-300',
-];
-function AvatarSize(value: string) {
-  switch (value) {
-    case '2xl':
-      return ' w-24 h-24 text-[32px]';
-    case 'xl':
-      return ' w-20 h-20 text-[32px]';
-    case 'lg':
-      return ' w-16 h-16 text-[24px]';
-    case 'md':
-      return ' w-12 h-12 text-[20px]';
-    case 'sm':
-      return ' w-8 h-8 text-[16px]';
-    case 'xs':
-      return ' w-6 h-6 text-[14px]';
-    case 'xxs':
-      return ' w-5 h-5 text-[12px]';
-    default:
-      return ' w-10 h-10 text-[18px]';
+function getLetters(name: string) {
+  const words = name.split(' ');
+  if (words.length === 1) {
+    return name.slice(0, 2).toUpperCase();
+  } else {
+    return words[0][0] + words[1][0];
   }
-}
-function NameFirstandLastName(name: string) {
-  return name
-    .split(' ')
-    .map((n) => n[0])
-    .join('')
-    .toUpperCase();
-}
-function colorKey(value: number) {
-  const arrayLength = avatarColor.length - 1;
-  if (value > arrayLength) {
-    return value % arrayLength;
-  }
-  return value;
 }

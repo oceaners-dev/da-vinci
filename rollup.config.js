@@ -30,7 +30,7 @@ export default [
       { file: pkg.main, format: 'cjs' },
       { file: pkg.module, format: 'esm' },
       {
-        file: 'example/components/da-vinci-ui/index.js',
+        file: 'example/components/components/index.js',
         format: 'es',
         banner: '/* eslint-disable */',
       },

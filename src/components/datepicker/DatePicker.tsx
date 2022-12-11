@@ -17,13 +17,17 @@ import {
 } from './functions';
 
 export interface DatePickerProps {
+  /**
+   * For `close` calendar dropdown after select a date
+   */
+  closeOnSelect?: boolean;
   date: Date;
   onChange: (date: Date) => void;
   /**
    * @default true
    * @description If true, the datepicker `will be rendered in a full screen portal` for better experience.
    */
-  portalAtMobile?: boolean;
+  openInModal?: boolean;
 }
 
 interface CalendarProps {
@@ -31,16 +35,27 @@ interface CalendarProps {
    * For closing the calendar when clicking outside at mobile
    */
   calendarRef?: React.Ref<HTMLDivElement>;
+  closeFunction: () => void;
+  /**
+   * For `close` calendar dropdown after select a date
+   */
+  closeOnSelect?: boolean;
   /**
    * @default true
    * @description If true, the datepicker `will be rendered in a full screen portal` for better experience.
    */
-  portalAtMobile?: boolean;
+  openInModal?: boolean;
   ref: React.Ref<HTMLDivElement>;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-const DateSelection: React.FC<{}> = () => {
+const DateSelection = ({
+  closeFunction,
+  closeOnSelect,
+}: {
+  closeFunction: () => void;
+  closeOnSelect?: boolean;
+}) => {
   const {
     nextMonth,
     prevMonth,
@@ -64,7 +79,13 @@ const DateSelection: React.FC<{}> = () => {
         className={`hover:bg-gray-200 rounded p-1 text-sm ${
           isSelectedDate(i) ? 'bg-gray-300 ' : ''
         }`}
-        onClick={() => selectDate(i)}
+        onClick={() => {
+          selectDate(i);
+
+          if (closeOnSelect) {
+            closeFunction();
+          }
+        }}
         style={{ textAlign: 'center' }}
       >
         {i}
@@ -250,11 +271,17 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<
   CalendarProps
 >((props, ref) => {
   const { view } = useContext(DatepickerCtx);
+  const clickRef = useClickOutside(() => props.closeFunction());
 
   let selectionComponent = null;
   switch (view) {
     case 'date':
-      selectionComponent = <DateSelection />;
+      selectionComponent = (
+        <DateSelection
+          closeOnSelect={props.closeOnSelect}
+          closeFunction={() => props.closeFunction()}
+        />
+      );
       break;
     case 'month':
       selectionComponent = <MonthSelection />;
@@ -265,39 +292,39 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<
     default:
   }
 
-  const isMobile = true;
-  // navigator.userAgent.indexOf('iPhone') > 0 ||
-  // navigator.userAgent.indexOf('iPad') > 0 ||
-  // navigator.userAgent.indexOf('iPod') > 0 ||
-  // navigator.userAgent.indexOf('Android') > 0;
-
-  return isMobile && props.portalAtMobile ? (
+  return props.openInModal ? (
     <Portal className="fixed inset-0 w-full h-full flex items-center justify-center bg-black/40 backdrop-blur-sm z-40">
       <Card
-        className="bg-white w-fit shadow-lg max-w-xs !p-2 rounded-lg "
-        ref={props.calendarRef}
+        className="bg-white shadow-lg max-w-xs !p-2 rounded-lg w-full"
+        ref={clickRef}
       >
         {selectionComponent}
       </Card>
     </Portal>
   ) : (
+    // TODO: add relative div here
     <Card
-      className="bg-white absolute top-10 left-0 w-fit shadow-lg max-w-xs !p-2 rounded-lg "
+      className="bg-white absolute top-12 left-0 shadow-lg !w-[unset] !p-2 rounded-lg "
       ref={props.calendarRef}
     >
       {selectionComponent}
     </Card>
   );
 });
+
 const RawDatePicker: React.FC<{
+  /**
+   * For `close` calendar dropdown after select a date
+   */
+  closeOnSelect?: boolean;
   date: Date;
   onChange: (date: Date) => void;
   /**
    * @default true
    * @description If true, the datepicker `will be rendered in a full screen portal` for better experience.
    */
-  portalAtMobile?: boolean;
-}> = ({ date, onChange, portalAtMobile }) => {
+  openInModal?: boolean;
+}> = ({ closeOnSelect, date, onChange, openInModal }) => {
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const clickRef = useClickOutside(() => setShowDatePicker(false));
 
@@ -307,7 +334,7 @@ const RawDatePicker: React.FC<{
 
   return (
     <DatepickerCtx.Provider value={ctxValue}>
-      <div className="w-fit relative h-fit" ref={clickRef}>
+      <div className="w-fit relative h-fit" ref={openInModal ? null : clickRef}>
         <Input
           type="text"
           onFocus={() => {
@@ -335,8 +362,9 @@ const RawDatePicker: React.FC<{
         {showDatePicker && (
           <Calendar
             ref={calendarRef}
-            calendarRef={clickRef}
-            portalAtMobile={portalAtMobile}
+            closeOnSelect={closeOnSelect}
+            openInModal={openInModal}
+            closeFunction={() => setShowDatePicker(false)}
           />
         )}
         {/* <Calendar ref={calendarRef} /> */}
@@ -345,14 +373,15 @@ const RawDatePicker: React.FC<{
   );
 };
 
-RawDatePicker.defaultProps = {
-  portalAtMobile: true,
-};
-
 export const DatePicker: React.FC<DatePickerProps> = (props) => (
   <RawDatePicker
+    closeOnSelect={props.closeOnSelect}
     date={props.date}
     onChange={props.onChange}
-    portalAtMobile={props.portalAtMobile}
+    openInModal={props.openInModal}
   />
 );
+
+DatePicker.defaultProps = {
+  closeOnSelect: true,
+};

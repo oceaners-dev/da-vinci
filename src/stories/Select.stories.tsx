@@ -39,6 +39,7 @@ const Template: ComponentStory<typeof Select> = (args) => <Select {...args} />;
 export const Default = Template.bind({});
 export const Multiple = Template.bind({});
 export const Disabled = Template.bind({});
+export const CustomOptionComponent = Template.bind({});
 export const HideSelectedOptions = Template.bind({});
 
 Default.args = {
@@ -88,6 +89,30 @@ Disabled.args = {
   helperText: 'Join the army',
 };
 Disabled.parameters = {
+  docs: {
+    description: {
+      story: 'With `disabled` option',
+    },
+  },
+};
+
+////////////////////////
+CustomOptionComponent.args = {
+  multiple: true,
+  options: Array.from({ length: 10 }, (_, i) => ({
+    value: uuid(),
+    label: faker.name.firstName(),
+  })),
+  label: "Dumbledore's Army",
+  helperText: 'Join the army',
+  renderOptions: ({ label, value }) => (
+    <div className="bg-blue-500 w-full flex justify-between hover:bg-black text-white px-3 py-1">
+      <div>{label}</div>
+      <div>Fersat</div>
+    </div>
+  ),
+};
+CustomOptionComponent.parameters = {
   docs: {
     description: {
       story: 'With `disabled` option',

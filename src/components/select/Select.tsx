@@ -31,6 +31,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
       multiple, // ✅
       onChange, // ✅
       onDropdownToggle, // ✅
+      renderOptions, // ✅
       required, // 🚨
       searchable, // 🚨
       withoutDropdownIcon, // ✅
@@ -224,8 +225,8 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
                   );
                   return (
                     <button
+                      className="w-full"
                       key={option.value}
-                      className="px-4 py-1 text-sm hover:bg-gray-300 cursor-pointer w-full text-left flex flex-row items-center justify-between"
                       onClick={() => {
                         handleSelect(option);
 
@@ -238,8 +239,14 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
                         }
                       }}
                     >
-                      <span>{option.label}</span>
-                      {isSelected && <SvgTick className="w-4 h-4" />}
+                      {renderOptions ? (
+                        renderOptions(option)
+                      ) : (
+                        <div className="px-4 py-1 text-sm hover:bg-gray-300 cursor-pointer w-full text-left flex flex-row items-center justify-between w-full">
+                          <span>{option.label}</span>
+                          {isSelected && <SvgTick className="w-4 h-4" />}
+                        </div>
+                      )}
                     </button>
                   );
                 })}
@@ -349,6 +356,12 @@ export interface SelectProps {
    */
   onDropdownToggle?: () => void;
   options: Option[];
+  /**
+   *
+   * @param renderOptions Custom render function for options.
+   * @returns
+   */
+  renderOptions?: (option: Option) => React.ReactNode;
   /**
    * Adds an `asterisk` to the label
    */

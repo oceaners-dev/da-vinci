@@ -1,5 +1,6 @@
 import React from 'react'
 import '../components/da-vinci-ui/styles.css'
+import 'tailwindcss/tailwind.css'
 
 import type { AppProps } from 'next/app'
 

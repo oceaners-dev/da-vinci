@@ -27,10 +27,10 @@ export default [
       }),
     ],
     output: [
-      { file: pkg.main, format: 'cjs' },
+      { file: pkg.main, format: 'cjs', sourcemap: true },
       { file: pkg.module, format: 'esm' },
       {
-        file: 'example/components/components/index.js',
+        file: 'example/components/da-vinci-ui/index.js',
         format: 'es',
         banner: '/* eslint-disable */',
       },

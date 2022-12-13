@@ -10,8 +10,8 @@
     "url": ""
   },
   "scripts": {
-    "dev": "concurrently \"pnpm build --watch\" \"pnpm storybook\"",
-    "build": "NODE_ENV=production rm -rf ./dist && rollup -c && cp ./dist/styles.css ./example/components/components/styles.css",
+    "dev": "concurrently \"pnpm build\" \"pnpm storybook\"",
+    "build": "NODE_ENV=production rm -rf ./dist && rollup -c -w && cp ./dist/styles.css ./example/components/da-vinci-ui/styles.css",
     "watch": "concurrently \"pnpm watch:rollup\"",
     "watch:rollup": "NODE_ENV=production rollup -c -w",
     "make:docs": "typedoc",
@@ -118,7 +118,7 @@
     "next": ">=13",
     "react": ">=18",
     "react-aria": ">=3",
-    "chroma-js" : ">=2",
+    "chroma-js": ">=2",
     "react-dom": ">=18",
     "react-uuid": ">=2",
     "tailwindcss": "3.2.4",

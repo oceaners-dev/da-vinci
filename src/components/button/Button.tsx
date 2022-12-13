@@ -8,7 +8,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       btnType,
       children,
       icon,
-      isActive,
+      // isActive,
       isHoverStylesDisabled,
       className,
       ...rest
@@ -25,21 +25,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     useEffect(() => {
       if (!btnType) return;
-      switch (btnType) {
-        case 'primary':
-          setBackgroundColorClass(`bg-blue-500`);
-          break;
-        case 'secondary':
-          setBackgroundColorClass(`bg-gray-100`);
-          break;
-        case 'positive':
-          setBackgroundColorClass(`bg-lime-500`);
-          break;
-        case 'negative':
-          setBackgroundColorClass(`bg-red-500`);
-          break;
-        default:
-          break;
+      const colors = {
+        primary: 'bg-blue-500',
+        secondary: 'bg-gray-100',
+        positive: 'bg-lime-500',
+        negative: 'bg-red-500',
+      };
+      const color = colors[btnType];
+
+      if (color) {
+        setBackgroundColorClass(color);
       }
     }, [btnType]);
 
@@ -49,14 +44,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       const bgColor = window
         .getComputedStyle(element, null)
         .getPropertyValue('background-color');
-
       const isLight = (chroma(bgColor).luminance() as number) > 0.5;
 
-      if (isLight) {
-        setTextColor(`text-gray-800`);
-      } else {
-        setTextColor(`text-gray-50`);
-      }
+      setTextColor(isLight ? 'text-gray-800' : 'text-gray-50');
 
       if (!isHoverStylesDisabled) {
         const bgPalette = chroma.scale([bgColor, 'black']).colors(9);

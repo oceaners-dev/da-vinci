@@ -1,13 +1,23 @@
 import { useRouter } from 'next/router'
-import React from 'react'
-import { Button, Layout, Nav, Sider, Space } from '../components/da-vinci-ui'
+import React, { useState } from 'react'
+import {
+  DatePicker,
+  Indicator,
+  Layout,
+  Nav,
+  Sider,
+  Space,
+} from '../components/da-vinci-ui'
 export default function Home() {
   const router = useRouter()
   const activeItem = navLinks.find((item) => item.link === router.asPath)
+  const [date, setDate] = useState(new Date())
+
   return (
     <Layout hasSidebar className={'relative m-6 w-full gap-5 '}>
       <Sider className="sticky top-5 h-fit">
         <Nav
+          key={'fersat'}
           expanded={true}
           vertical={true}
           items={navLinks}
@@ -18,13 +28,13 @@ export default function Home() {
       </Sider>
       <Layout>
         <div>
-          <Button
-            onClick={() => {
-              console.log('test')
-            }}
-          >
-            Test
-          </Button>
+          <br />
+          <br />
+          <br />
+          <br />
+          <Indicator position="top-right" dot={true}>
+            <div className="w-5 h-5 flex bg-black relative" />
+          </Indicator>
         </div>
         {/* {orderTrackMemo} */}
         <Space />

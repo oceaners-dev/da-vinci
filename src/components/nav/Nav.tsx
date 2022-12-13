@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import uuid from 'react-uuid';
-import { DaVinciLogo } from '../../utils/svg';
 import { Card } from '../card-UNFINISHED/Card';
 import { Link } from '../link/Link';
 import { NavContext } from './Context';
@@ -52,9 +52,14 @@ export function Nav(props: NavProps) {
                   logo
                 )
               ) : (
-                <div className="flex items-center gap-2 font-medium font-serif w-auto justify-center">
-                  <DaVinciLogo className="w-6 h-6" />
-                  {isExpanded && 'DaVinci UI'}
+                <div className="flex gap-2 font-medium font-serif w-auto ml-1">
+                  <Image
+                    src="/images/da-vinci.png"
+                    width={40}
+                    height={40}
+                    // className="w-6 h-6"
+                    alt="Da Vinci logo"
+                  />
                 </div>
               )}
               {vertical ? (
@@ -71,7 +76,7 @@ export function Nav(props: NavProps) {
                       key={uuid()}
                       isActive={item.link === activeItem?.link}
                       href={item.link}
-                      className="!justify-start"
+                      className="!justify-start cursor-pointer"
                       icon={item.icon}
                     >
                       {vertical ? (isExpanded ? item.label : '') : item.label}

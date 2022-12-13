@@ -3,17 +3,34 @@ import { NavProvider } from '../nav/Context';
 
 // TODO: https://ui.mantine.dev/category/navbars copy something
 export function Layout(props: LayoutProps) {
-  const { children, className, hasSidebar, fullHeight } = props;
+  const {
+    children, // ✅
+    className, // ✅
+    hasSidebar,
+    header,
+    fullHeight,
+    footer,
+    ...rest
+  } = props;
   return (
     <div
       className={`
-        w-[-webkit-fill-available]  max-w-[100vw] flex box-border ${
+        w-[-webkit-fill-available] max-w-[100vw] flex box-border ${
           className || ''
-        } ${hasSidebar ? 'flex-row' : 'flex-col'} ${
-        fullHeight ? 'h-full' : ''
-      }`}
+        } ${
+        header || footer ? 'flex-col' : hasSidebar ? 'flex-row' : 'flex-col'
+      } ${fullHeight ? 'h-full' : ''}`}
+      {...rest}
     >
-      <NavProvider>{children}</NavProvider>
+      {header && <div className="w-full box-border">{header}</div>}
+      <div
+        className={
+          (hasSidebar ? 'flex-row' : 'flex-col') + ' flex w-full h-auto'
+        }
+      >
+        <NavProvider>{children}</NavProvider>
+      </div>
+      {footer && <div className="w-full box-border">{footer}</div>}
     </div>
   );
 }
@@ -24,7 +41,24 @@ Layout.defaultProps = {
 
 export interface LayoutProps {
   children: React.ReactNode;
+  /**
+   * classNames for `Layout` wrapper
+   * @type {React.ReactNode}
+   * @memberof LayoutProps
+   */
   className?: React.HTMLAttributes<HTMLElement>['className'];
+  /**
+   * Footer will be displayed on bottom of the layout
+   * @type {React.ReactNode}
+   * @memberof LayoutProps
+   */
+  footer?: React.ReactNode;
   fullHeight?: boolean;
   hasSidebar?: boolean;
+  /**
+   * Header will be displayed on top of the layout
+   * @type {React.ReactNode}
+   * @memberof LayoutProps
+   */
+  header?: React.ReactNode;
 }

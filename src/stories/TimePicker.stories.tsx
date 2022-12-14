@@ -22,7 +22,6 @@ const Template: ComponentStory<typeof TimePicker> = () => {
     <TimePicker
       defaultValue="13:35"
       onChange={(e) => {
-        console.log('aaaa');
         console.log({ e });
       }}
     />

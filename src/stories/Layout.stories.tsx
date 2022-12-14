@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Layout } from '../components/layout/Layout';
-import { Sider } from '../components/sider/Sider';
 import { Nav } from '../components/nav/Nav';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -28,18 +27,13 @@ const Template: ComponentStory<typeof Layout> = (args) => <Layout {...args} />;
 export const Default = Template.bind({});
 export const HeaderWithSidebar = Template.bind({});
 export const Footer = Template.bind({});
-export const WithImage = Template.bind({});
-export const Color = Template.bind({});
-export const Size = Template.bind({});
 
 Default.args = {
   fullHeight: true,
   hasSidebar: true,
   children: (
     <>
-      <Sider>
-        <Nav className="!bg-gray-200 border-solid border-2 border-gray-400 text-gray-500 text-sm font-light" />
-      </Sider>
+      <Nav className="!bg-gray-200 border-solid border-2 border-gray-400 text-gray-500 text-sm font-light" />
       <div className="bg-gray-200 border-solid border-2 border-gray-400 text-gray-500 text-sm font-light w-full h-full flex justify-center items-center">
         Content
       </div>
@@ -57,9 +51,7 @@ HeaderWithSidebar.args = {
   ),
   children: (
     <>
-      <Sider>
-        <Nav className="!bg-gray-200 border-solid border-2 border-gray-400 text-gray-500 text-sm font-light" />
-      </Sider>
+      <Nav className="!bg-gray-200 border-solid border-2 border-gray-400 text-gray-500 text-sm font-light" />
       <div className="bg-gray-200 border-solid border-2 border-gray-400 text-gray-500 text-sm font-light w-full h-auto flex justify-center items-center">
         Content
       </div>
@@ -77,9 +69,7 @@ Footer.args = {
   ),
   children: (
     <>
-      <Sider>
-        <Nav className="!bg-gray-200 border-solid border-2 border-gray-400 text-gray-500 text-sm font-light" />
-      </Sider>
+      <Nav className="!bg-gray-200 border-solid border-2 border-gray-400 text-gray-500 text-sm font-light" />
       <div className="bg-gray-200 border-solid border-2 border-gray-400 text-gray-500 text-sm font-light w-full h-auto flex justify-center items-center">
         Content
       </div>

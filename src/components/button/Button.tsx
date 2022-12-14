@@ -99,7 +99,7 @@ export interface HtmlButtonProps
   icon?: React.ReactNode;
   isActive?: boolean;
   isHoverStylesDisabled?: boolean;
-  onClick: React.HTMLAttributes<HTMLButtonElement>['onClick'];
+  onClick?: React.HTMLAttributes<HTMLButtonElement>['onClick'];
 }
 
 export type ButtonProps = HtmlButtonProps;

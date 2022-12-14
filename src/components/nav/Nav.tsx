@@ -1,116 +1,96 @@
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import uuid from 'react-uuid';
 import { Card } from '../card-UNFINISHED/Card';
 import { Link } from '../link/Link';
-import { NavContext } from './Context';
 import { SvgExpandToRight } from './Svg';
 
-export function Nav(props: NavProps) {
+const Nav = forwardRef<HTMLDivElement, NavProps>((props, ref) => {
   const {
+    activeItem,
     children,
     className,
-    items,
     expanded,
-    hasExpandButton,
     expandedLogo,
-    activeItem,
+    hasExpandButton,
+    items,
     logo,
+    onExpandChange, // ✅
     vertical,
   } = props;
-
-  const context = React.useContext(NavContext);
-
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-    context.setIsExpanded(expanded as boolean);
-  }, []);
-
-  return mounted ? (
-    <NavContext.Consumer>
-      {({ isExpanded, setIsExpanded }) => {
-        return (
-          <nav className={''}>
-            <Card
-              className={
-                'w-[-webkit-fill-available] flex gap-[6px] text-gray-600 ' +
-                ' ' +
-                (vertical ? 'flex-col' : 'flex-row') +
-                ' ' +
-                (className || ' ')
-              }
-            >
-              {logo ? (
-                isExpanded ? (
-                  expandedLogo ? (
-                    expandedLogo
-                  ) : (
-                    logo
-                  )
-                ) : (
-                  logo
-                )
-              ) : (
-                <div className="flex gap-2 font-medium font-serif w-auto ml-1">
-                  <Image
-                    src="/images/da-vinci.png"
-                    width={40}
-                    height={40}
-                    // className="w-6 h-6"
-                    alt="Da Vinci logo"
-                  />
-                </div>
-              )}
-              {vertical ? (
-                <div className="w-full h-8" />
-              ) : (
-                <div className="h-full w-8" />
-              )}
-              {children ? (
-                children
-              ) : items ? (
-                items.map((item) => {
-                  return (
-                    <Link
-                      key={uuid()}
-                      isActive={item.link === activeItem?.link}
-                      href={item.link}
-                      className="!justify-start cursor-pointer"
-                      icon={item.icon}
-                    >
-                      {vertical ? (isExpanded ? item.label : '') : item.label}
-                    </Link>
-                  );
-                })
-              ) : (
-                <div />
-              )}
-
-              {hasExpandButton && vertical && (
-                <>
-                  <div className="w-full h-8" />
-                  <button
-                    className="w-fit ml-3"
-                    onClick={() => {
-                      setIsExpanded(!isExpanded);
-                    }}
-                  >
-                    <SvgExpandToRight
-                      className={isExpanded ? 'rotate-180' : ''}
-                    />
-                  </button>
-                </>
-              )}
-            </Card>
-          </nav>
-        );
-      }}
-    </NavContext.Consumer>
-  ) : (
-    <></>
+  const [isExpandedState, setIsExpandedState] = useState<boolean>(
+    expanded as boolean,
   );
-}
+
+
+  useEffect(() => {
+    setIsExpandedState(expanded as boolean);
+  }, [expanded]);
+
+  useEffect(() => {
+    onExpandChange && onExpandChange(isExpandedState);
+  }, [isExpandedState]);
+
+  return (
+    <nav className={''}>
+      <Card
+        className={
+          'flex text-gray-600 transition-all transform duration-150' +
+          ' ' +
+          (vertical ? 'flex-col !w-fit' : 'flex-row !w-full items-center') +
+          ' ' +
+          (className || ' ') +
+          ' ' +
+          (vertical && isExpandedState ? '!pr-20' : '')
+        }
+      >
+        {logo &&
+          (isExpandedState ? (expandedLogo ? expandedLogo : logo) : logo)}
+
+        {vertical && <div className="w-full h-8" />}
+
+        {items && (
+          <div
+            className={
+              (vertical ? 'flex-col gap-2' : 'flex-row gap-4 ml-12') + ' flex '
+            }
+          >
+            {items.map((item) => {
+              return (
+                <Link
+                  key={uuid()}
+                  isActive={item.link === activeItem?.link}
+                  href={item.link}
+                  className="!justify-start cursor-pointer"
+                  icon={item.icon}
+                >
+                  {vertical ? (isExpandedState ? item.label : '') : item.label}
+                </Link>
+              );
+            })}
+          </div>
+        )}
+
+        {children && children}
+
+        {hasExpandButton && vertical && (
+          <>
+            <div className="w-full h-8" />
+            <button
+              className="w-fit ml-3"
+              onClick={() => {
+                setIsExpandedState(!isExpandedState);
+              }}
+            >
+              <SvgExpandToRight
+                className={isExpandedState ? 'rotate-180' : ''}
+              />
+            </button>
+          </>
+        )}
+      </Card>
+    </nav>
+  );
+});
 
 Nav.defaultProps = {
   expanded: true,
@@ -118,7 +98,7 @@ Nav.defaultProps = {
   vertical: true,
 };
 
-export interface NavPropHorizontal {
+export interface NavProps {
   // user must compare something with one of NavItem's param
   activeItem?: NavItem;
   children?: React.ReactNode;
@@ -131,29 +111,19 @@ export interface NavPropHorizontal {
   hasExpandButton?: boolean;
   items?: NavItem[];
   logo?: React.ReactNode;
-  vertical?: boolean;
-}
-
-export interface NavVerticalProps {
-  // user must compare something with one of NavItem's param
-  activeItem?: NavItem;
-  children?: React.ReactNode;
-  className?: React.HTMLAttributes<HTMLElement>['className'];
-  expanded?: boolean;
   /**
-   * @description: There's two logo type: `expandedLogo` and `logo`. When `Nav` expanded, `expandedLogo` will be displayed. If your logo is small, you can use same logo.
+   * You can watch changes with this function.
+   * @param isExpanded
+   * @returns
    */
-  expandedLogo?: React.ReactNode;
-  hasExpandButton?: boolean;
-  items?: NavItem[];
-  logo?: React.ReactNode;
+  onExpandChange?: (isExpanded: boolean) => void;
   vertical?: boolean;
 }
-
-export type NavProps = NavPropHorizontal | NavVerticalProps;
 
 export interface NavItem {
   icon?: React.ReactNode;
   label: string;
   link: string;
 }
+
+export { Nav };

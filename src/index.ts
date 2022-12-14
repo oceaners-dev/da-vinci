@@ -1,5 +1,6 @@
 import '../public/styles/globals.css';
 
+export * from './components/affix/Affix';
 export * from './components/avatar/Avatar';
 export type { AvatarProps } from './components/avatar/Avatar';
 export * from './components/button/Button';
@@ -20,8 +21,6 @@ export * from './components/overflow-list-UNFINISHED/OverflowList';
 export * from './components/pagination/Pagination';
 export * from './components/portal/Portal';
 export * from './components/radio/Radio';
-export * from './components/sider/Sider';
-export type { SiderProps } from './components/sider/Sider';
 export * from './components/sidesheet/SideSheet';
 export * from './components/space/Space';
 export * from './components/select/Select';
@@ -31,3 +30,4 @@ export * from './components/tag/Tag';
 export * from './components/tag/Group';
 export * from './components/timepicker/TimePicker';
 export * from './components/typography/Typography';
+export * from './hooks';

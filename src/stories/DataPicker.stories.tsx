@@ -15,14 +15,13 @@ export default {
   },
 } as ComponentMeta<typeof DatePicker>;
 
-const Template: ComponentStory<typeof DatePicker> = (args) => {
+const Template: ComponentStory<typeof DatePicker> = () => {
   const [date, setDate] = useState<Date>(new Date());
 
   return (
     <DatePicker
       date={date}
       onChange={(a) => {
-        console.log(a);
         setDate(a);
       }}
     />
@@ -35,9 +34,8 @@ const WithoutPortalTemplate: ComponentStory<typeof DatePicker> = (args) => {
   return (
     <DatePicker
       date={date}
-      portalAtMobile={false}
+      openInModal={false}
       onChange={(a) => {
-        console.log(a);
         setDate(a);
       }}
     />

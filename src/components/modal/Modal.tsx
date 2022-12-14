@@ -32,7 +32,7 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
 
     const closeModal = useCallback(() => {
       setIsOpened(false);
-      onClose;
+      onClose && onClose();
     }, []);
 
     const clickedOutside = useClickOutside(() => {
@@ -61,7 +61,7 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
 
     return (
       <Portal
-        className={`fixed inset-0 bg-black/50 w-screen h-screen ${overlayClasses}`}
+        className={`fixed inset-0 z-50 bg-black/50 w-screen h-screen ${overlayClasses}`}
       >
         <Card
           ref={(cardRef) => {

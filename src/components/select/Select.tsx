@@ -61,7 +61,6 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
               setSelected([value]);
             }
           } else {
-            console.log('here', selected[0].value === value.value);
             setSelected(
               selected[0].value === value.value ? undefined : [value],
             );

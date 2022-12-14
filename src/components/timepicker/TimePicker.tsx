@@ -25,8 +25,6 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
       defaultValue ? defaultValue : '00:00',
     );
 
-    console.log({ timeValue });
-
     // callbacks
     const openDropdown = useCallback(() => {
       setIsDropdownOpened(true);

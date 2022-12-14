@@ -4,6 +4,7 @@ export default create({
   base: 'light',
   brandTitle: "Da Vinci's Design Book",
   brandUrl: 'https://oceaners-dev.github.io/da-vinci/',
-  brandImage: 'https://oceaners-dev.github.io/da-vinci/images/da-vinci.png',
+  brandImage:
+    'https://oceaners-dev.github.io/da-vinci/images/da-vinci-storybook.png',
   brandTarget: '_self',
 });

@@ -132,7 +132,6 @@ const toastNotification = (settings: ToastProps) => {
   const defaultSettings = cookies.get(
     'da-vinci-notification-settings',
   ) as NotificationTypeDefaults;
-  console.log({ settings });
   const toastType = settings.type!;
 
   cookies.set(

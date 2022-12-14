@@ -9,7 +9,7 @@ export const Link = forwardRef<HTMLAnchorElement, CustomLinkProps>(
       <CustomLink {...rest} ref={ref}>
         <div
           className={`py-2 flex flex-row items-center justify-center text-gray-600 hover:bg-gray-200 hover:button-classes ${
-            !icon ? 'px-2' : ''
+            !icon ? 'px-2' : 'pr-2'
           } ${isActive && 'button-classes'} ${className}`}
         >
           {icon && (

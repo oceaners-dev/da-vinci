@@ -1,6 +1,7 @@
 import '../public/styles/globals.css';
 
 export * from './components/affix/Affix';
+export * from './components/alert/Alert';
 export * from './components/avatar/Avatar';
 export type { AvatarProps } from './components/avatar/Avatar';
 export * from './components/button/Button';

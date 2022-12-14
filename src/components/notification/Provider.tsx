@@ -215,7 +215,7 @@ export interface NotificationSettings {
   /**
    * @description You can pass `emoji` icon.
    */
-  icon?: string;
+  icon?: React.ReactNode;
   /**
    * @description Positions of the notification.
    * @enum `top`, `bottom`, `topLeft`, `bottomLeft`, `topRight`, `bottomRight`

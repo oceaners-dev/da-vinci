@@ -7,7 +7,6 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/stories/**/*.{js,ts,jsx,tsx}',
     './examples/**/*.{js,ts,jsx,tsx}',
-    
   ],
   theme: {
     extend: {
@@ -156,7 +155,7 @@ module.exports = {
           boxSizing: 'border-box',
           width: '--webkit-fill-available',
           backgroundColor: 'white',
-          boxShadow: theme('boxShadow.xl'),
+          // boxShadow: theme('boxShadow.md'),
           outlineStyle: 'solid',
           outlineWidth: '1px',
           outlineColor: theme('colors.hf-light'),

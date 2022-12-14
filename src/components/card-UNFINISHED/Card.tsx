@@ -2,9 +2,11 @@ import React from 'react';
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   (props, ref) => {
-    const { children, className } = props;
+    const { children, className, ...rest } = props;
+
+    console.log({ ...rest });
     return (
-      <div ref={ref} className={`card-classes ${className || ''}`}>
+      <div ref={ref} className={`card-classes ${className || ''}`} {...rest}>
         {children}
       </div>
     );

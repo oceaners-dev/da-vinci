@@ -32,7 +32,6 @@ const Affix: React.FunctionComponent<AffixProps> = (props) => {
     zIndex, // ✅
   } = props;
 
-  console.log({ target });
   const [topY, setTopY] = useState<number>(0);
 
   const _position = position || {
@@ -61,14 +60,12 @@ const Affix: React.FunctionComponent<AffixProps> = (props) => {
   useEventListener(
     'scroll',
     (a) => {
-      console.log({ a });
       const offsetTop = Math.abs(
         // @ts-ignore
         a.target.body // @ts-ignore
           ? a.target.body.getBoundingClientRect().y // @ts-ignore
           : a.target.scrollTop,
       );
-      console.log({ offsetTop });
       setTopY(offsetTop);
     },
     target!,

@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useState } from 'react';
-import { CheckboxProps } from './CheckBox';
+// import { CheckboxProps } from './CheckBox';
 
 export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
   (props, ref) => {
@@ -25,29 +25,29 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
       }
     }, [values]);
 
-    const customChildren = React.Children.map(children, (child) => {
-      if (React.isValidElement(child)) {
-        return React.cloneElement(
-          child as { key: string; props: CheckboxProps; type: string },
-          {
-            defaultChecked: defaultValue
-              ? defaultValue.find((e) => e.name === child.props.name)?.value
-              : values.find((e) => e.name === child.props.name)?.value,
-            onChangeEvent: (e: React.ChangeEvent<HTMLInputElement>) => {
-              const name = e.target.name;
-              const value = e.target.checked;
-              if (e.target.checked) {
-                setValues((prev) => [...prev, { name, value }]);
-              } else {
-                setValues((prev) => prev.filter((v) => v.name !== name));
-              }
-            },
-            // TODO: complete other functions
-          },
-        );
-      }
-      return child;
-    });
+    // const customChildren = React.Children.map(children, (child) => {
+    //   if (React.isValidElement(child)) {
+    //     return React.cloneElement(
+    //       child as { key: string; props: CheckboxProps; type: string },
+    //       {
+    //         defaultChecked: defaultValue
+    //           ? defaultValue.find((e) => e.name === child.props.name)?.value
+    //           : values.find((e) => e.name === child.props.name)?.value,
+    //         onChangeEvent: (e: React.ChangeEvent<HTMLInputElement>) => {
+    //           const name = e.target.name;
+    //           const value = e.target.checked;
+    //           if (e.target.checked) {
+    //             setValues((prev) => [...prev, { name, value }]);
+    //           } else {
+    //             setValues((prev) => prev.filter((v) => v.name !== name));
+    //           }
+    //         },
+    //         // TODO: complete other functions
+    //       },
+    //     );
+    //   }
+    //   return child;
+    // });
 
     return (
       <div ref={ref} className="flex flex-col gap-2">
@@ -70,7 +70,7 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
               : 'flex-col gap-[2px]'
           } ${listClassName || ''}`}
         >
-          {customChildren}
+          {children}
         </div>
       </div>
     );

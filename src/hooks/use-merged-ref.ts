@@ -1,16 +1,16 @@
-import React, { useCallback } from 'react'
+import React, { useCallback } from 'react';
 
-type Ref<T> = React.Dispatch<React.SetStateAction<T>> | React.ForwardedRef<T>
+type Ref<T> = React.Dispatch<React.SetStateAction<T>> | React.ForwardedRef<T>;
 
 export function mergeRefs<T = any>(...refs: Ref<T>[]) {
   return (node: T | null) => {
     // @ts-ignore
-    refs.forEach((ref) => assignRef(ref, node))
-  }
+    refs.forEach((ref) => assignRef(ref, node));
+  };
 }
 
 export function useMergedRef<T = any>(...refs: Ref<T>[]) {
-  return useCallback(mergeRefs(...refs), refs)
+  return useCallback(mergeRefs(...refs), refs);
 }
 
 export function assignRef<T = any>(
@@ -18,9 +18,9 @@ export function assignRef<T = any>(
   value: T | null,
 ) {
   if (typeof ref === 'function') {
-    ref(value)
+    ref(value);
   } else if (typeof ref === 'object' && ref !== null && 'current' in ref) {
     // eslint-disable-next-line no-param-reassign
-    ref.current = value
+    ref.current = value;
   }
 }

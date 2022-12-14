@@ -4,7 +4,6 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   (props, ref) => {
     const { children, className, ...rest } = props;
 
-    console.log({ ...rest });
     return (
       <div ref={ref} className={`card-classes ${className || ''}`} {...rest}>
         {children}

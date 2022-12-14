@@ -26,7 +26,8 @@
     "storybook": "start-storybook -p 6006 --quiet",
     "build-storybook": "build-storybook",
     "deploy-storybook": "storybook-to-ghpages",
-    "release": "pnpm release-it"
+    "release": "pnpm release-it",
+    "format": "prettier --write './src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
   },
   "lint-staged": {
     "./{src,__tests__}/**/*.{ts,js,jsx,tsx}": [

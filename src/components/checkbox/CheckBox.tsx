@@ -1,4 +1,5 @@
-import React, { forwardRef, useId } from 'react';
+import React, { forwardRef, useEffect, useId, useState } from 'react';
+import { SvgTick } from '../../utils/svg';
 import { ForwardRefWithStaticComponents } from '../../utils/ts/forward-ref-with-static-component';
 import { CheckboxGroup } from './group';
 
@@ -14,16 +15,15 @@ export const CheckBox: CheckboxComponent = forwardRef<
 >((props, ref) => {
   const id = useId();
   const {
-    className, // ✅
-    checked, // ✅
-    name, // ✅
-    disabled, // ✅
-    onChangeEvent, // ✅
-    onChangeChecked, // ✅
-    label, // ✅
-    hideCheckbox, // ✅
-    defaultChecked, // ✅
-    selectableLabel, // ✅
+    className,
+    checked,
+    name,
+    disabled,
+    onChange,
+    label,
+    hideCheckbox,
+    defaultChecked,
+    isLabelSelectable,
     customIcon, // 🚨 TODO
     type, // 🚨 TODO
   } = props;
@@ -31,38 +31,56 @@ export const CheckBox: CheckboxComponent = forwardRef<
   if (!label && !name) {
     throw new Error('You must provide a label or name to checkbox');
   }
+  const [isChecked, setIsChecked] = useState<boolean>(
+    checked ? checked : defaultChecked ? defaultChecked : false,
+  );
+
+  useEffect(() => {
+    setIsChecked(checked ? checked : defaultChecked ? defaultChecked : false);
+  }, [defaultChecked, checked, onChange]);
+
+  useEffect(() => {
+    onChange && onChange({ [name]: isChecked as boolean });
+  }, [isChecked]);
 
   return (
     <div
-      className={`flex flex-row items-center cursor-pointer ${className || ''}`}
+      className={`flex flex-row items-center cursor-pointer ${
+        className || ''
+      } w-fit ${disabled ? 'pointer-events-none opacity-50  ' : ''}`}
     >
-      <input
-        ref={ref}
-        type="checkbox"
-        checked={checked}
-        disabled={disabled}
-        name={name}
-        value={name}
-        defaultChecked={defaultChecked}
-        id={id}
-        className={` cursor-pointer h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 ${
-          customIcon ? 'hidden' : ''
-        } ${hideCheckbox ? 'hidden' : ''}`}
-        onChange={(e) => {
-          if (onChangeEvent) {
-            onChangeEvent(e);
-          }
-          if (onChangeChecked) {
-            onChangeChecked(e.target.checked);
-          }
-          // TODO: test these with group
-        }}
-      />
+      {!hideCheckbox && (
+        <div
+          ref={ref}
+          id={id}
+          onClick={() => {
+            setIsChecked(!isChecked);
+          }}
+          className={`w-4 h-4 outline outline-2 rounded-sm transition-all transform duration-150 aspect-square ${
+            isChecked
+              ? 'bg-blue-500 outline-blue-500 hover:bg-blue-400 hover:outline-blue-400'
+              : 'bg-white outline-gray-200 hover:bg-gray-200'
+          }`}
+        >
+          <SvgTick
+            className={`transition-all transform duration-150 ${
+              isChecked ? 'text-white' : ''
+            }`}
+            style={{
+              opacity: isChecked ? 1 : 0,
+            }}
+          />
+        </div>
+      )}
+
       {label && (
         <label
           htmlFor={id}
+          onClick={() => {
+            setIsChecked(!isChecked);
+          }}
           className={`cursor-pointer pl-2 w-[-webkit-fill-available] ${
-            selectableLabel ? '' : 'select-none'
+            isLabelSelectable ? '' : 'select-none'
           }`}
         >
           {label}
@@ -73,7 +91,7 @@ export const CheckBox: CheckboxComponent = forwardRef<
 }) as any;
 
 CheckBox.defaultProps = {
-  selectableLabel: false,
+  isLabelSelectable: false,
 };
 
 export type CheckboxComponent = ForwardRefWithStaticComponents<
@@ -110,6 +128,10 @@ export interface CheckboxProps {
    * Just `hides` the tick box between the label. If you use `customIcon` it's hiding automatically.
    */
   hideCheckbox?: boolean;
+  /**
+   * Layers are `unselectable`. by default. If you want to make it selectable, you can use the `selectable` prop.
+   */
+  isLabelSelectable?: boolean;
   label?: React.ReactNode;
   /**
    * We don't know why but some of UI libraries lets name optional. We do not want to
@@ -117,17 +139,9 @@ export interface CheckboxProps {
    */
   name: string;
   /**
-   * @returns `true` if checked, `false` if unchecked.
+   * @returns {object} { [name]: boolean }
    */
-  onChangeChecked?: (checked: boolean) => void;
-  /**
-   * @returns event directly. if you want to get `booleam` value, use `onChangeChecked`
-   */
-  onChangeEvent?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  /**
-   * Layers are `unselectable`. by default. If you want to make it selectable, you can use the `selectable` prop.
-   */
-  selectableLabel?: boolean;
+  onChange?: (x: object) => void;
   type?: 'default' | 'radio' | 'card' | 'pureCard';
 }
 

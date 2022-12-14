@@ -21,7 +21,6 @@ const Nav = forwardRef<HTMLDivElement, NavProps>((props, ref) => {
     expanded as boolean,
   );
 
-
   useEffect(() => {
     setIsExpandedState(expanded as boolean);
   }, [expanded]);

@@ -21,7 +21,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>(
       label, // ✅
       hideRadio, // ✅
       defaultChecked, // ✅
-      selectableLabel, // ✅
+      isLabelSelectable, // ✅
       customIcon, // 🚨 TODO
       type, // 🚨 TODO
     } = props;
@@ -62,7 +62,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>(
           <label
             htmlFor={id}
             className={`cursor-pointer pl-2 w-[-webkit-fill-available] ${
-              selectableLabel ? '' : 'select-none'
+              isLabelSelectable ? '' : 'select-none'
             }`}
           >
             {label}
@@ -74,7 +74,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>(
 ) as any;
 
 Radio.defaultProps = {
-  selectableLabel: false,
+  isLabelSelectable: false,
 };
 
 export type RadioComponent = ForwardRefWithStaticComponents<
@@ -111,6 +111,10 @@ export interface RadioProps {
    * Just `hides` the tick box between the label. If you use `customIcon` it's hiding automatically.
    */
   hideRadio?: boolean;
+  /**
+   * Layers are `unselectable`. by default. If you want to make it selectable, you can use the `selectable` prop.
+   */
+  isLabelSelectable?: boolean;
   label?: React.ReactNode;
   /**
    * We don't know why but some of UI libraries lets name optional. We do not want to
@@ -125,10 +129,6 @@ export interface RadioProps {
    * @returns event directly. if you want to get `booleam` value, use `onChangeChecked`
    */
   onChangeEvent?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  /**
-   * Layers are `unselectable`. by default. If you want to make it selectable, you can use the `selectable` prop.
-   */
-  selectableLabel?: boolean;
   type?: 'default' | 'radio' | 'card' | 'pureCard';
 }
 

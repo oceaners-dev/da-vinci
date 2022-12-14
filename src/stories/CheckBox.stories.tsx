@@ -33,7 +33,7 @@ const GroupTemplate: ComponentStory<typeof CheckboxGroup> = (args) => (
 );
 
 export const DefaultChecked = Template.bind({});
-export const SelectableLabel = Template.bind({});
+export const isLabelSelectable = Template.bind({});
 export const Group = GroupTemplate.bind({});
 export const GroupOrientation = GroupTemplate.bind({});
 export const GroupDefaultSelected = GroupTemplate.bind({});
@@ -43,14 +43,14 @@ DefaultChecked.args = {
   defaultChecked: true,
   name: 'Yo',
   label: 'I have read the terms',
-  selectableLabel: true,
+  isLabelSelectable: true,
 };
 
-SelectableLabel.args = {
+isLabelSelectable.args = {
   defaultChecked: true,
   name: 'Yo',
   label: 'I have read the terms',
-  selectableLabel: false,
+  isLabelSelectable: false,
 };
 
 Group.args = {

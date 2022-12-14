@@ -1,8 +1,8 @@
 export interface InviewPortType {
-  callback: () => void;
-  freezeOnceVisible: boolean;
-  options: IntersectionObserverInit | undefined;
-  target: HTMLElement | null;
+  callback: () => void
+  freezeOnceVisible: boolean
+  options: IntersectionObserverInit | undefined
+  target: HTMLElement | null
 }
 
 const checkInViewIntersectionObserver = ({
@@ -18,26 +18,26 @@ const checkInViewIntersectionObserver = ({
     entries.map((entry: IntersectionObserverEntry) => {
       if (entry.isIntersecting) {
         //
-        callback();
+        callback()
         //  ---- IF TRUE WE WILL UNOBSERVER AND FALSE IS NO
         if (freezeOnceVisible) {
-          observer.unobserve(entry.target);
+          observer.unobserve(entry.target)
         }
       }
-      return true;
-    });
-  };
+      return true
+    })
+  }
 
   // _checkBrowserSupport-----
   if (typeof window.IntersectionObserver === 'undefined') {
     console.error(
       'window.IntersectionObserver === undefined! => Your Browser is Notsupport',
-    );
-    return;
+    )
+    return
   }
 
-  const observer = new IntersectionObserver(_funCallback, options);
-  target && observer.observe(target);
-};
+  const observer = new IntersectionObserver(_funCallback, options)
+  target && observer.observe(target)
+}
 
-export default checkInViewIntersectionObserver;
+export default checkInViewIntersectionObserver

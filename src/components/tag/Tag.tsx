@@ -1,7 +1,7 @@
-import React, { forwardRef, useRef } from 'react';
-import Image from 'next/image';
-import { useMergedRef } from '../../hooks/use-merged-ref';
-import { SvgX } from '../../utils/svg';
+import React, { forwardRef, useRef } from 'react'
+import Image from 'next/image'
+import { useMergedRef } from '../../hooks/use-merged-ref'
+import { SvgX } from '../../utils/svg'
 
 export const Tag = forwardRef<HTMLDivElement, TagProps>((props, ref) => {
   const {
@@ -15,10 +15,10 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>((props, ref) => {
     onClose, // ✅
     removeNodeOnClose, // ✅
     tagKey,
-  } = props;
-  const tagRef = useRef<HTMLDivElement>(null);
+  } = props
+  const tagRef = useRef<HTMLDivElement>(null)
 
-  const mergedRef = useMergedRef(tagRef, ref);
+  const mergedRef = useMergedRef(tagRef, ref)
 
   return (
     <div
@@ -56,12 +56,12 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>((props, ref) => {
           className="leading-none ml-[2px]"
           onClick={() => {
             if (onClose) {
-              onClose();
+              onClose()
             }
             if (removeNodeOnClose) {
-              if (!tagRef) return;
-              if (!tagRef.current) return;
-              tagRef.current?.remove();
+              if (!tagRef) return
+              if (!tagRef.current) return
+              tagRef.current?.remove()
             }
           }}
         >
@@ -69,35 +69,35 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>((props, ref) => {
         </button>
       )}
     </div>
-  );
-});
+  )
+})
 
 Tag.defaultProps = {
   type: 'light',
   avatarShape: 'circle',
   removeNodeOnClose: true,
-};
+}
 
 export interface TagProps {
-  avatarShape?: 'square' | 'circle';
-  avatarSrc?: React.ComponentProps<typeof Image>['src'];
-  children: React.ReactNode;
-  className?: string;
-  closable?: boolean;
+  avatarShape?: 'square' | 'circle'
+  avatarSrc?: React.ComponentProps<typeof Image>['src']
+  children: React.ReactNode
+  className?: string
+  closable?: boolean
   /**
    * TailwindCSS class for color
    */
-  color?: string;
-  onClick?: (e: MouseEvent) => void;
-  onClose?: () => void;
+  color?: string
+  onClick?: (e: MouseEvent) => void
+  onClose?: () => void
   /**
    * @description Disables removing node on closing tag. Needs for `Select` component.
    */
-  removeNodeOnClose?: boolean;
+  removeNodeOnClose?: boolean
   /**
    * Defines padding between tag text
    */
-  size?: 'small' | 'large' | 'default';
-  tagKey?: string;
-  type?: 'light' | 'solid' | 'ghost';
+  size?: 'small' | 'large' | 'default'
+  tagKey?: string
+  type?: 'light' | 'solid' | 'ghost'
 }

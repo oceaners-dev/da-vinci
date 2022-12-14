@@ -1,6 +1,6 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Input } from '../components/input/Input';
+import React from 'react'
+import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Input } from '../components/input/Input'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -22,25 +22,25 @@ export default {
     onChange: { action: 'onChange' },
     disabled: { control: 'boolean' },
   },
-} as ComponentMeta<typeof Input>;
+} as ComponentMeta<typeof Input>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Input> = (args) => <Input {...args} />;
+const Template: ComponentStory<typeof Input> = (args) => <Input {...args} />
 
-export const Default = Template.bind({});
-export const LabelPlaceholder = Template.bind({});
-export const LeftRightLabels = Template.bind({});
-export const Components = Template.bind({});
-export const Disabled = Template.bind({});
+export const Default = Template.bind({})
+export const LabelPlaceholder = Template.bind({})
+export const LeftRightLabels = Template.bind({})
+export const Components = Template.bind({})
+export const Disabled = Template.bind({})
 
 Default.args = {
   defaultValue: 'Hello',
-};
+}
 
 LabelPlaceholder.args = {
   labelPlaceholder: 'Title',
   helperText: 'Title must be happy.',
-};
+}
 
 LabelPlaceholder.parameters = {
   docs: {
@@ -48,12 +48,12 @@ LabelPlaceholder.parameters = {
       story: "Don't use **labelPlaceholder** with **placeholder**",
     },
   },
-};
+}
 
 LeftRightLabels.args = {
   labelLeft: 'https://',
   labelRight: '.com',
-};
+}
 
 Components.args = {
   leftComponent: (
@@ -61,11 +61,11 @@ Components.args = {
       🐋
     </div>
   ),
-};
+}
 
 Disabled.args = {
   disabled: true,
   labelLeft: 'https://',
   labelRight: '.com',
   defaultValue: 'google',
-};
+}

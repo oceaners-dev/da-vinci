@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { DatePicker } from '../components/datepicker/DatePicker';
+import React, { useState } from 'react'
+import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { DatePicker } from '../components/datepicker/DatePicker'
 
 export default {
   title: 'Inputs/DatePicker',
@@ -13,34 +13,34 @@ export default {
       },
     },
   },
-} as ComponentMeta<typeof DatePicker>;
+} as ComponentMeta<typeof DatePicker>
 
 const Template: ComponentStory<typeof DatePicker> = () => {
-  const [date, setDate] = useState<Date>(new Date());
+  const [date, setDate] = useState<Date>(new Date())
 
   return (
     <DatePicker
       date={date}
       onChange={(a) => {
-        setDate(a);
+        setDate(a)
       }}
     />
-  );
-};
+  )
+}
 
 const WithoutPortalTemplate: ComponentStory<typeof DatePicker> = (args) => {
-  const [date, setDate] = useState<Date>(new Date());
+  const [date, setDate] = useState<Date>(new Date())
 
   return (
     <DatePicker
       date={date}
       openInModal={false}
       onChange={(a) => {
-        setDate(a);
+        setDate(a)
       }}
     />
-  );
-};
+  )
+}
 
-export const Default = Template.bind({});
-export const WithoutPortal = WithoutPortalTemplate.bind({});
+export const Default = Template.bind({})
+export const WithoutPortal = WithoutPortalTemplate.bind({})

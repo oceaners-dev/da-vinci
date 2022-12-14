@@ -1,63 +1,62 @@
-import React, { forwardRef, useEffect, useState } from 'react';
-import { SvgLeftArrow, SvgRightArrow } from '../../utils/svg';
-import { Button } from '../button/Button';
+import React, { forwardRef, useEffect, useState } from 'react'
+import { SvgLeftArrow, SvgRightArrow } from '../../utils/svg'
+import { Button } from '../button/Button'
 
 // TODO: seo optimization
 // TODO: add siblings
 export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
   (props, ref) => {
-    const { className, current, total, perPage, maxPageCount, onChange } =
-      props;
+    const { className, current, total, perPage, maxPageCount, onChange } = props
 
     const [currentPage, setCurrentPage] = useState<number>(
       current ? current : 1,
-    );
+    )
 
     useEffect(() => {
-      if (!current) return;
-      setCurrentPage(current ? current : 1);
-    }, [current]);
+      if (!current) return
+      setCurrentPage(current ? current : 1)
+    }, [current])
 
     /**
      * How many pages are there in pagination
      */
-    const paginationCount = Math.ceil(total / (perPage ? perPage : 1));
+    const paginationCount = Math.ceil(total / (perPage ? perPage : 1))
     const paginationArray = Array.from(
       { length: paginationCount },
       (_, i) => i + 1,
-    );
+    )
 
     /**
      * Generate dynamic list for map
      */
     const [dynamicPaginationList, setDynamicPaginationList] =
-      useState<number[]>();
+      useState<number[]>()
 
     useEffect(() => {
       // If pagination count is less than max page count
-      let maxPage = maxPageCount!;
+      let maxPage = maxPageCount!
       if (maxPage % 2 === 0) {
-        maxPage = maxPage - 1;
+        maxPage = maxPage - 1
       }
       if (paginationCount >= maxPage!) {
         if (currentPage <= maxPage! / 2) {
-          setDynamicPaginationList(paginationArray.slice(0, maxPage));
+          setDynamicPaginationList(paginationArray.slice(0, maxPage))
         } else if (currentPage > paginationCount - maxPage! / 2) {
           setDynamicPaginationList(
             paginationArray.slice(paginationCount - maxPage!, paginationCount),
-          );
+          )
         } else {
           setDynamicPaginationList(
             paginationArray.slice(
               currentPage - maxPage! / 2,
               currentPage + maxPage! / 2,
             ),
-          );
+          )
         }
       } else {
-        setDynamicPaginationList(paginationArray);
+        setDynamicPaginationList(paginationArray)
       }
-    }, [currentPage]);
+    }, [currentPage])
 
     return (
       <div
@@ -68,9 +67,9 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
           disabled={currentPage === 1}
           onClick={() => {
             if (currentPage !== 1) {
-              setCurrentPage(currentPage - 1);
+              setCurrentPage(currentPage - 1)
               if (onChange) {
-                onChange(currentPage - 1);
+                onChange(currentPage - 1)
               }
             }
           }}
@@ -79,7 +78,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
         </Button>
         {dynamicPaginationList &&
           dynamicPaginationList.map((page, index) => {
-            const idx = index + 1;
+            const idx = index + 1
             return (
               <Button
                 key={page}
@@ -90,22 +89,22 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
                 } w-10 `}
                 onClick={() => {
                   if (onChange) {
-                    onChange(Number(page));
+                    onChange(Number(page))
                   }
-                  setCurrentPage(Number(page));
+                  setCurrentPage(Number(page))
                 }}
               >
                 {page}
               </Button>
-            );
+            )
           })}
         <Button
           disabled={currentPage === paginationCount}
           onClick={() => {
             if (currentPage < paginationCount) {
-              setCurrentPage(currentPage + 1);
+              setCurrentPage(currentPage + 1)
               if (onChange) {
-                onChange(currentPage + 1);
+                onChange(currentPage + 1)
               }
             }
           }}
@@ -113,35 +112,35 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
           <SvgRightArrow />
         </Button>
       </div>
-    );
+    )
   },
-);
+)
 
 Pagination.defaultProps = {
   maxPageCount: 10,
-};
+}
 
 export interface PaginationProps {
   /**
    * className for the whole component
    */
-  className?: string; // ✅
-  current?: number;
+  className?: string // ✅
+  current?: number
   // ✅
   /**
    * For `limit` pagination item count. For example. if you have `30 pages` and
    * you `don't want to` have a pagination with 30 items, you can set `limit` prop to `5`.
    * It's `10` by default.
    */
-  maxPageCount?: number;
+  maxPageCount?: number
   // ✅
-  onChange?: (page: number) => void;
+  onChange?: (page: number) => void
   // ✅
   /**
    * If you set per page prop, `we can calculate page count automatically`.
    * Don't forget to set `total` prop too.
    */
-  perPage?: number;
+  perPage?: number
   // ✅
-  total: number; // ✅
+  total: number // ✅
 }

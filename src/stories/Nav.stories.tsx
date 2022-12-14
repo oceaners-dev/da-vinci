@@ -1,11 +1,11 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Nav } from '../components/nav/Nav';
+import React from 'react'
+import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Nav } from '../components/nav/Nav'
 
 export default {
   title: 'Display/Nav (not finished)',
   component: Nav,
-} as ComponentMeta<typeof Nav>;
+} as ComponentMeta<typeof Nav>
 
 const Template: ComponentStory<typeof Nav> = (args) => {
   return (
@@ -13,8 +13,8 @@ const Template: ComponentStory<typeof Nav> = (args) => {
       //   className="!bg-gray-200 border-solid border-2 border-gray-400 text-gray-500 text-sm font-light"
       {...args}
     />
-  );
-};
+  )
+}
 
 const items = [
   {
@@ -41,21 +41,21 @@ const items = [
       </svg>
     ),
   },
-];
+]
 
-export const Vertical = Template.bind({});
-export const Horizontal = Template.bind({});
+export const Vertical = Template.bind({})
+export const Horizontal = Template.bind({})
 // export const HeaderWithSidebar = Template.bind({});
 // export const Footer = Template.bind({});
 
 Vertical.args = {
   items: items,
-};
+}
 
 Horizontal.args = {
   vertical: false,
   items: items,
-};
+}
 
 // HeaderWithSidebar.args = {
 //   fullHeight: true,

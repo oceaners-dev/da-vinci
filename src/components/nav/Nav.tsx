@@ -1,8 +1,8 @@
-import React, { forwardRef, useEffect, useState } from 'react';
-import uuid from 'react-uuid';
-import { Card } from '../card-UNFINISHED/Card';
-import { Link } from '../link/Link';
-import { SvgExpandToRight } from './Svg';
+import React, { forwardRef, useEffect, useState } from 'react'
+import uuid from 'react-uuid'
+import { Card } from '../card-UNFINISHED/Card'
+import { Link } from '../link/Link'
+import { SvgExpandToRight } from './Svg'
 
 const Nav = forwardRef<HTMLDivElement, NavProps>((props, ref) => {
   const {
@@ -16,18 +16,18 @@ const Nav = forwardRef<HTMLDivElement, NavProps>((props, ref) => {
     logo,
     onExpandChange, // ✅
     vertical,
-  } = props;
+  } = props
   const [isExpandedState, setIsExpandedState] = useState<boolean>(
     expanded as boolean,
-  );
+  )
 
   useEffect(() => {
-    setIsExpandedState(expanded as boolean);
-  }, [expanded]);
+    setIsExpandedState(expanded as boolean)
+  }, [expanded])
 
   useEffect(() => {
-    onExpandChange && onExpandChange(isExpandedState);
-  }, [isExpandedState]);
+    onExpandChange && onExpandChange(isExpandedState)
+  }, [isExpandedState])
 
   return (
     <nav className={''}>
@@ -64,7 +64,7 @@ const Nav = forwardRef<HTMLDivElement, NavProps>((props, ref) => {
                 >
                   {vertical ? (isExpandedState ? item.label : '') : item.label}
                 </Link>
-              );
+              )
             })}
           </div>
         )}
@@ -77,7 +77,7 @@ const Nav = forwardRef<HTMLDivElement, NavProps>((props, ref) => {
             <button
               className="w-fit ml-3"
               onClick={() => {
-                setIsExpandedState(!isExpandedState);
+                setIsExpandedState(!isExpandedState)
               }}
             >
               <SvgExpandToRight
@@ -88,41 +88,41 @@ const Nav = forwardRef<HTMLDivElement, NavProps>((props, ref) => {
         )}
       </Card>
     </nav>
-  );
-});
+  )
+})
 
 Nav.defaultProps = {
   expanded: true,
   hasExpandButton: true,
   vertical: true,
-};
+}
 
 export interface NavProps {
   // user must compare something with one of NavItem's param
-  activeItem?: NavItem;
-  children?: React.ReactNode;
-  className?: React.HTMLAttributes<HTMLElement>['className'];
-  expanded?: boolean;
+  activeItem?: NavItem
+  children?: React.ReactNode
+  className?: React.HTMLAttributes<HTMLElement>['className']
+  expanded?: boolean
   /**
    * @description: There's two logo type: `expandedLogo` and `logo`. When `Nav` expanded, `expandedLogo` will be displayed. If your logo is small, you can use same logo.
    */
-  expandedLogo?: React.ReactNode;
-  hasExpandButton?: boolean;
-  items?: NavItem[];
-  logo?: React.ReactNode;
+  expandedLogo?: React.ReactNode
+  hasExpandButton?: boolean
+  items?: NavItem[]
+  logo?: React.ReactNode
   /**
    * You can watch changes with this function.
    * @param isExpanded
    * @returns
    */
-  onExpandChange?: (isExpanded: boolean) => void;
-  vertical?: boolean;
+  onExpandChange?: (isExpanded: boolean) => void
+  vertical?: boolean
 }
 
 export interface NavItem {
-  icon?: React.ReactNode;
-  label: string;
-  link: string;
+  icon?: React.ReactNode
+  label: string
+  link: string
 }
 
-export { Nav };
+export { Nav }

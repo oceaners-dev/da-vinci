@@ -1,7 +1,7 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Layout } from '../components/layout/Layout';
-import { Nav } from '../components/nav/Nav';
+import React from 'react'
+import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Layout } from '../components/layout/Layout'
+import { Nav } from '../components/nav/Nav'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -19,14 +19,14 @@ export default {
       },
     },
   },
-} as ComponentMeta<typeof Layout>;
+} as ComponentMeta<typeof Layout>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Layout> = (args) => <Layout {...args} />;
+const Template: ComponentStory<typeof Layout> = (args) => <Layout {...args} />
 
-export const Default = Template.bind({});
-export const HeaderWithSidebar = Template.bind({});
-export const Footer = Template.bind({});
+export const Default = Template.bind({})
+export const HeaderWithSidebar = Template.bind({})
+export const Footer = Template.bind({})
 
 Default.args = {
   fullHeight: true,
@@ -39,7 +39,7 @@ Default.args = {
       </div>
     </>
   ),
-};
+}
 
 HeaderWithSidebar.args = {
   fullHeight: true,
@@ -57,7 +57,7 @@ HeaderWithSidebar.args = {
       </div>
     </>
   ),
-};
+}
 
 Footer.args = {
   fullHeight: true,
@@ -75,7 +75,7 @@ Footer.args = {
       </div>
     </>
   ),
-};
+}
 
 // WithImage.parameters = {
 //   docs: {

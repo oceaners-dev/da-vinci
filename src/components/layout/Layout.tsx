@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavProvider } from '../nav/Context';
+import React from 'react'
+import { NavProvider } from '../nav/Context'
 
 // TODO: https://ui.mantine.dev/category/navbars copy something
 export function Layout(props: LayoutProps) {
@@ -11,7 +11,7 @@ export function Layout(props: LayoutProps) {
     fullHeight,
     footer,
     ...rest
-  } = props;
+  } = props
   return (
     <div
       className={`
@@ -32,33 +32,33 @@ export function Layout(props: LayoutProps) {
       </div>
       {footer && <div className="w-full box-border">{footer}</div>}
     </div>
-  );
+  )
 }
 
 Layout.defaultProps = {
   hasSidebar: false,
-};
+}
 
 export interface LayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
   /**
    * classNames for `Layout` wrapper
    * @type {React.ReactNode}
    * @memberof LayoutProps
    */
-  className?: React.HTMLAttributes<HTMLElement>['className'];
+  className?: React.HTMLAttributes<HTMLElement>['className']
   /**
    * Footer will be displayed on bottom of the layout
    * @type {React.ReactNode}
    * @memberof LayoutProps
    */
-  footer?: React.ReactNode;
-  fullHeight?: boolean;
-  hasSidebar?: boolean;
+  footer?: React.ReactNode
+  fullHeight?: boolean
+  hasSidebar?: boolean
   /**
    * Header will be displayed on top of the layout
    * @type {React.ReactNode}
    * @memberof LayoutProps
    */
-  header?: React.ReactNode;
+  header?: React.ReactNode
 }

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { SVGProps } from 'react';
+import * as React from 'react'
+import { SVGProps } from 'react'
 
 export const DaVinciLogo = (props: SVGProps<SVGSVGElement>) => (
   <svg width={32} height={32} viewBox="0 0 128 128" {...props}>
@@ -61,7 +61,7 @@ export const DaVinciLogo = (props: SVGProps<SVGSVGElement>) => (
       clipPath="url(#e)"
     />
   </svg>
-);
+)
 
 export const SvgClear = (props: SVGProps<SVGSVGElement>) => (
   <svg width={32} height={32} viewBox="0 0 24 24" {...props}>
@@ -70,7 +70,7 @@ export const SvgClear = (props: SVGProps<SVGSVGElement>) => (
       d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"
     />
   </svg>
-);
+)
 
 export const SvgEyeOff = (props: SVGProps<SVGSVGElement>) => (
   <svg width={32} height={32} viewBox="0 0 512 512" {...props}>
@@ -83,7 +83,7 @@ export const SvgEyeOff = (props: SVGProps<SVGSVGElement>) => (
       d="M256 352a96 96 0 0 1-92.6-121.34l-69.07-69.08C66.12 187.42 39.24 221.14 16 256c26.42 44 62.56 89.24 100.2 115.18C159.38 400.92 206.33 416 255.76 416A233.47 233.47 0 0 0 335 402.2l-53.61-53.6A95.84 95.84 0 0 1 256 352Zm0-192a96 96 0 0 1 92.6 121.34L419.26 352c29.15-26.25 56.07-61.56 76.74-96-26.38-43.43-62.9-88.56-101.18-114.82C351.1 111.2 304.31 96 255.76 96a222.92 222.92 0 0 0-78.21 14.29l53.11 53.11A95.84 95.84 0 0 1 256 160Z"
     />
   </svg>
-);
+)
 
 export const SvgEyeOn = (props: SVGProps<SVGSVGElement>) => (
   <svg width={32} height={32} viewBox="0 0 512 512" {...props}>
@@ -93,7 +93,7 @@ export const SvgEyeOn = (props: SVGProps<SVGSVGElement>) => (
       d="M394.82 141.18C351.1 111.2 304.31 96 255.76 96c-43.69 0-86.28 13-126.59 38.48C88.52 160.23 48.67 207 16 256c26.42 44 62.56 89.24 100.2 115.18C159.38 400.92 206.33 416 255.76 416c49 0 95.85-15.07 139.3-44.79C433.31 345 469.71 299.82 496 256c-26.38-43.43-62.9-88.56-101.18-114.82ZM256 352a96 96 0 1 1 96-96 96.11 96.11 0 0 1-96 96Z"
     />
   </svg>
-);
+)
 
 export function SvgX(props: SVGProps<SVGSVGElement>) {
   return (
@@ -103,7 +103,7 @@ export function SvgX(props: SVGProps<SVGSVGElement>) {
         d="M18.3 5.71a.996.996 0 0 0-1.41 0L12 10.59L7.11 5.7A.996.996 0 1 0 5.7 7.11L10.59 12L5.7 16.89a.996.996 0 1 0 1.41 1.41L12 13.41l4.89 4.89a.996.996 0 1 0 1.41-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"
       />
     </svg>
-  );
+  )
 }
 
 export function SvgLeftArrow(props: SVGProps<SVGSVGElement>) {
@@ -114,7 +114,7 @@ export function SvgLeftArrow(props: SVGProps<SVGSVGElement>) {
         d="M13.5 8.5a.5.5 0 0 0 0-1H3.803l4.031-3.628a.5.5 0 1 0-.668-.744l-5 4.5a.5.5 0 0 0 0 .744l5 4.5a.5.5 0 1 0 .668-.744L3.803 8.5H13.5Z"
       />
     </svg>
-  );
+  )
 }
 
 export function SvgRightArrow(props: SVGProps<SVGSVGElement>) {
@@ -125,7 +125,7 @@ export function SvgRightArrow(props: SVGProps<SVGSVGElement>) {
         d="M2.5 7.5a.5.5 0 1 0 0 1h9.697l-4.031 3.628a.5.5 0 1 0 .668.744l5-4.5a.5.5 0 0 0 0-.744l-5-4.5a.5.5 0 0 0-.668.744L12.197 7.5H2.5Z"
       />
     </svg>
-  );
+  )
 }
 
 export function SvgBottomArrow(props: SVGProps<SVGSVGElement>) {
@@ -136,7 +136,7 @@ export function SvgBottomArrow(props: SVGProps<SVGSVGElement>) {
         d="M8.12 9.29L12 13.17l3.88-3.88a.996.996 0 1 1 1.41 1.41l-4.59 4.59a.996.996 0 0 1-1.41 0L6.7 10.7a.996.996 0 0 1 0-1.41c.39-.38 1.03-.39 1.42 0z"
       ></path>
     </svg>
-  );
+  )
 }
 
 export function SvgTick(props: SVGProps<SVGSVGElement>) {
@@ -144,5 +144,5 @@ export function SvgTick(props: SVGProps<SVGSVGElement>) {
     <svg width="1em" height="1em" viewBox="0 0 15 15" {...props}>
       <path fill="none" stroke="currentColor" d="M4 7.5L7 10l4-5"></path>
     </svg>
-  );
+  )
 }

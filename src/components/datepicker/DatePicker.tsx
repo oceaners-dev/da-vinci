@@ -1,51 +1,51 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable max-len */
-import React, { useRef, useContext, useState } from 'react';
-import uuid from 'react-uuid';
-import { useClickOutside } from '../../hooks';
-import { SvgLeftArrow, SvgRightArrow } from '../../utils/svg';
-import { Card } from '../card-UNFINISHED/Card';
-import { Input } from '../input/Input';
-import { Portal } from '../portal/Portal';
-import { DatepickerCtx, useDatepickerCtx } from './DatepickerContext';
+import React, { useRef, useContext, useState } from 'react'
+import uuid from 'react-uuid'
+import { useClickOutside } from '../../hooks'
+import { SvgLeftArrow, SvgRightArrow } from '../../utils/svg'
+import { Card } from '../card-UNFINISHED/Card'
+import { Input } from '../input/Input'
+import { Portal } from '../portal/Portal'
+import { DatepickerCtx, useDatepickerCtx } from './DatepickerContext'
 import {
   beginningDayOfWeek,
   daysInMonth,
   daysOfWeekNames,
   formattedDate,
   monthNames,
-} from './functions';
+} from './functions'
 
 export interface DatePickerProps {
   /**
    * For `close` calendar dropdown after select a date
    */
-  closeOnSelect?: boolean;
-  date: Date;
-  onChange: (date: Date) => void;
+  closeOnSelect?: boolean
+  date: Date
+  onChange: (date: Date) => void
   /**
    * @default true
    * @description If true, the datepicker `will be rendered in a full screen portal` for better experience.
    */
-  openInModal?: boolean;
+  openInModal?: boolean
 }
 
 interface CalendarProps {
   /**
    * For closing the calendar when clicking outside at mobile
    */
-  calendarRef?: React.Ref<HTMLDivElement>;
-  closeFunction: () => void;
+  calendarRef?: React.Ref<HTMLDivElement>
+  closeFunction: () => void
   /**
    * For `close` calendar dropdown after select a date
    */
-  closeOnSelect?: boolean;
+  closeOnSelect?: boolean
   /**
    * @default true
    * @description If true, the datepicker `will be rendered in a full screen portal` for better experience.
    */
-  openInModal?: boolean;
-  ref: React.Ref<HTMLDivElement>;
+  openInModal?: boolean
+  ref: React.Ref<HTMLDivElement>
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -53,8 +53,8 @@ const DateSelection = ({
   closeFunction,
   closeOnSelect,
 }: {
-  closeFunction: () => void;
-  closeOnSelect?: boolean;
+  closeFunction: () => void
+  closeOnSelect?: boolean
 }) => {
   const {
     nextMonth,
@@ -64,12 +64,12 @@ const DateSelection = ({
     selectDate,
     visible: { month, year },
     isSelectedDate,
-  } = useContext(DatepickerCtx);
+  } = useContext(DatepickerCtx)
 
-  const dates = [];
+  const dates = []
 
   for (let i = 0; i < beginningDayOfWeek(month, year); i++) {
-    dates.push(<div key={`emptybefore${i}`} />);
+    dates.push(<div key={`emptybefore${i}`} />)
   }
 
   for (let i = 1; i <= daysInMonth(month, year); i++) {
@@ -80,17 +80,17 @@ const DateSelection = ({
           isSelectedDate(i) ? 'bg-gray-300 ' : ''
         }`}
         onClick={() => {
-          selectDate(i);
+          selectDate(i)
 
           if (closeOnSelect) {
-            closeFunction();
+            closeFunction()
           }
         }}
         style={{ textAlign: 'center' }}
       >
         {i}
       </button>,
-    );
+    )
   }
 
   return (
@@ -145,8 +145,8 @@ const DateSelection = ({
 
       {dates}
     </div>
-  );
-};
+  )
+}
 
 /**
  * Month Selection Component
@@ -155,7 +155,7 @@ const DateSelection = ({
 // eslint-disable-next-line @typescript-eslint/ban-types
 const MonthSelection: React.FC<{}> = () => {
   const { viewYears, selectMonth, nextYear, prevYear, visible } =
-    useContext(DatepickerCtx);
+    useContext(DatepickerCtx)
 
   return (
     <div
@@ -181,8 +181,8 @@ const MonthSelection: React.FC<{}> = () => {
         </CalButton>
       ))}
     </div>
-  );
-};
+  )
+}
 
 /**
  * Year Selection Component
@@ -195,13 +195,13 @@ const YearSelection: React.FC<{}> = () => {
     prevDecade,
     nextDecade,
     visible: { year },
-  } = useContext(DatepickerCtx);
+  } = useContext(DatepickerCtx)
 
-  const years = [];
-  const [minYear, maxYear] = [year - 6, year + 6];
+  const years = []
+  const [minYear, maxYear] = [year - 6, year + 6]
 
   for (let i = minYear; i < maxYear; i++) {
-    years.push(<CalButton onClick={() => selectYear(i)}>{i}</CalButton>);
+    years.push(<CalButton onClick={() => selectYear(i)}>{i}</CalButton>)
   }
 
   return (
@@ -224,20 +224,20 @@ const YearSelection: React.FC<{}> = () => {
 
       {years}
     </div>
-  );
-};
+  )
+}
 
 const buttonClassName =
-  'hover:bg-gray-200 rounded p-1 text-sm flex align-center justify-center focus:outline-none';
+  'hover:bg-gray-200 rounded p-1 text-sm flex align-center justify-center focus:outline-none'
 
 const CalButton: React.FC<{
-  chevron?: 'right' | 'left';
-  children?: React.ReactNode;
-  className?: string;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  style?: React.StyleHTMLAttributes<HTMLButtonElement>;
+  chevron?: 'right' | 'left'
+  children?: React.ReactNode
+  className?: string
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  style?: React.StyleHTMLAttributes<HTMLButtonElement>
 }> = (props) => {
-  let children = null;
+  let children = null
 
   if (props.chevron && props.chevron === 'left') {
     children = (
@@ -245,15 +245,15 @@ const CalButton: React.FC<{
         className="w-5 h-5 stroke-current"
         style={{ strokeWidth: 0 }}
       />
-    );
+    )
   } else if (props.chevron && props.chevron === 'right') {
     children = (
       <SvgRightArrow
         className="w-5 h-5 stroke-current"
         style={{ strokeWidth: 0 }}
       />
-    );
-  } else children = props.children;
+    )
+  } else children = props.children
 
   return (
     <button
@@ -263,17 +263,17 @@ const CalButton: React.FC<{
     >
       {children}
     </button>
-  );
-};
+  )
+}
 
 const Calendar: React.FC<CalendarProps> = React.forwardRef<
   HTMLDivElement,
   CalendarProps
 >((props, ref) => {
-  const { view } = useContext(DatepickerCtx);
-  const clickRef = useClickOutside(() => props.closeFunction());
+  const { view } = useContext(DatepickerCtx)
+  const clickRef = useClickOutside(() => props.closeFunction())
 
-  let selectionComponent = null;
+  let selectionComponent = null
   switch (view) {
     case 'date':
       selectionComponent = (
@@ -281,14 +281,14 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<
           closeOnSelect={props.closeOnSelect}
           closeFunction={() => props.closeFunction()}
         />
-      );
-      break;
+      )
+      break
     case 'month':
-      selectionComponent = <MonthSelection />;
-      break;
+      selectionComponent = <MonthSelection />
+      break
     case 'year':
-      selectionComponent = <YearSelection />;
-      break;
+      selectionComponent = <YearSelection />
+      break
     default:
   }
 
@@ -309,28 +309,28 @@ const Calendar: React.FC<CalendarProps> = React.forwardRef<
     >
       {selectionComponent}
     </Card>
-  );
-});
+  )
+})
 
 const RawDatePicker: React.FC<{
   /**
    * For `close` calendar dropdown after select a date
    */
-  closeOnSelect?: boolean;
-  date: Date;
-  onChange: (date: Date) => void;
+  closeOnSelect?: boolean
+  date: Date
+  onChange: (date: Date) => void
   /**
    * @default true
    * @description If true, the datepicker `will be rendered in a full screen portal` for better experience.
    */
-  openInModal?: boolean;
+  openInModal?: boolean
 }> = ({ closeOnSelect, date, onChange, openInModal }) => {
-  const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
-  const clickRef = useClickOutside(() => setShowDatePicker(false));
+  const [showDatePicker, setShowDatePicker] = useState<boolean>(false)
+  const clickRef = useClickOutside(() => setShowDatePicker(false))
 
-  const popupNode = useRef<HTMLElement>();
-  const ctxValue = useDatepickerCtx(date, onChange, popupNode);
-  const calendarRef = useRef<HTMLDivElement>(null);
+  const popupNode = useRef<HTMLElement>()
+  const ctxValue = useDatepickerCtx(date, onChange, popupNode)
+  const calendarRef = useRef<HTMLDivElement>(null)
 
   return (
     <DatepickerCtx.Provider value={ctxValue}>
@@ -338,7 +338,7 @@ const RawDatePicker: React.FC<{
         <Input
           type="text"
           onFocus={() => {
-            setShowDatePicker(true);
+            setShowDatePicker(true)
           }}
           value={
             date
@@ -370,8 +370,8 @@ const RawDatePicker: React.FC<{
         {/* <Calendar ref={calendarRef} /> */}
       </div>
     </DatepickerCtx.Provider>
-  );
-};
+  )
+}
 
 export const DatePicker: React.FC<DatePickerProps> = (props) => (
   <RawDatePicker
@@ -380,8 +380,8 @@ export const DatePicker: React.FC<DatePickerProps> = (props) => (
     onChange={props.onChange}
     openInModal={props.openInModal}
   />
-);
+)
 
 DatePicker.defaultProps = {
   closeOnSelect: true,
-};
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export const renderUserInputIcon = (
   direction: 'before' | 'after',
@@ -12,5 +12,5 @@ export const renderUserInputIcon = (
     >
       {children}
     </div>
-  );
-};
+  )
+}

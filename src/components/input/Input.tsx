@@ -1,11 +1,11 @@
-import React, { useEffect, useId, useState } from 'react';
-import { useMergedRef } from '../../hooks';
-import { SvgClear, SvgEyeOff, SvgEyeOn } from '../../utils/svg';
+import React, { useEffect, useId, useState } from 'react'
+import { useMergedRef } from '../../hooks'
+import { SvgClear, SvgEyeOff, SvgEyeOn } from '../../utils/svg'
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (props, ref) => {
     // TODO: Add colors
-    const inputRef = React.useRef<HTMLInputElement>(null);
+    const inputRef = React.useRef<HTMLInputElement>(null)
     const {
       bordered, // ✅
       className, // ✅
@@ -27,24 +27,24 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       wrapperClasses, // ✅
       wrapperOnClick,
       ...rest
-    } = props;
+    } = props
 
-    const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
-    const [isInputEmpty, setIsInputEmpty] = useState<boolean>(true);
-    const [isInputActive, setIsInputActive] = useState<boolean>(false);
+    const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true)
+    const [isInputEmpty, setIsInputEmpty] = useState<boolean>(true)
+    const [isInputActive, setIsInputActive] = useState<boolean>(false)
 
-    const inputId = useId();
+    const inputId = useId()
 
-    const inputRefs = useMergedRef(inputRef, ref);
+    const inputRefs = useMergedRef(inputRef, ref)
     useEffect(() => {
-      if (!inputRef.current) return;
+      if (!inputRef.current) return
 
       const listener = (e: Event) => {
-        const inputValue = (e.target! as HTMLInputElement).value;
-        setIsInputEmpty(inputValue === '');
-      };
-      inputRef.current.addEventListener('input', listener);
-    }, [inputRef]);
+        const inputValue = (e.target! as HTMLInputElement).value
+        setIsInputEmpty(inputValue === '')
+      }
+      inputRef.current.addEventListener('input', listener)
+    }, [inputRef])
 
     const renderLabelBox = (position: 'left' | 'right', label: string) => (
       <div
@@ -62,9 +62,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       >
         {label}
       </div>
-    );
+    )
 
-    const renderComponentBox = (component: React.ReactNode) => component;
+    const renderComponentBox = (component: React.ReactNode) => component
 
     return (
       <div
@@ -104,9 +104,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             data-name="click-helper"
             className="h-full w-full absolute top-0 left-0 box-border"
             onClick={() => {
-              inputRef.current?.focus();
+              inputRef.current?.focus()
               if (wrapperOnClick) {
-                wrapperOnClick();
+                wrapperOnClick()
               }
             }}
           />
@@ -120,10 +120,10 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={inputRefs}
             disabled={disabled}
             onFocus={() => {
-              setIsInputActive(true);
+              setIsInputActive(true)
             }}
             onBlur={() => {
-              setIsInputActive(false);
+              setIsInputActive(false)
             }}
             className={
               'relative z-20 w-fit h-full outline-none outline-0 outline-offset-0 bg-transparent pl-4 box-border ' +
@@ -150,8 +150,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                   : ' absolute top-1/2 right-0 -translate-y-1/2 ')
               }
               onClick={() => {
-                inputRef.current!.value = '';
-                setIsInputEmpty(true);
+                inputRef.current!.value = ''
+                setIsInputEmpty(true)
               }}
             >
               <SvgClear className="h-full w-3 relative z-20 inline-flex" />
@@ -162,7 +162,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             <button
               className="box-border h-full w-fit pr-4 block"
               onClick={() => {
-                setIsPasswordHidden(!isPasswordHidden);
+                setIsPasswordHidden(!isPasswordHidden)
               }}
             >
               {isPasswordHidden ? (
@@ -186,15 +186,15 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
         </div>
       </div>
-    );
+    )
   },
-);
+)
 
 Input.defaultProps = {
   showClear: true,
   rounded: false,
   bordered: false,
-};
+}
 
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'defaultValue'> {
@@ -202,68 +202,68 @@ export interface InputProps
    * Is input has borders
    * @default false
    */
-  bordered?: boolean;
+  bordered?: boolean
   /**
    *  className for `<input>` directly.
    * @type {React.HTMLAttributes<HTMLInputElement>['className']}
    * @memberof InputProps
    *
    */
-  className?: React.HTMLAttributes<HTMLInputElement>['className'];
-  defaultValue?: string;
+  className?: React.HTMLAttributes<HTMLInputElement>['className']
+  defaultValue?: string
   /**
    * Disables translate-y animation for input
    */
-  disableMoving?: boolean;
-  disabled?: boolean;
+  disableMoving?: boolean
+  disabled?: boolean
   /**
    * Display a informative small text above input
    */
-  helperText?: string;
+  helperText?: string
   /**
    * If you need to hide the input, you can use this prop. But `think again`. Probably you are doing something `wrong`.
    */
-  readonly hideInput?: boolean;
+  readonly hideInput?: boolean
   /**
    * Text label for input
    */
-  label?: string;
-  labelLeft?: string;
+  label?: string
+  labelLeft?: string
   /**
    * The placeholder becomes a label
    */
-  labelPlaceholder?: string;
-  labelRight?: string;
+  labelPlaceholder?: string
+  labelRight?: string
   /**
    * If you want to add a component to the left of the input, you can use this prop. We don't set `overflow hidden` for Input's wrapper. So if your component overflows, you can use `wrapperClasses` prop to set `overflow-hidden` for wrapper.
    */
-  leftComponent?: React.ReactNode;
+  leftComponent?: React.ReactNode
 
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  password?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  password?: boolean
   /**
    * If you want to add a component to the left of the input, you can use this prop. We don't set `overflow hidden` for Input's wrapper. So if your component overflows, you can use `wrapperClasses` prop to set `overflow-hidden` for wrapper.
    */
-  rightComponent?: React.ReactNode;
+  rightComponent?: React.ReactNode
   /**
    * @default false
    * Fully rounded input borders
    */
-  rounded?: boolean;
+  rounded?: boolean
   /**
    * Show clear button at right side of input when it's not empty.
    * @default true
    */
-  showClear?: boolean;
+  showClear?: boolean
   /**
    * If you want to add classes for size prop, use `className` prop with `data-[size=*]` selector. Eg: `data-[size=large]:px-10`
    * @type {('small' | 'default' | 'large')}
    * @memberof InputProps
    */
-  sizing?: 'small' | 'default' | 'large';
+  sizing?: 'small' | 'default' | 'large'
   /**
    * className for parent div
    */
-  wrapperClasses?: string;
-  wrapperOnClick?: () => void;
+  wrapperClasses?: string
+  wrapperOnClick?: () => void
 }

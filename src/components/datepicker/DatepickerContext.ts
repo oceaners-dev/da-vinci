@@ -1,32 +1,32 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react'
 
-type ViewState = 'date' | 'month' | 'year';
+type ViewState = 'date' | 'month' | 'year'
 
 interface MonthYear {
-  month: number;
-  year: number;
+  month: number
+  year: number
 }
 
 interface DatepickerContextType {
-  date: Date | null;
-  isSelectedDate: (d: number) => boolean;
-  isVisible: boolean;
-  nextDecade: () => void;
-  nextMonth: () => void;
-  nextYear: () => void;
-  prevDecade: () => void;
-  prevMonth: () => void;
-  prevYear: () => void;
-  selectDate: (d: number) => void;
-  selectMonth: (m: number) => void;
-  selectYear: (y: number) => void;
-  showCalendar: () => void;
-  toggleCalendar: () => void;
-  view: ViewState;
-  viewMonths: () => void;
-  viewYears: () => void;
-  visible: MonthYear;
+  date: Date | null
+  isSelectedDate: (d: number) => boolean
+  isVisible: boolean
+  nextDecade: () => void
+  nextMonth: () => void
+  nextYear: () => void
+  prevDecade: () => void
+  prevMonth: () => void
+  prevYear: () => void
+  selectDate: (d: number) => void
+  selectMonth: (m: number) => void
+  selectYear: (y: number) => void
+  showCalendar: () => void
+  toggleCalendar: () => void
+  view: ViewState
+  viewMonths: () => void
+  viewYears: () => void
+  visible: MonthYear
 }
 
 export const DatepickerCtx = createContext<DatepickerContextType>({
@@ -51,7 +51,7 @@ export const DatepickerCtx = createContext<DatepickerContextType>({
   showCalendar: () => {},
   toggleCalendar: () => {},
   isSelectedDate: (d) => false,
-});
+})
 
 export function useDatepickerCtx(
   date: Date,
@@ -61,16 +61,16 @@ export function useDatepickerCtx(
   const [monthYear, setMonthYear] = useState<MonthYear>({
     month: date?.getMonth() ?? new Date().getMonth(),
     year: date?.getFullYear() ?? new Date().getFullYear(),
-  });
+  })
 
-  const [view, setView] = useState<ViewState>('date');
+  const [view, setView] = useState<ViewState>('date')
 
-  const [isVisible, setVisible] = useState<boolean>(false);
+  const [isVisible, setVisible] = useState<boolean>(false)
 
   const selectDate = (d: number) => {
-    onChange(new Date(monthYear.year, monthYear.month, d));
-    setVisible(false);
-  };
+    onChange(new Date(monthYear.year, monthYear.month, d))
+    setVisible(false)
+  }
 
   const isSelectedDate = (d: number): boolean => {
     if (
@@ -78,37 +78,37 @@ export function useDatepickerCtx(
       monthYear.month === date.getMonth() &&
       monthYear.year === date.getFullYear()
     ) {
-      return true;
+      return true
     }
-    return false;
-  };
+    return false
+  }
 
   const selectMonth = (m: number) => {
-    setMonthYear((state) => ({ ...state, month: m }));
-    setView('date');
-  };
+    setMonthYear((state) => ({ ...state, month: m }))
+    setView('date')
+  }
 
   const selectYear = (y: number) => {
-    setMonthYear((state) => ({ ...state, year: y }));
-    setView('month');
-  };
+    setMonthYear((state) => ({ ...state, year: y }))
+    setView('month')
+  }
 
   useEffect(() => {
     function mouseDownListener(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
-        setVisible(false);
+        setVisible(false)
       }
     }
 
     if (isVisible) {
-      setMonthYear({ month: date.getMonth(), year: date.getFullYear() });
-      document.addEventListener('mousedown', mouseDownListener);
+      setMonthYear({ month: date.getMonth(), year: date.getFullYear() })
+      document.addEventListener('mousedown', mouseDownListener)
     }
 
     return () => {
-      document.removeEventListener('mousedown', mouseDownListener);
-    };
-  }, [isVisible]);
+      document.removeEventListener('mousedown', mouseDownListener)
+    }
+  }, [isVisible])
 
   return {
     date,
@@ -143,5 +143,5 @@ export function useDatepickerCtx(
     showCalendar: () => setVisible(true),
     toggleCalendar: () => setVisible((state) => !state),
     isSelectedDate,
-  };
+  }
 }

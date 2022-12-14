@@ -1,12 +1,12 @@
-import React, { forwardRef, useEffect, useState } from 'react';
-import uuid from 'react-uuid';
-import { SvgX } from '../../utils/svg';
-import { Button } from '../button/Button';
-import { Card } from '../card-UNFINISHED/Card';
-import { Input } from '../input/Input';
-import { Pagination } from '../pagination/Pagination';
-import { Space } from '../space/Space';
-import { SvgSearch, SvgSort } from './svg';
+import React, { forwardRef, useEffect, useState } from 'react'
+import uuid from 'react-uuid'
+import { SvgX } from '../../utils/svg'
+import { Button } from '../button/Button'
+import { Card } from '../card-UNFINISHED/Card'
+import { Input } from '../input/Input'
+import { Pagination } from '../pagination/Pagination'
+import { Space } from '../space/Space'
+import { SvgSearch, SvgSort } from './svg'
 
 export const Table = forwardRef<HTMLDivElement, TableProps>((props, ref) => {
   const {
@@ -21,29 +21,29 @@ export const Table = forwardRef<HTMLDivElement, TableProps>((props, ref) => {
     currentPage, // ✅
     hidePagination, // ✅
     onPageChange, // ✅
-  } = props;
+  } = props
 
-  const [current, setCurrent] = useState(currentPage ? currentPage : 1);
-  const [showingRows, setShowingRows] = useState<typeof rows>();
-  const [rowsState, setRowsState] = useState<typeof rows>();
-  const [updateTable, setUpdateTable] = useState<string>();
-  const [searchInput, setSearchInput] = useState<string>();
-
-  useEffect(() => {
-    if (!rows) return;
-    setRowsState(rows);
-  }, [rows]);
+  const [current, setCurrent] = useState(currentPage ? currentPage : 1)
+  const [showingRows, setShowingRows] = useState<typeof rows>()
+  const [rowsState, setRowsState] = useState<typeof rows>()
+  const [updateTable, setUpdateTable] = useState<string>()
+  const [searchInput, setSearchInput] = useState<string>()
 
   useEffect(() => {
-    if (!rowsState || !current) return;
+    if (!rows) return
+    setRowsState(rows)
+  }, [rows])
+
+  useEffect(() => {
+    if (!rowsState || !current) return
 
     setShowingRows(
       rowsState.slice(
         (current - 1) * maxRows!,
         (current - 1) * maxRows! + maxRows!,
       ),
-    );
-  }, [rowsState, current, updateTable]);
+    )
+  }, [rowsState, current, updateTable])
 
   return (
     <div className="flex flex-col">
@@ -71,15 +71,15 @@ export const Table = forwardRef<HTMLDivElement, TableProps>((props, ref) => {
                         <button
                           className="leading-none"
                           onClick={() => {
-                            setRowsState(rowsState?.sort(col.sorter));
-                            setUpdateTable(uuid());
+                            setRowsState(rowsState?.sort(col.sorter))
+                            setUpdateTable(uuid())
                             // reverse if already sorted
                             if (
                               rowsState?.[0][col.title] ===
                               showingRows![0][col.title]
                             ) {
-                              setRowsState(rowsState?.reverse());
-                              setUpdateTable(uuid());
+                              setRowsState(rowsState?.reverse())
+                              setUpdateTable(uuid())
                             }
                           }}
                         >
@@ -108,13 +108,13 @@ export const Table = forwardRef<HTMLDivElement, TableProps>((props, ref) => {
                                 placeholder="Search"
                                 value={searchInput}
                                 onChange={(e) => {
-                                  setSearchInput(e.target.value);
+                                  setSearchInput(e.target.value)
                                 }}
                               />
                               <button
                                 onClick={() => {
-                                  setRowsState(rows);
-                                  setSearchInput('');
+                                  setRowsState(rows)
+                                  setSearchInput('')
                                 }}
                               >
                                 <label
@@ -132,9 +132,9 @@ export const Table = forwardRef<HTMLDivElement, TableProps>((props, ref) => {
                                     rowsState?.filter((row) => {
                                       return row[col.title]
                                         .toLowerCase()
-                                        .includes(searchInput?.toLowerCase());
+                                        .includes(searchInput?.toLowerCase())
                                     }),
-                                  );
+                                  )
                                 }}
                               >
                                 Search
@@ -145,7 +145,7 @@ export const Table = forwardRef<HTMLDivElement, TableProps>((props, ref) => {
                       )}
                     </div>
                   </th>
-                );
+                )
               })}
           </tr>
         </thead>
@@ -186,10 +186,10 @@ export const Table = forwardRef<HTMLDivElement, TableProps>((props, ref) => {
                         >
                           <div className="text-left">{row[col.title]}</div>
                         </td>
-                      );
+                      )
                     })}
                 </tr>
-              );
+              )
             })}
         </tbody>
       </table>
@@ -200,86 +200,86 @@ export const Table = forwardRef<HTMLDivElement, TableProps>((props, ref) => {
           current={current}
           perPage={maxRows}
           onChange={(page) => {
-            setCurrent(page);
+            setCurrent(page)
             if (onPageChange) {
-              onPageChange(page);
+              onPageChange(page)
             }
           }}
         />
       )}
     </div>
-  );
-});
+  )
+})
 
 Table.defaultProps = {
   withBorder: true,
   maxRows: 15,
   currentPage: 1,
   hidePagination: false,
-};
+}
 
-type Row = { [key: string]: any };
+type Row = { [key: string]: any }
 
 export interface Column extends Pick<Row, any> {
-  render?: (col?: Column) => React.ReactNode;
+  render?: (col?: Column) => React.ReactNode
   // ✅
-  search?: boolean;
+  search?: boolean
   // ✅
-  sorter?: (a: any, b: any) => number;
+  sorter?: (a: any, b: any) => number
   // ✅
-  title: string;
+  title: string
   /**
    * You can define responsive width classes for each column.
    */
-  width?: string; // ✅
+  width?: string // ✅
 }
 
 export interface TableProps {
   /**
    * Column properties like `title`, `width`
    */
-  cols: Column[];
+  cols: Column[]
   /**
    * Enter which page number you want to display
    * @default 1
    */
-  currentPage?: number;
+  currentPage?: number
   /**
    * Hides pagination.
    * @default false
    */
-  hidePagination?: boolean;
+  hidePagination?: boolean
   /**
    * Adds background color to cells on hover
    */
-  highlightOnHover?: boolean;
+  highlightOnHover?: boolean
   /**
    * Maximum number of rows to display in a page
    * @default 15
    */
-  maxRows?: number;
+  maxRows?: number
   /**
    * On page change callback
    */
-  onPageChange?: (page: number) => void;
+  onPageChange?: (page: number) => void
   /**
    * Data for the table
    */
-  rows: Row[];
+  rows: Row[]
   /**
    * Adds background color to odd cols
    */
-  stripedHorizontal?: boolean;
+  stripedHorizontal?: boolean
   /**
    * Adds background color to odd cells
    */
-  stripedVertical?: boolean;
+  stripedVertical?: boolean
   /**
    * Horizontal borders between lines
    */
-  withBorder?: boolean;
+  withBorder?: boolean
   /**
    * Vertical borders between columns
    */
-  withColumnBorders?: boolean;
+  withColumnBorders?: boolean
 }

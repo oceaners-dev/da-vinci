@@ -1,17 +1,17 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext } from 'react'
 
 const NavContext = createContext<{
-  isExpanded?: boolean;
-  setIsExpanded: (isExpanded: boolean) => void;
+  isExpanded?: boolean
+  setIsExpanded: (isExpanded: boolean) => void
 }>({
   isExpanded: true,
   setIsExpanded: () => {
-    console.log();
+    console.log()
   },
-});
+})
 
 const NavProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isExpanded, setIsExpanded] = useState<boolean>();
+  const [isExpanded, setIsExpanded] = useState<boolean>()
 
   return (
     <NavContext.Provider
@@ -22,7 +22,7 @@ const NavProvider = ({ children }: { children: React.ReactNode }) => {
     >
       {children}
     </NavContext.Provider>
-  );
-};
+  )
+}
 
-export { NavContext, NavProvider };
+export { NavContext, NavProvider }

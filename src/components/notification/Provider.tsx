@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Cookie from 'cookie-universal';
-const cookies = Cookie();
-import { createRoot } from 'react-dom/client';
-import { useIsomorphicEffect } from '../../hooks/useIsomorphicEffect';
-import uuid from 'react-uuid';
-import { NotificationCard } from './Notification';
+import React, { useEffect, useRef, useState } from 'react'
+import Cookie from 'cookie-universal'
+const cookies = Cookie()
+import { createRoot } from 'react-dom/client'
+import { useIsomorphicEffect } from '../../hooks/useIsomorphicEffect'
+import uuid from 'react-uuid'
+import { NotificationCard } from './Notification'
 
 // TODO: add jsx support: https://stackoverflow.com/a/70464490
 export function NotificationProvider({
@@ -31,11 +31,11 @@ export function NotificationProvider({
     },
   },
 }: {
-  defaultSettings?: NotificationTypeDefaults;
+  defaultSettings?: NotificationTypeDefaults
 }) {
-  const [latestCookie, setLatestCookie] = useState<ToastProps | null>(null);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const [isWrapperCreated, setIsWrapperCreated] = useState<boolean>(false);
+  const [latestCookie, setLatestCookie] = useState<ToastProps | null>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const [isWrapperCreated, setIsWrapperCreated] = useState<boolean>(false)
 
   if (
     JSON.stringify(defaultSettings) !==
@@ -49,7 +49,7 @@ export function NotificationProvider({
         sameSite: true,
         encode: (value) => value,
       },
-    );
+    )
   }
 
   useIsomorphicEffect(() => {
@@ -57,36 +57,36 @@ export function NotificationProvider({
       // TODO: trigger notif.
       const currentCookie = cookies.get('da-vinci-notification', {
         parseJSON: true,
-      });
-      setLatestCookie(currentCookie);
-    });
-  });
+      })
+      setLatestCookie(currentCookie)
+    })
+  })
 
   useEffect(() => {
-    if (!document || !wrapperRef.current) return;
-    if (isWrapperCreated) return;
+    if (!document || !wrapperRef.current) return
+    if (isWrapperCreated) return
 
-    document.body.appendChild(wrapperRef.current);
+    document.body.appendChild(wrapperRef.current)
 
-    setIsWrapperCreated(true);
-  }, [isWrapperCreated, wrapperRef.current]);
+    setIsWrapperCreated(true)
+  }, [isWrapperCreated, wrapperRef.current])
 
   // useEffect(() => {
   //   if (!window) return
   // }, [])
 
   useEffect(() => {
-    if (!latestCookie || Object.entries(latestCookie).length === 0) return;
-    if (!isWrapperCreated) return;
-    const div = wrapperRef.current;
-    if (!div) return;
+    if (!latestCookie || Object.entries(latestCookie).length === 0) return
+    if (!isWrapperCreated) return
+    const div = wrapperRef.current
+    if (!div) return
 
     let innerWrapper = document.querySelector(
       `[data-position="${latestCookie.position}"]`,
-    );
+    )
     if (!innerWrapper) {
-      innerWrapper = document.createElement('div');
-      innerWrapper.setAttribute('data-position', latestCookie.position!);
+      innerWrapper = document.createElement('div')
+      innerWrapper.setAttribute('data-position', latestCookie.position!)
 
       // TODO: add default styles setting to wrapper
       // TODO: optimize css 👇🏻 (take normal css classes, parse it with position)
@@ -103,36 +103,36 @@ export function NotificationProvider({
         ' ' +
         'data-[position=topRight]:top-hf-side-padding data-[position=topRight]:right-hf-side-padding' +
         ' ' +
-        'data-[position=bottomRight]:bottom-hf-side-padding data-[position=bottomRight]:right-hf-side-padding';
-      wrapperRef.current.appendChild(innerWrapper);
+        'data-[position=bottomRight]:bottom-hf-side-padding data-[position=bottomRight]:right-hf-side-padding'
+      wrapperRef.current.appendChild(innerWrapper)
     }
 
-    const id = uuid();
-    const notification = document.createElement('div');
-    notification.setAttribute('class', 'da-vinci-notification-single');
-    notification.setAttribute('role', 'alert');
-    notification.setAttribute('data-id', id);
-    innerWrapper.appendChild(notification);
+    const id = uuid()
+    const notification = document.createElement('div')
+    notification.setAttribute('class', 'da-vinci-notification-single')
+    notification.setAttribute('role', 'alert')
+    notification.setAttribute('data-id', id)
+    innerWrapper.appendChild(notification)
 
-    const root = createRoot(notification);
-    root.render(<NotificationCard id={id} data={latestCookie} />);
+    const root = createRoot(notification)
+    root.render(<NotificationCard id={id} data={latestCookie} />)
 
     if (Number(latestCookie.duration) !== Number(0)) {
       setTimeout(() => {
-        root.unmount();
-        notification.remove();
-      }, latestCookie.duration);
+        root.unmount()
+        notification.remove()
+      }, latestCookie.duration)
     }
-  }, [latestCookie, isWrapperCreated]);
+  }, [latestCookie, isWrapperCreated])
 
-  return (<div ref={wrapperRef} id="da-vinci-notification" />) as any;
+  return (<div ref={wrapperRef} id="da-vinci-notification" />) as any
 }
 
 const toastNotification = (settings: ToastProps) => {
   const defaultSettings = cookies.get(
     'da-vinci-notification-settings',
-  ) as NotificationTypeDefaults;
-  const toastType = settings.type!;
+  ) as NotificationTypeDefaults
+  const toastType = settings.type!
 
   cookies.set(
     'da-vinci-notification',
@@ -154,25 +154,25 @@ const toastNotification = (settings: ToastProps) => {
       path: '/',
       sameSite: true,
     },
-  );
-  return document.dispatchEvent(new Event('cookiechange'));
-};
+  )
+  return document.dispatchEvent(new Event('cookiechange'))
+}
 
 const success = (settings: NotificationSettings) => {
-  toastNotification({ ...settings, type: 'success' });
-};
+  toastNotification({ ...settings, type: 'success' })
+}
 
 const info = (settings: NotificationSettings) => {
-  toastNotification({ ...settings, type: 'info' });
-};
+  toastNotification({ ...settings, type: 'info' })
+}
 
 const warning = (settings: NotificationSettings) => {
-  toastNotification({ ...settings, type: 'warning' });
-};
+  toastNotification({ ...settings, type: 'warning' })
+}
 
 const error = (settings: NotificationSettings) => {
-  toastNotification({ ...settings, type: 'error' });
-};
+  toastNotification({ ...settings, type: 'error' })
+}
 
 export type NotificationPosition =
   | 'top'
@@ -180,12 +180,12 @@ export type NotificationPosition =
   | 'topLeft'
   | 'bottomLeft'
   | 'topRight'
-  | 'bottomRight';
+  | 'bottomRight'
 
 /**
  * Type of the notification. Can be `success`, `info`, `warning`, `error`. Default is `success`.
  * */
-export type NotificationTypes = 'success' | 'info' | 'warning' | 'error';
+export type NotificationTypes = 'success' | 'info' | 'warning' | 'error'
 
 /**
  * @description Message type for Notification
@@ -199,15 +199,15 @@ export interface NotificationSettings {
   /**
    * @description You can pass CSS classes to notification.
    */
-  className?: string;
+  className?: string
   /**
    * @description Duration of notification as ms. Set is `0` for `disable auto closing`.
    */
   /**
    * @description Content of the notification.
    */
-  content: React.ReactNode;
-  duration?: number;
+  content: React.ReactNode
+  duration?: number
 
   /**
    * @description Title of the notification. Default is `Success`.
@@ -215,24 +215,24 @@ export interface NotificationSettings {
   /**
    * @description You can pass `emoji` icon.
    */
-  icon?: React.ReactNode;
+  icon?: React.ReactNode
   /**
    * @description Positions of the notification.
    * @enum `top`, `bottom`, `topLeft`, `bottomLeft`, `topRight`, `bottomRight`
    */
-  position?: NotificationPosition;
-  title?: React.ReactNode;
+  position?: NotificationPosition
+  title?: React.ReactNode
 }
 
 export interface ToastProps extends NotificationSettings {
-  type: NotificationTypes;
+  type: NotificationTypes
 }
 
 export interface NotificationTypeDefaults {
-  error?: Omit<NotificationSettings, 'content'>;
-  info?: Omit<NotificationSettings, 'content'>;
-  success?: Omit<NotificationSettings, 'content'>;
-  warning?: Omit<NotificationSettings, 'content'>;
+  error?: Omit<NotificationSettings, 'content'>
+  info?: Omit<NotificationSettings, 'content'>
+  success?: Omit<NotificationSettings, 'content'>
+  warning?: Omit<NotificationSettings, 'content'>
 }
 
 export const toast = {
@@ -240,9 +240,9 @@ export const toast = {
   info,
   warning,
   error,
-};
+}
 
 export const Notification = {
   Provider: NotificationProvider,
   toast,
-};
+}

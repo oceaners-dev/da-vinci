@@ -1,18 +1,18 @@
-import React, { useCallback } from 'react';
-import { Alert } from '../alert/Alert';
-import { ToastProps } from './Provider';
-import { NotificationIcons } from './svg';
+import React, { useCallback } from 'react'
+import { Alert } from '../alert/Alert'
+import { ToastProps } from './Provider'
+import { NotificationIcons } from './svg'
 
 export function NotificationCard({
   data,
   id,
 }: {
-  data: ToastProps;
-  id: string;
+  data: ToastProps
+  id: string
 }) {
   const closeNotification = useCallback(() => {
-    return document.querySelector('[data-id="' + id + '"]')?.remove();
-  }, []);
+    return document.querySelector('[data-id="' + id + '"]')?.remove()
+  }, [])
 
   return (
     <Alert
@@ -32,5 +32,5 @@ export function NotificationCard({
           : '#0284c7'
       }
     />
-  );
+  )
 }

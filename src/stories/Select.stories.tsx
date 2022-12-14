@@ -1,8 +1,8 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Select } from '../components/select/Select';
-import { faker } from '@faker-js/faker';
-import uuid from 'react-uuid';
+import React from 'react'
+import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { Select } from '../components/select/Select'
+import { faker } from '@faker-js/faker'
+import uuid from 'react-uuid'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -31,16 +31,16 @@ export default {
     onChange: { action: 'onChange' },
     disabled: { control: 'boolean' },
   },
-} as ComponentMeta<typeof Select>;
+} as ComponentMeta<typeof Select>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Select> = (args) => <Select {...args} />;
+const Template: ComponentStory<typeof Select> = (args) => <Select {...args} />
 
-export const Default = Template.bind({});
-export const Multiple = Template.bind({});
-export const Disabled = Template.bind({});
-export const CustomOptionComponent = Template.bind({});
-export const HideSelectedOptions = Template.bind({});
+export const Default = Template.bind({})
+export const Multiple = Template.bind({})
+export const Disabled = Template.bind({})
+export const CustomOptionComponent = Template.bind({})
+export const HideSelectedOptions = Template.bind({})
 
 Default.args = {
   options: Array.from({ length: 10 }, (_, i) => ({
@@ -49,7 +49,7 @@ Default.args = {
   })),
   label: "Dumbledore's Army",
   helperText: 'Join the army',
-};
+}
 
 Default.parameters = {
   docs: {
@@ -57,7 +57,7 @@ Default.parameters = {
       story: 'With `label` and `helperText` options',
     },
   },
-};
+}
 
 ////////////////////////
 Multiple.args = {
@@ -68,14 +68,14 @@ Multiple.args = {
   })),
   label: "Dumbledore's Army",
   helperText: 'Join the army',
-};
+}
 Multiple.parameters = {
   docs: {
     description: {
       story: 'With `multiple` option',
     },
   },
-};
+}
 
 ////////////////////////
 Disabled.args = {
@@ -87,14 +87,14 @@ Disabled.args = {
   })),
   label: "Dumbledore's Army",
   helperText: 'Join the army',
-};
+}
 Disabled.parameters = {
   docs: {
     description: {
       story: 'With `disabled` option',
     },
   },
-};
+}
 
 ////////////////////////
 CustomOptionComponent.args = {
@@ -111,14 +111,14 @@ CustomOptionComponent.args = {
       <div>Fersat</div>
     </div>
   ),
-};
+}
 CustomOptionComponent.parameters = {
   docs: {
     description: {
       story: 'With `disabled` option',
     },
   },
-};
+}
 
 ////////////////////////
 HideSelectedOptions.args = {
@@ -130,11 +130,11 @@ HideSelectedOptions.args = {
   })),
   label: "Dumbledore's Army",
   helperText: 'Join the army',
-};
+}
 HideSelectedOptions.parameters = {
   docs: {
     description: {
       story: 'With `disabled` option',
     },
   },
-};
+}

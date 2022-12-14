@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 
 export function useWindowEvent<K extends string>(
   type: K,
@@ -8,9 +8,9 @@ export function useWindowEvent<K extends string>(
   options?: boolean | AddEventListenerOptions,
 ) {
   useEffect(() => {
-    if (!window) return;
+    if (!window) return
     //@ts-ignore
-    window.addEventListener(type, listener, options); //@ts-ignore
-    return () => window.removeEventListener(type, listener, options);
-  }, [type, listener]);
+    window.addEventListener(type, listener, options) //@ts-ignore
+    return () => window.removeEventListener(type, listener, options)
+  }, [type, listener])
 }

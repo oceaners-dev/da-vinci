@@ -8,7 +8,7 @@
 export function formattedDate(date: Date): string {
   return `${date.getDate()} ${
     monthNames[date.getMonth()]
-  } ${date.getFullYear()}`;
+  } ${date.getFullYear()}`
 }
 
 /**
@@ -16,7 +16,7 @@ export function formattedDate(date: Date): string {
  * @param date
  */
 export function beginningDayOfWeek(m: number, y: number): number {
-  return new Date(y, m, 1).getDay();
+  return new Date(y, m, 1).getDay()
 }
 
 /**
@@ -31,11 +31,11 @@ export function daysInMonth(month: number, year: number) {
     case 7:
     case 9:
     case 11:
-      return 31;
+      return 31
     case 1:
-      return isLeapYear(year) ? 29 : 28;
+      return isLeapYear(year) ? 29 : 28
     default:
-      return 30;
+      return 30
   }
 }
 
@@ -44,7 +44,7 @@ export function daysInMonth(month: number, year: number) {
  * @param year
  */
 export function isLeapYear(year: number): boolean {
-  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0
 }
 
 export const daysOfWeekNames = [
@@ -55,7 +55,7 @@ export const daysOfWeekNames = [
   'Thursday',
   'Friday',
   'Saturday',
-];
+]
 
 export const monthNames = [
   'January',
@@ -70,4 +70,4 @@ export const monthNames = [
   'October',
   'November',
   'December',
-];
+]

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import uuid from 'react-uuid';
-import { useClickOutside, useShallowEffect } from '../../hooks';
-import { SvgBottomArrow, SvgClear, SvgTick } from '../../utils/svg';
-import { ForwardRefWithStaticComponents } from '../../utils/ts/forward-ref-with-static-component';
-import { Card } from '../card-UNFINISHED/Card';
-import { Input } from '../input/Input';
-import { Tag } from '../tag/Tag';
+import React, { useEffect, useState } from 'react'
+import uuid from 'react-uuid'
+import { useClickOutside, useShallowEffect } from '../../hooks'
+import { SvgBottomArrow, SvgClear, SvgTick } from '../../utils/svg'
+import { ForwardRefWithStaticComponents } from '../../utils/ts/forward-ref-with-static-component'
+import { Card } from '../card-UNFINISHED/Card'
+import { Input } from '../input/Input'
+import { Tag } from '../tag/Tag'
 
 // TODO: add tag for selected items
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
@@ -37,64 +37,62 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
       withoutDropdownIcon, // ✅
       zIndex, // 🚨
       ...rest
-    } = props;
+    } = props
 
-    const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>();
-    const [selected, setSelected] = useState(defaultSelectedValues);
-    const [optionsList, setOptionsList] = useState<Option[]>(options);
+    const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>()
+    const [selected, setSelected] = useState(defaultSelectedValues)
+    const [optionsList, setOptionsList] = useState<Option[]>(options)
 
     useEffect(() => {
-      if (!initiallyOpen) return;
-      setIsDropdownOpen(initiallyOpen);
-    }, [initiallyOpen]);
+      if (!initiallyOpen) return
+      setIsDropdownOpen(initiallyOpen)
+    }, [initiallyOpen])
 
     const handleSelect = (value: Option) => {
       if (!multiple) {
         if (!selected) {
-          setSelected([value]);
+          setSelected([value])
         } else {
           if (!allowDeselect) {
             // TODO: optimize this part
             if (selected[0].value === value.value) {
-              return;
+              return
             } else {
-              setSelected([value]);
+              setSelected([value])
             }
           } else {
-            setSelected(
-              selected[0].value === value.value ? undefined : [value],
-            );
+            setSelected(selected[0].value === value.value ? undefined : [value])
           }
         }
       } else {
         // if selected, remove it
         if (!selected) {
-          setSelected([value]);
+          setSelected([value])
         } else {
           if (selected.find((item) => item.value === value.value)) {
-            setSelected(selected.filter((item) => item.value !== value.value));
+            setSelected(selected.filter((item) => item.value !== value.value))
           } else {
-            setSelected([...selected, value]);
+            setSelected([...selected, value])
           }
         }
       }
       if (hideSelectedOptions) {
         setOptionsList(
           optionsList.filter((option) => option.value !== value.value),
-        );
+        )
       }
-    };
+    }
 
     const cardClickRef = useClickOutside(() => {
-      setIsDropdownOpen(false);
-    });
+      setIsDropdownOpen(false)
+    })
 
     useShallowEffect(() => {
-      if (!window) return;
+      if (!window) return
       if (onChange) {
-        onChange(selected);
+        onChange(selected)
       }
-    }, [selected]);
+    }, [selected])
 
     return (
       <div
@@ -114,18 +112,18 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           disabled={disabled}
           onClick={() => {
             if (!disabled) {
-              setIsDropdownOpen(!isDropdownOpen);
+              setIsDropdownOpen(!isDropdownOpen)
             }
             if (onDropdownToggle) {
-              onDropdownToggle();
+              onDropdownToggle()
             }
           }}
           wrapperOnClick={() => {
             if (!disabled) {
-              setIsDropdownOpen(!isDropdownOpen);
+              setIsDropdownOpen(!isDropdownOpen)
             }
             if (onDropdownToggle) {
-              onDropdownToggle();
+              onDropdownToggle()
             }
           }}
           showClear={false}
@@ -142,10 +140,10 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
                   className="px-2 relative z-20"
                   onClick={() => {
                     if (!disabled) {
-                      setIsDropdownOpen(!isDropdownOpen);
+                      setIsDropdownOpen(!isDropdownOpen)
                     }
                     if (onDropdownToggle) {
-                      onDropdownToggle();
+                      onDropdownToggle()
                     }
                   }}
                 >
@@ -157,10 +155,10 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
                 className="px-2 relative z-20"
                 onClick={() => {
                   if (!disabled) {
-                    setIsDropdownOpen(!isDropdownOpen);
+                    setIsDropdownOpen(!isDropdownOpen)
                   }
                   if (onDropdownToggle) {
-                    onDropdownToggle();
+                    onDropdownToggle()
                   }
                 }}
               >
@@ -177,10 +175,10 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
                   className="h-full w-full absolute top-0 left-0 z-10"
                   onClick={() => {
                     if (!disabled) {
-                      setIsDropdownOpen(!isDropdownOpen);
+                      setIsDropdownOpen(!isDropdownOpen)
                     }
                     if (onDropdownToggle) {
-                      onDropdownToggle();
+                      onDropdownToggle()
                     }
                   }}
                 />
@@ -192,12 +190,12 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
                       className="relative z-20"
                       removeNodeOnClose={false}
                       onClose={() => {
-                        handleSelect(item);
+                        handleSelect(item)
                       }}
                     >
                       {item.label}
                     </Tag>
-                  );
+                  )
                 })}
               </div>
             )
@@ -221,20 +219,20 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
                   // TODO: change key
                   const isSelected = selected?.find(
                     (item) => item.value === option.value,
-                  );
+                  )
                   return (
                     <button
                       className="w-full"
                       key={option.value}
                       onClick={() => {
-                        handleSelect(option);
+                        handleSelect(option)
 
                         // this part must be the last part
                         if (!closeOnSelect && !multiple) {
-                          setIsDropdownOpen(false);
+                          setIsDropdownOpen(false)
                         }
                         if (closeOnSelect) {
-                          setIsDropdownOpen(false);
+                          setIsDropdownOpen(false)
                         }
                       }}
                     >
@@ -247,21 +245,21 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
                         </div>
                       )}
                     </button>
-                  );
+                  )
                 })}
             </Card>
           )}
         </div>
       </div>
-    );
+    )
   },
-);
+)
 
 const OptionComponent = React.forwardRef<HTMLDivElement, Option>(
   (props, ref) => {
-    return <div />;
+    return <div />
   },
-);
+)
 
 Select.defaultProps = {
   allowDeselect: true,
@@ -271,123 +269,123 @@ Select.defaultProps = {
   clearable: true,
   searchable: false,
   hideSelectedOptions: false,
-};
+}
 
 export interface SelectProps {
   /**
    * When `multiple` is false and `allowDeselect` is true, user can deselect the selected option.
    * @default true
    */
-  allowDeselect?: boolean;
+  allowDeselect?: boolean
   /**
    * Is input has borders
    * @default false
    */
-  bordered?: boolean;
+  bordered?: boolean
   /**
    * You can find element's name at `data-name` attribute
    */
   classNames?: {
-    dropdownWrapper?: string;
-    label?: string;
-    selectWrapper?: string;
-  };
+    dropdownWrapper?: string
+    label?: string
+    selectWrapper?: string
+  }
   /**
    * if true, users can deselect options at once or one by one
    * @defaults true
    */
-  clearable?: boolean;
+  clearable?: boolean
   /**
    * if true, dropdown closes after click. if `multiple` is true, dropdown stays open by default.
    */
-  closeOnSelect?: boolean;
-  creatable?: boolean;
+  closeOnSelect?: boolean
+  creatable?: boolean
   /**
    * You can pass default selected values. If `multiple` is false, you can pass only one value. Otherwise, we will take `first value`.
    */
-  customOptionComponent?: React.ComponentType<Option>;
-  defaultSelectedValues?: Option[];
+  customOptionComponent?: React.ComponentType<Option>
+  defaultSelectedValues?: Option[]
   /**
    * if true, Select will be unclickable
    */
-  disabled?: boolean;
+  disabled?: boolean
   /**
    * if you want to make dropdown position static, you can use this prop
    * @defaults 'auto'
    */
-  dropdownPosition?: 'top' | 'bottom' | 'auto';
+  dropdownPosition?: 'top' | 'bottom' | 'auto'
   /**
    * Custom search/filter logic for options. `searchable` prop must be true.
    */
-  filter?: (value: string, option: Option) => boolean;
+  filter?: (value: string, option: Option) => boolean
   /**
    * for group options
    */
   groups?: {
-    id: string;
-    title: string;
-  };
+    id: string
+    title: string
+  }
   /**
    * A tiny description for the Select input. Will be display under the label.
    */
-  helperText?: string;
+  helperText?: string
   /**
    * if true, selected elements will be removed from dropdown
    * @defaults false
    */
-  hideSelectedOptions?: boolean;
+  hideSelectedOptions?: boolean
   /**
    * If true, dropdown is open by default.
    * @defaults false
    */
-  initiallyOpen?: boolean;
+  initiallyOpen?: boolean
   /**
    * A title for the Select input. Will be display at the top of the Select element.
    */
-  label?: string;
+  label?: string
   /**
    * if true, users can select multiple options
    */
-  multiple?: boolean;
-  onChange?: (value?: Option[]) => void;
+  multiple?: boolean
+  onChange?: (value?: Option[]) => void
   /**
    * gives you the information about the current state of the dropdown
    */
-  onDropdownToggle?: () => void;
-  options: Option[];
+  onDropdownToggle?: () => void
+  options: Option[]
   /**
    *
    * @param renderOptions Custom render function for options.
    * @returns
    */
-  renderOptions?: (option: Option) => React.ReactNode;
+  renderOptions?: (option: Option) => React.ReactNode
   /**
    * Adds an `asterisk` to the label
    */
-  required?: boolean;
+  required?: boolean
   /**
    * Adds a search input to the dropdown
    * @defaults false
    */
-  searchable?: boolean;
+  searchable?: boolean
   /**
    * if true, arrow icon at the right side will be hidden
    */
-  withoutDropdownIcon?: boolean;
+  withoutDropdownIcon?: boolean
   /**
    * @see classNames.dropdownWrapper
    * You can add classNames with `classNames.dropdownWrapper` for dropdown wrapper
    */
-  zIndex?: number;
+  zIndex?: number
 }
 
 export interface Option {
-  [key: string]: any;
-  label: string;
-  value: string;
+  [key: string]: any
+  label: string
+  value: string
 }
 
 export type SelectComponent = ForwardRefWithStaticComponents<
   SelectProps,
   { Option: typeof OptionComponent }
->;
+>

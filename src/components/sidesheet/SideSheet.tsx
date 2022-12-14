@@ -1,14 +1,14 @@
-import React, { forwardRef, useCallback, useEffect, useState } from 'react';
-import { useClickOutside } from '../../hooks/useClickOutside';
-import { useEventListener } from '../../hooks/useEventListener';
-import { Card } from '../card-UNFINISHED/Card';
-import { Portal } from '../portal/Portal';
+import React, { forwardRef, useCallback, useEffect, useState } from 'react'
+import { useClickOutside } from '../../hooks/useClickOutside'
+import { useEventListener } from '../../hooks/useEventListener'
+import { Card } from '../card-UNFINISHED/Card'
+import { Portal } from '../portal/Portal'
 
-import { SvgX } from '../../utils/svg';
-import { Space } from '../space/Space';
-import { Button } from '../button/Button';
-import uuid from 'react-uuid';
-import { useMergedRef } from '../../hooks';
+import { SvgX } from '../../utils/svg'
+import { Space } from '../space/Space'
+import { Button } from '../button/Button'
+import uuid from 'react-uuid'
+import { useMergedRef } from '../../hooks'
 
 // Or Drawer
 export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
@@ -28,39 +28,39 @@ export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
       closeOnOverlayClick,
       overlayClasses,
       footerButtons,
-    } = props;
-    const [isOpened, setIsOpened] = useState(isOpen);
+    } = props
+    const [isOpened, setIsOpened] = useState(isOpen)
 
     const closeModal = useCallback(() => {
-      setIsOpened(false);
-      onClose;
-    }, []);
+      setIsOpened(false)
+      onClose
+    }, [])
 
     const clickedOutside = useClickOutside(() => {
       if (closeOnOverlayClick) {
-        closeModal();
+        closeModal()
       }
-    });
+    })
 
-    const refs = useMergedRef(clickedOutside, ref);
+    const refs = useMergedRef(clickedOutside, ref)
 
     useEventListener('keyup', (e) => {
       if (closeOnEsc) {
         if (e.key === 'Escape') {
-          closeModal();
+          closeModal()
         }
       }
-    });
+    })
 
     useEffect(() => {
-      if (!document) return;
-      setIsOpened(isOpen);
+      if (!document) return
+      setIsOpened(isOpen)
       if (isOpen) {
-        onOpen;
+        onOpen
       }
-    }, [isOpen]);
+    }, [isOpen])
 
-    if (!isOpened) return null;
+    if (!isOpened) return null
 
     return (
       <Portal
@@ -114,7 +114,7 @@ export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
                       >
                         {button.text}
                       </Button>
-                    );
+                    )
                   })}
                 </div>
               </>
@@ -122,9 +122,9 @@ export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
           </div>
         </Card>
       </Portal>
-    );
+    )
   },
-);
+)
 
 SideSheet.defaultProps = {
   withSideSpace: true,
@@ -133,46 +133,46 @@ SideSheet.defaultProps = {
   closeOnOverlayClick: true,
   closeOnEsc: true,
   closeIcon: true,
-};
+}
 
 export interface SideSheetProps {
-  children: React.ReactNode;
+  children: React.ReactNode
   /**
    * `Card` classes. You can change card design by passing tailwind classes here.
    */
-  className?: React.HTMLAttributes<HTMLElement>['className'];
+  className?: React.HTMLAttributes<HTMLElement>['className']
   // ✅
-  closeIcon?: boolean | JSX.Element;
+  closeIcon?: boolean | JSX.Element
   // ✅
-  closeOnEsc?: boolean;
+  closeOnEsc?: boolean
   // ✅
-  closeOnOverlayClick?: boolean;
+  closeOnOverlayClick?: boolean
   // ✅
   footerButtons?: {
-    buttonClasses?: string;
-    onClick?: () => void;
+    buttonClasses?: string
+    onClick?: () => void
     // ✅
-    text?: string;
-  }[];
+    text?: string
+  }[]
   // ✅
-  isOpen?: boolean;
+  isOpen?: boolean
   // ✅
-  onClose?: () => void;
+  onClose?: () => void
   // ✅
-  onOpen?: () => void;
+  onOpen?: () => void
   // ✅
-  overlayClasses?: string;
+  overlayClasses?: string
   // ✅
-  placement?: 'left' | 'right' | 'top' | 'bottom';
+  placement?: 'left' | 'right' | 'top' | 'bottom'
   // ✅
   /**
    * You can modify the `size` of the SideSheet with `className` prop. `Don't forget` to
    * add `max-width` for extra large uber super sonic monitors 🖥️ max-width is `600px` by default.
    */
-  size?: 'small' | 'medium' | 'large'; // ✅
-  title?: string | JSX.Element;
+  size?: 'small' | 'medium' | 'large' // ✅
+  title?: string | JSX.Element
   // ✅
-  withSideSpace?: boolean;
+  withSideSpace?: boolean
 }
 
 const calculateClasses = ({
@@ -180,9 +180,9 @@ const calculateClasses = ({
   withSideSpace,
   size,
 }: {
-  placement?: 'left' | 'right' | 'top' | 'bottom';
-  size?: 'small' | 'medium' | 'large';
-  withSideSpace?: boolean;
+  placement?: 'left' | 'right' | 'top' | 'bottom'
+  size?: 'small' | 'medium' | 'large'
+  withSideSpace?: boolean
 }) => {
   const positions = {
     left: `${
@@ -205,7 +205,7 @@ const calculateClasses = ({
         ? 'left-hf-side-padding/2 bottom-hf-side-padding'
         : 'left-0 bottom-0'
     }`,
-  };
+  }
   const sizes = {
     topBottom: `${
       (size === 'medium'
@@ -229,10 +229,10 @@ const calculateClasses = ({
         ? 'h-[-webkit-fill-available] my-hf-side-padding'
         : 'h-full')
     }`,
-  };
+  }
   return `${positions[placement!]} ${
     sizes[
       placement === 'left' || placement === 'right' ? 'leftRight' : 'topBottom'
     ]
-  }`;
-};
+  }`
+}

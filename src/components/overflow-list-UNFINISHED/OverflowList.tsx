@@ -3,7 +3,7 @@ import React, {
   ReactElement,
   useEffect,
   useState,
-} from 'react';
+} from 'react'
 
 /**
  * @typedef {object} OverflowListProps
@@ -13,40 +13,40 @@ import React, {
 export const OverflowList = React.forwardRef<HTMLDivElement, OverflowListProps>(
   (props, ref) => {
     const { children, maxElements, numberComponent, maxWidth, nestedAvatars } =
-      props;
+      props
 
-    const wrapperRef = React.useRef<HTMLDivElement>(null);
-    const [showingCount, setShowingCount] = useState<number>();
-    const [overflowingCount, setOverflowingCount] = useState<number>();
+    const wrapperRef = React.useRef<HTMLDivElement>(null)
+    const [showingCount, setShowingCount] = useState<number>()
+    const [overflowingCount, setOverflowingCount] = useState<number>()
     const [renderComponent, setRenderComponent] = useState<
       | ReactElement<unknown, string | JSXElementConstructor<any>>[]
       | null
       | undefined
-    >();
+    >()
 
     useEffect(() => {
-      if (!window || !wrapperRef.current) return;
-      const wrapperWidth = wrapperRef.current.offsetWidth;
-      const elementCount = wrapperRef.current.childElementCount;
+      if (!window || !wrapperRef.current) return
+      const wrapperWidth = wrapperRef.current.offsetWidth
+      const elementCount = wrapperRef.current.childElementCount
       const elementWidth = (wrapperRef.current.children[0] as HTMLElement)
-        .offsetWidth;
-      const showingElementCount = Math.floor(wrapperWidth / elementWidth);
-      const overflowingElementCount = elementCount - showingElementCount;
+        .offsetWidth
+      const showingElementCount = Math.floor(wrapperWidth / elementWidth)
+      const overflowingElementCount = elementCount - showingElementCount
 
-      setShowingCount(showingElementCount);
-    }, [wrapperRef]);
+      setShowingCount(showingElementCount)
+    }, [wrapperRef])
 
     const customChildren = React.Children.map(children, (child, idx) => {
       if (React.isValidElement(child)) {
-        return React.cloneElement(child);
+        return React.cloneElement(child)
       }
-    });
+    })
     return (
       <div>
         <div
           ref={(ref) => {
             // @ts-ignore
-            wrapperRef.current = ref;
+            wrapperRef.current = ref
           }}
           className={`flex flex-row items-center ${
             nestedAvatars
@@ -60,27 +60,27 @@ export const OverflowList = React.forwardRef<HTMLDivElement, OverflowListProps>(
         </div>
         <div>{overflowingCount}</div>
       </div>
-    );
+    )
   },
-);
+)
 
 OverflowList.defaultProps = {
   maxWidth: 'max-w-full',
-};
+}
 
 export interface OverflowListProps {
-  children: React.ReactNode;
+  children: React.ReactNode
   /**
    * @description The maximum number of visible items before truncating.
    */
-  maxElements?: number;
-  maxWidth?: string;
+  maxElements?: number
+  maxWidth?: string
   /**
    * @description Nested avatars will be shown with a border and overflow component.
    */
-  nestedAvatars?: boolean;
+  nestedAvatars?: boolean
   /**
    * @description Counts overflowing items and add them to a portal.
    */
-  numberComponent?: React.ReactNode;
+  numberComponent?: React.ReactNode
 }

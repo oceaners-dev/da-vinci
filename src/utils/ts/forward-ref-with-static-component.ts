@@ -3,6 +3,6 @@ export type ForwardRefWithStaticComponents<
   Static extends Record<string, any>,
 > = ((props: Props) => React.ReactElement) &
   Static & {
-    defaultProps?: Partial<Props>;
-    displayName?: string;
-  };
+    defaultProps?: Partial<Props>
+    displayName?: string
+  }

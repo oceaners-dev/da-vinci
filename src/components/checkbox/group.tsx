@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react'
 // import { CheckboxProps } from './CheckBox';
 
 export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
@@ -12,18 +12,18 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
       orientation, // ✅
       required, // TODO 🚨
       listClassName, // ✅
-    } = props;
+    } = props
 
     const [values, setValues] = useState<{ name: string; value: boolean }[]>(
       defaultValue ? defaultValue : [],
-    );
+    )
 
     useEffect(() => {
-      if (!values) return;
+      if (!values) return
       if (onChange) {
-        onChange(values);
+        onChange(values)
       }
-    }, [values]);
+    }, [values])
 
     // const customChildren = React.Children.map(children, (child) => {
     //   if (React.isValidElement(child)) {
@@ -73,28 +73,28 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
           {children}
         </div>
       </div>
-    );
+    )
   },
-);
+)
 
 CheckboxGroup.defaultProps = {
   orientation: 'vertical',
-};
+}
 
 export interface CheckboxGroupProps {
-  children: React.ReactNode;
+  children: React.ReactNode
   /**
    * The default value of the checkbox group.
    * This value overrides the default value of the checkbox.
    */
-  defaultValue?: { name: string; value: boolean }[];
-  description?: React.ReactNode;
-  label?: React.ReactNode;
-  listClassName?: React.HTMLAttributes<HTMLDivElement>['className'];
-  onChange?: (value: { name: string; value: boolean }[]) => void;
+  defaultValue?: { name: string; value: boolean }[]
+  description?: React.ReactNode
+  label?: React.ReactNode
+  listClassName?: React.HTMLAttributes<HTMLDivElement>['className']
+  onChange?: (value: { name: string; value: boolean }[]) => void
   /**
    * If vertical, gap is 2px. If horizontal, gap is 4.
    */
-  orientation?: 'horizontal' | 'vertical';
-  required?: boolean;
+  orientation?: 'horizontal' | 'vertical'
+  required?: boolean
 }

@@ -1,6 +1,6 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { TimePicker } from '../components/timepicker/TimePicker';
+import React from 'react'
+import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { TimePicker } from '../components/timepicker/TimePicker'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -14,7 +14,7 @@ export default {
       },
     },
   },
-} as ComponentMeta<typeof TimePicker>;
+} as ComponentMeta<typeof TimePicker>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof TimePicker> = () => {
@@ -22,11 +22,11 @@ const Template: ComponentStory<typeof TimePicker> = () => {
     <TimePicker
       defaultValue="13:35"
       onChange={(e) => {
-        console.log({ e });
+        console.log({ e })
       }}
     />
-  );
-};
+  )
+}
 
-export const Default = Template.bind({});
-Default.args = {};
+export const Default = Template.bind({})
+Default.args = {}

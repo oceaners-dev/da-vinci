@@ -1,5 +1,4 @@
 import React from 'react'
-import { NavProvider } from '../nav/Context'
 
 // TODO: https://ui.mantine.dev/category/navbars copy something
 export function Layout(props: LayoutProps) {
@@ -25,10 +24,10 @@ export function Layout(props: LayoutProps) {
       {header && <div className="w-full box-border">{header}</div>}
       <div
         className={
-          (hasSidebar ? 'flex-row' : 'flex-col') + ' flex w-full h-auto'
+          (hasSidebar ? 'flex-row gap-5' : 'flex-col') + ' flex w-full h-auto'
         }
       >
-        <NavProvider>{children}</NavProvider>
+        {children}
       </div>
       {footer && <div className="w-full box-border">{footer}</div>}
     </div>

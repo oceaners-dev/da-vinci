@@ -9,7 +9,8 @@ export const Link = forwardRef<HTMLAnchorElement, CustomLinkProps>(
       <CustomLink {...rest} ref={ref}>
         <div
           className={`py-2 flex flex-row items-center justify-center text-gray-600 hover:bg-gray-200 hover:button-classes ${
-            !icon ? 'px-2' : 'pr-2'
+            !icon ? 'px-2' : children && 'pr-2'
+            // TODO: remove pr-2 on expanded
           } ${isActive && 'button-classes'} ${className}`}
         >
           {icon && (
@@ -17,7 +18,9 @@ export const Link = forwardRef<HTMLAnchorElement, CustomLinkProps>(
               {icon}
             </div>
           )}
-          <div className="w-full max-w-[150px] font-medium">{children}</div>
+          {children && (
+            <div className="w-full max-w-[150px] font-medium">{children}</div>
+          )}
         </div>
       </CustomLink>
     )

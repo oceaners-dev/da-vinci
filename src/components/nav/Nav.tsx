@@ -38,14 +38,22 @@ const Nav = forwardRef<HTMLDivElement, NavProps>((props, ref) => {
           (vertical ? 'flex-col !w-fit' : 'flex-row !w-full items-center') +
           ' ' +
           (className || ' ') +
-          ' ' +
-          (vertical && isExpandedState ? '!pr-20' : '')
+          ' '
+          // (vertical && isExpandedState ? '!pr-20' : '')
         }
       >
         {logo &&
-          (isExpandedState ? (expandedLogo ? expandedLogo : logo) : logo)}
+          (isExpandedState ? (
+            expandedLogo ? (
+              <div>{expandedLogo}</div>
+            ) : (
+              <div className="w-6 h-6">{logo}</div>
+            )
+          ) : (
+            <div>{logo}</div>
+          ))}
 
-        {vertical && <div className="w-full h-8" />}
+        {vertical && <div className="w-full h-12" />}
 
         {items && (
           <div
@@ -59,7 +67,10 @@ const Nav = forwardRef<HTMLDivElement, NavProps>((props, ref) => {
                   key={uuid()}
                   isActive={item.link === activeItem?.link}
                   href={item.link}
-                  className="!justify-start cursor-pointer"
+                  className={
+                    '!justify-start cursor-pointer ' +
+                    (vertical && isExpandedState ? '!pr-2' : '!justify-center')
+                  }
                   icon={item.icon}
                 >
                   {vertical ? (isExpandedState ? item.label : '') : item.label}

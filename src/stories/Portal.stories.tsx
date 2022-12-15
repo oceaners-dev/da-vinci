@@ -5,7 +5,7 @@ import { Button } from '../components/button/Button'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Display/Portal',
+  title: 'Overlays/Portal',
   component: Portal,
 } as ComponentMeta<typeof Portal>
 
@@ -22,6 +22,5 @@ const Template: ComponentStory<typeof Portal> = (args) => {
 }
 
 export const Default = Template.bind({})
-export const LimitPageCount = Template.bind({})
 
 Default.args = {}

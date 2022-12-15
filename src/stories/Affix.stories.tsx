@@ -5,7 +5,7 @@ import { Button } from '../components/button/Button'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Display/Affix',
+  title: 'Overlays/Affix',
   component: Affix,
   parameters: {
     docs: {

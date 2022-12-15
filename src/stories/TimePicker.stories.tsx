@@ -4,7 +4,7 @@ import { TimePicker } from '../components/timepicker/TimePicker'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Inputs/TimePicker',
+  title: 'Form/TimePicker',
   component: TimePicker,
   parameters: {
     docs: {

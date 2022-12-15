@@ -5,7 +5,7 @@ import { CheckboxGroup } from '../components/checkbox/group'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Inputs/CheckBox',
+  title: 'Form/CheckBox',
   component: CheckBox,
   subcomponents: { CheckboxGroup },
   parameters: {

@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { DatePicker } from '../components/datepicker/DatePicker'
 
 export default {
-  title: 'Inputs/DatePicker',
+  title: 'Form/DatePicker',
   component: DatePicker,
   parameters: {
     docs: {

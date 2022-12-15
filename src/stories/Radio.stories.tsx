@@ -5,7 +5,7 @@ import { RadioGroup } from '../components/radio/group'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Inputs/Radio',
+  title: 'Form/Radio',
   component: Radio,
   subcomponents: { RadioGroup },
   parameters: {

@@ -4,7 +4,7 @@ import { Modal } from '../components/modal/Modal'
 import { Button } from '../components/button/Button'
 
 export default {
-  title: 'Display/Modal (not finished)',
+  title: 'Overlays/Modal (not finished)',
   component: Modal,
   argTypes: {
     isOpen: {

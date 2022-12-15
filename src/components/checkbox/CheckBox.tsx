@@ -3,9 +3,6 @@ import { SvgTick } from '../../utils/svg'
 import { ForwardRefWithStaticComponents } from '../../utils/ts/forward-ref-with-static-component'
 import { CheckboxGroup } from './group'
 
-// TODO: style improvement
-// TODO: card component
-
 /**
  * Layers are `unselectable` (`::selection: none`) by default. If you want to make it selectable, you can use the `selectable` prop.
  */
@@ -15,17 +12,17 @@ export const CheckBox: CheckboxComponent = forwardRef<
 >((props, ref) => {
   const id = useId()
   const {
-    className,
-    checked,
-    name,
-    disabled,
-    onChange,
-    label,
-    hideCheckbox,
-    defaultChecked,
-    isLabelSelectable,
+    classNames, // ✅
+    description, // ✅
+    checked, // ✅
+    name, // ✅
+    disabled, // ✅
+    onChange, // ✅
+    label, // ✅
+    hideCheckbox, // ✅
+    defaultChecked, // ✅
+    isLabelSelectable, // ✅
     customIcon, // 🚨 TODO
-    type, // 🚨 TODO
   } = props
 
   if (!label && !name) {
@@ -45,22 +42,26 @@ export const CheckBox: CheckboxComponent = forwardRef<
 
   return (
     <div
-      className={`flex flex-row items-center cursor-pointer ${
-        className || ''
-      } w-fit ${disabled ? 'pointer-events-none opacity-50  ' : ''}`}
+      data-name="checkbox-wrapper"
+      className={`relative flex max-w-[200px] flex-row cursor-pointer ${
+        classNames?.wrapper || ''
+      } w-fit ${disabled ? 'pointer-events-none opacity-50  ' : ''} ${
+        description ? 'items-start' : 'items-center'
+      }`}
+      onClick={() => {
+        setIsChecked(!isChecked)
+      }}
     >
       {!hideCheckbox && (
         <div
           ref={ref}
           id={id}
-          onClick={() => {
-            setIsChecked(!isChecked)
-          }}
+          data-name="checkbox"
           className={`w-4 h-4 outline outline-2 rounded-sm transition-all transform duration-150 aspect-square ${
             isChecked
               ? 'bg-blue-500 outline-blue-500 hover:bg-blue-400 hover:outline-blue-400'
               : 'bg-white outline-gray-200 hover:bg-gray-200'
-          }`}
+          } ${classNames?.checkbox || ''}`}
         >
           <SvgTick
             className={`transition-all transform duration-150 ${
@@ -74,17 +75,27 @@ export const CheckBox: CheckboxComponent = forwardRef<
       )}
 
       {label && (
-        <label
-          htmlFor={id}
-          onClick={() => {
-            setIsChecked(!isChecked)
-          }}
-          className={`cursor-pointer pl-2 w-[-webkit-fill-available] ${
-            isLabelSelectable ? '' : 'select-none'
-          }`}
-        >
-          {label}
-        </label>
+        <div className="flex flex-col gap-1">
+          <label
+            data-name="checkbox-label"
+            htmlFor={id}
+            className={`cursor-pointer leading-3 pl-2 w-[-webkit-fill-available] ${
+              isLabelSelectable ? '' : 'select-none'
+            } ${classNames?.label || ''}`}
+          >
+            {label}
+          </label>
+          {description && (
+            <div
+              className={`text-[10px] pl-2 leading-none ${
+                classNames?.description || ''
+              }`}
+              data-name="checkbox-description"
+            >
+              {description}
+            </div>
+          )}
+        </div>
       )}
     </div>
   )
@@ -112,7 +123,12 @@ export interface CheckboxProps {
   /**
    * For wrapper div.
    */
-  className?: string
+  classNames?: {
+    checkbox?: string
+    description?: string
+    label?: string
+    wrapper?: string
+  }
   /**
    * Custom tick box icon. Use tailwind classes for style `selected` and `unselected` states.
    */
@@ -121,7 +137,7 @@ export interface CheckboxProps {
    * @type boolean
    */
   defaultChecked?: boolean
-  // 🚨
+  description?: React.ReactNode
   disabled?: boolean
   extraInfo?: React.ReactNode
   /**
@@ -142,7 +158,6 @@ export interface CheckboxProps {
    * @returns {object} { [name]: boolean }
    */
   onChange?: (x: object) => void
-  type?: 'default' | 'radio' | 'card' | 'pureCard'
 }
 
 CheckBox.Group = CheckboxGroup

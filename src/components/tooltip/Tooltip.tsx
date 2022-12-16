@@ -51,11 +51,16 @@ const Tooltip: React.FunctionComponent<TooltipProps> = ({
     }
   }, [])
 
+  const animationClasses = `transition-all transform duration-300 `
+  const lrClasses =
+    `absolute bottom-1/2 translate-y-1/2  !max-w-[300px] !w-fit ` +
+    animationClasses
+
   return (
     <div
       ref={ref}
       className={
-        'w-fit relative ' +
+        'relative ' +
         (position === 'top' || position === 'bottom'
           ? ' flex flex-col'
           : ' flex row')
@@ -67,14 +72,13 @@ const Tooltip: React.FunctionComponent<TooltipProps> = ({
         {position === 'top' && isVisible && (
           <div
             className={
-              `absolute bottom-2 transition-all transform duration-300 ` +
-              (displayAnimation ? 'opacity-1' : 'opacity-0')
+              `absolute ` +
+              animationClasses +
+              (displayAnimation ? 'opacity-1 bottom-2' : 'opacity-0 bottom-0')
             }
           >
             <Card
-              className={
-                classNames?.wrapper + ' max-w-[300px] w-fit !px-2 !py-1 text-xs'
-              }
+              className={'!px-2 !py-1 text-xs !w-max ' + classNames?.wrapper}
             >
               {content}
             </Card>
@@ -85,11 +89,13 @@ const Tooltip: React.FunctionComponent<TooltipProps> = ({
         <div className="relative h-auto w-0 flex">
           <div
             className={
-              `absolute bottom-1/2 translate-y-1/2 right-3 transition-all transform duration-300 ` +
-              (displayAnimation ? 'opacity-1' : 'opacity-0')
+              lrClasses +
+              (displayAnimation ? 'opacity-1 right-3' : 'opacity-0 right-0')
             }
           >
-            <Card className={classNames?.wrapper + ' w-[300px]'}>
+            <Card
+              className={'!px-2 !py-1 text-xs !w-max ' + classNames?.wrapper}
+            >
               {content}
             </Card>
           </div>
@@ -100,11 +106,13 @@ const Tooltip: React.FunctionComponent<TooltipProps> = ({
         <div className="relative h-auto w-0 flex">
           <div
             className={
-              `absolute bottom-1/2 translate-y-1/2 left-3 transition-all transform duration-300 ` +
-              (displayAnimation ? 'opacity-1' : 'opacity-0')
+              lrClasses +
+              (displayAnimation ? 'opacity-1  left-3 ' : 'opacity-0 left-0')
             }
           >
-            <Card className={classNames?.wrapper + ' w-[300px]'}>
+            <Card
+              className={'!px-2 !py-1 text-xs !w-max ' + classNames?.wrapper}
+            >
               {content}
             </Card>
           </div>
@@ -114,11 +122,14 @@ const Tooltip: React.FunctionComponent<TooltipProps> = ({
         {position === 'bottom' && isVisible && (
           <div
             className={
-              `absolute top-2 transition-all transform duration-300 ` +
-              (displayAnimation ? 'opacity-1' : 'opacity-0')
+              `absolute ` +
+              animationClasses +
+              (displayAnimation ? 'opacity-1 top-2 ' : 'opacity-0 top-0')
             }
           >
-            <Card className={classNames?.wrapper + ' w-[300px]'}>
+            <Card
+              className={'!px-2 !py-1 text-xs !w-max ' + classNames?.wrapper}
+            >
               {content}
             </Card>
           </div>

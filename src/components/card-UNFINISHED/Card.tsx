@@ -28,7 +28,7 @@ Card.defaultProps = {
  */
 export interface CardProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode
-  className?: React.HTMLAttributes<HTMLElement>['className']
+  className?: string
   cover?: React.ReactNode
   hasBorders?: boolean
   header?: React.ReactNode

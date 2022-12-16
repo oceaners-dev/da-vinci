@@ -90,6 +90,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     useShallowEffect(() => {
       if (!window) return
       if (onChange) {
+        // TODO: onchange triggers error on page load
         onChange(selected)
       }
     }, [selected])

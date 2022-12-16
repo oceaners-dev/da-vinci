@@ -30,10 +30,15 @@ export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
       footerButtons,
     } = props
     const [isOpened, setIsOpened] = useState(isOpen)
+    const [isAnimationStarted, setIsAnimationStarted] = useState<boolean>(false)
 
     const closeModal = useCallback(() => {
-      setIsOpened(false)
-      onClose
+      setIsAnimationStarted(false)
+
+      setTimeout(() => {
+        setIsOpened(false)
+        onClose && onClose()
+      }, 150)
     }, [])
 
     const clickedOutside = useClickOutside(() => {
@@ -55,8 +60,12 @@ export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
     useEffect(() => {
       if (!document) return
       setIsOpened(isOpen)
+
       if (isOpen) {
-        onOpen
+        onOpen && onOpen()
+        setTimeout(() => {
+          setIsAnimationStarted(true)
+        }, 150)
       }
     }, [isOpen])
 
@@ -64,43 +73,49 @@ export const SideSheet = forwardRef<HTMLDivElement, SideSheetProps>(
 
     return (
       <Portal
-        className={`fixed inset-0 bg-black/50 w-screen h-screen ${
+        className={`fixed inset-0 bg-black/50 z-50 w-screen h-screen ${
           overlayClasses || ''
         }`}
       >
         <Card
           ref={refs}
-          className={`absolute  
-          ${calculateClasses({ placement, withSideSpace, size })}
-          ${className || ''}`}
+          className={
+            `absolute 
+          transition-all duration-150 transform ` +
+            (isAnimationStarted ? 'opacity-1' : 'opacity-0') +
+            ` ${calculateClasses({ placement, withSideSpace, size })}
+          ${className || ''}`
+          }
         >
-          <div className="w-full h-full relative flex flex-col">
-            {/* close icon start */}
-            {typeof closeIcon === 'boolean' && closeIcon && (
-              <button
-                className="top-0 right-0 absolute"
-                onClick={() => closeModal()}
-              >
-                <SvgX className="w-5 h-5" />
-              </button>
-            )}
-            {typeof closeIcon !== 'boolean' && closeIcon && (
-              <button
-                className="top-0 right-0 absolute"
-                onClick={() => closeModal()}
-              >
-                {closeIcon}
-              </button>
-            )}
-            {/* close icon end */}
-            {title && (
-              <>
-                <div className="font-medium">{title}</div>
-                <Space direction="vertical" />
-              </>
-            )}
+          <div className="w-full h-full relative flex flex-col justify-between">
+            <div className="flex flex-col">
+              {/* close icon start */}
+              {typeof closeIcon === 'boolean' && closeIcon && (
+                <button
+                  className="top-0 right-0 absolute"
+                  onClick={() => closeModal()}
+                >
+                  <SvgX className="w-5 h-5" />
+                </button>
+              )}
+              {typeof closeIcon !== 'boolean' && closeIcon && (
+                <button
+                  className="top-0 right-0 absolute"
+                  onClick={() => closeModal()}
+                >
+                  {closeIcon}
+                </button>
+              )}
+              {/* close icon end */}
+              {title && (
+                <>
+                  <div className="font-medium">{title}</div>
+                  <Space direction="vertical" />
+                </>
+              )}
 
-            {children}
+              {children}
+            </div>
             {footerButtons && (
               <>
                 <Space direction="vertical" />

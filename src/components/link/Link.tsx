@@ -8,18 +8,20 @@ export const Link = forwardRef<HTMLAnchorElement, CustomLinkProps>(
     return (
       <CustomLink {...rest} ref={ref}>
         <div
-          className={`py-2 flex flex-row items-center justify-center text-gray-600 hover:bg-gray-200 hover:button-classes ${
-            !icon ? 'px-2' : children && 'pr-2'
+          className={`flex flex-row items-center ${
+            !icon ? 'px-1' : children && 'pr-2'
             // TODO: remove pr-2 on expanded
           } ${isActive && 'button-classes'} ${className}`}
         >
           {icon && (
-            <div className="px-2 [&>svg]:w-6 [&>svg]:h-6  leading-none">
+            <div className="px-1 [&>svg]:w-[1.3em] [&>svg]:h-[1.3em]  leading-none">
               {icon}
             </div>
           )}
           {children && (
-            <div className="w-full max-w-[150px] font-medium">{children}</div>
+            <div className="w-full max-w-[150px] font-medium leading-normal">
+              {children}
+            </div>
           )}
         </div>
       </CustomLink>

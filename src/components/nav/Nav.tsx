@@ -68,12 +68,16 @@ const Nav = forwardRef<HTMLDivElement, NavProps>((props, ref) => {
                   isActive={item.link === activeItem?.link}
                   href={item.link}
                   className={
-                    '!justify-start cursor-pointer ' +
+                    '!justify-start cursor-pointer p-1 gap-1 hover:bg-gray-200 rounded ' +
                     (vertical && isExpandedState ? '!pr-2' : '!justify-center')
                   }
                   icon={item.icon}
                 >
-                  {vertical ? (isExpandedState ? item.label : '') : item.label}
+                  {vertical
+                    ? isExpandedState
+                      ? item.label
+                      : undefined
+                    : item.label}
                 </Link>
               )
             })}

@@ -26,7 +26,7 @@ Card.defaultProps = {
  * @param headerRight - The right side of the header. It is a ReactNode.
  * @param header - Header component if headerText does not meet your needs
  */
-export interface CardProps extends React.HTMLAttributes<HTMLElement> {
+export interface CardProps {
   children: React.ReactNode
   className?: string
   cover?: React.ReactNode

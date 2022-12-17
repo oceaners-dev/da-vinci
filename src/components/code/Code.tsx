@@ -11,7 +11,10 @@ const Code: React.FC<CodeProps> = ({ code, language }) => {
   return (
     <Highlight {...defaultProps} code={code} language={language} theme={theme}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <pre className={`${className} p-4 rounded-md`} style={style}>
+        <pre
+          className={`${className} rounded-md h-fit`}
+          style={{ ...style, padding: '20px 40px' }}
+        >
           {tokens.map((line, i) => (
             <div key={i} {...getLineProps({ line, key: i })}>
               {line.map((token, key) => (

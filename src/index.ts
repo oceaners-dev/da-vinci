@@ -1,4 +1,4 @@
-import '../public/styles/globals.css'
+// import '../public/styles/globals.css'
 
 export * from './components/affix/Affix'
 export * from './components/alert/Alert'

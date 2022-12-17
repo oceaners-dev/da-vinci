@@ -30,6 +30,3 @@ jobs:
 
       - name: Build package
         run: pnpm run build
-
-      - name: Check commits messages
-        uses: wagoid/commitlint-github-action@v5

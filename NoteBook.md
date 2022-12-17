@@ -1,4 +1,3 @@
-* [ ] Notification'da insertDom hatasi var
 * [ ] Text
 * [ ] Code
 * [ ] Blockquote

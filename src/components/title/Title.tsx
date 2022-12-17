@@ -1,8 +1,9 @@
 import React from 'react'
+import { ColorVariants } from '../../utils/types'
 
 export type TitleProps = {
   className?: string
-  color?: 'primary' | 'secondary' | 'warning' | 'danger' | 'tertiary'
+  color?: ColorVariants
   level: 1 | 2 | 3 | 4 | 5 | 6
   text: string
 }

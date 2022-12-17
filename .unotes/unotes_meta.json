@@ -1,0 +1,59 @@
+{
+  "name": "",
+  "isOrdered": true,
+  "folders": {
+    "__tests__": {
+      "name": "__tests__",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "dist": {
+      "name": "dist",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "example": {
+      "name": "example",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "public": {
+      "name": "public",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "src": {
+      "name": "src",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "storybook-static": {
+      "name": "storybook-static",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "types": {
+      "name": "types",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "utils": {
+      "name": "utils",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    }
+  },
+  "files": {
+    "NoteBook": 0,
+    "LICENSE": 1,
+    "README": 2
+  }
+}

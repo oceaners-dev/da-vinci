@@ -14,7 +14,7 @@ export const Link = forwardRef<HTMLAnchorElement, CustomLinkProps>(
           } ${isActive && 'button-classes'} ${className}`}
         >
           {icon && (
-            <div className="px-1 [&>svg]:w-[1.3em] [&>svg]:h-[1.3em]  leading-none">
+            <div className="px-1 [&>svg]:w-[1.3em] [&>svg]:h-[1.3em] leading-none">
               {icon}
             </div>
           )}

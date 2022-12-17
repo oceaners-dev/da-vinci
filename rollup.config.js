@@ -1,6 +1,7 @@
-import typescript from 'rollup-plugin-typescript2';
-import pkg from './package.json';
-import postcss from 'rollup-plugin-postcss';
+import typescript from 'rollup-plugin-typescript2'
+import pkg from './package.json'
+import postcss from 'rollup-plugin-postcss'
+import commonjs from '@rollup/plugin-commonjs'
 
 export default [
   {
@@ -8,6 +9,10 @@ export default [
     external: Object.keys(pkg.peerDependencies || {}),
 
     plugins: [
+      commonjs({
+        include: /node_modules/,
+        requireReturnsDefault: 'auto', // <---- this solves default issue
+      }),
       typescript({
         typescript: require('typescript'),
       }),
@@ -36,4 +41,4 @@ export default [
       },
     ],
   },
-];
+]

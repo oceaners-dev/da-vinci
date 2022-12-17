@@ -20,24 +20,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: lts/*
-
-      - name: Install dependencies (with cache)
-        uses: bahmutov/npm-install@v1
-
-      - name: Check types
-        run: yarn type-check
-
-      - name: Check linting
-        run: yarn lint
-
-      - name: Run tests
-        run: yarn test:ci
-
-      - name: Build storybook
-        run: yarn build-storybook
+      
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: true
 
       - name: Build package
-        run: yarn build
+        run: pnpm run build
 
       - name: Check commits messages
         uses: wagoid/commitlint-github-action@v5

@@ -5,7 +5,6 @@ import { createRoot } from 'react-dom/client'
 import { useIsomorphicEffect } from '../../hooks/useIsomorphicEffect'
 import uuid from 'react-uuid'
 import { NotificationCard } from './Notification'
-import { isDevMode } from '../../utils'
 
 // TODO: add jsx support: https://stackoverflow.com/a/70464490
 export function NotificationProvider({
@@ -67,12 +66,13 @@ export function NotificationProvider({
     if (!document || !wrapperRef.current) return
     if (isWrapperCreated) return
 
-    if (document.getElementById('da-vinci-notification')) {
-      isDevMode &&
-        console.warn('da-vinci-notification already exists, Provider.tsx')
-      return
-    }
-    document.body.appendChild(wrapperRef.current)
+    // console.log(document.getElementById('da-vinci-notification'))
+    // if (document.getElementById('da-vinci-notification')) {
+    //   isDevMode &&
+    //     console.warn('da-vinci-notification already exists, Provider.tsx')
+    //   return
+    // }
+    // document.body.appendChild(wrapperRef.current)
 
     setIsWrapperCreated(true)
   }, [isWrapperCreated, wrapperRef])

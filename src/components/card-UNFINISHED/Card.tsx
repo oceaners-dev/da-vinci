@@ -35,4 +35,5 @@ export interface CardProps {
   headerLine?: boolean
   headerText?: string
   ref?: React.Ref<HTMLDivElement>
+  style?: React.CSSProperties
 }

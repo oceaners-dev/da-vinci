@@ -40,7 +40,7 @@ const Alert: React.FunctionComponent<AlertProps> = (props) => {
     setBgColor(chroma.scale([color, 'white']).colors(12)[10])
   }, [color])
 
-  return (
+  return (bgColor && (
     <Card
       className={`min-w-[300px] !w-fit ${className || ''}`}
       style={{
@@ -82,7 +82,7 @@ const Alert: React.FunctionComponent<AlertProps> = (props) => {
         </div>
       </div>
     </Card>
-  )
+  )) as any
 }
 
 Alert.defaultProps = {

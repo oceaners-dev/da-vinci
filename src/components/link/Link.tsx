@@ -19,7 +19,7 @@ export const Link = forwardRef<HTMLAnchorElement, CustomLinkProps>(
             </div>
           )}
           {children && (
-            <div className="w-full max-w-[150px] font-medium leading-normal">
+            <div className="w-full max-w-[150px] font-medium leading-none">
               {children}
             </div>
           )}

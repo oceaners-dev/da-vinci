@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { Button, Code, Layout, Nav, toast } from 'da-vinci-ui'
+import { Button, Code, Layout, Nav, Spin, toast } from 'da-vinci-ui'
 export default function Home() {
   const router = useRouter()
   const activeItem = navLinks.find((item) => item.link === router.asPath)
@@ -26,18 +26,7 @@ export default function Home() {
       >
         Trigger Notification
       </Button>
-      <Code
-        code={`<Button
-  onClick={() => {
-    toast.success({
-      title: 'Ey',
-      content: 'Yo',
-    })
-}}>
-  Trigger Notification
-</Button>`}
-        language="tsx"
-      />
+      <Spin />
     </Layout>
   )
 }

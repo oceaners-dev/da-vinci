@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { Card } from '../card-UNFINISHED/Card'
 
+// TODO: Add copy support
 // TODO: stay open if hover over tooltip
+
 export interface TooltipProps {
   children: React.ReactNode
   classNames?: {

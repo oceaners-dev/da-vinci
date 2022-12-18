@@ -1,6 +1,6 @@
 import React from 'react'
 
-export function Spin(props: SpinProps) {
+function Spin(props: SpinProps) {
   const { size, className, style, children, spinColor, circleColor } = props
   return (
     <div className="flex flex-row items-center gap-4">
@@ -89,3 +89,4 @@ const svgPath = () => {
     </>
   )
 }
+export { Spin }

@@ -64,7 +64,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={refs}
         className={
-          `py-2 flex flex-row items-center rounded justify-center text-xs ` +
+          `py-2 flex flex-row items-center rounded justify-center text-xs w-fit ` +
           `${className} ${backgroundColorClass} ${textColor}`
         }
         {...rest}

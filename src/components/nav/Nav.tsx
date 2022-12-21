@@ -35,6 +35,7 @@ const Nav = forwardRef<HTMLDivElement, NavProps>((props, ref) => {
   const renderNavItem = (item: NavItem) => {
     return (
       <Link
+        key={uuid()}
         isActive={item.link === activeItem?.link}
         href={item.link}
         className={

@@ -2,6 +2,7 @@ import React, { forwardRef, useEffect, useState } from 'react'
 import uuid from 'react-uuid'
 import { Card } from '../card-UNFINISHED/Card'
 import { Link } from '../link/Link'
+import { Tooltip } from '../tooltip/Tooltip'
 import { SvgExpandToRight } from './Svg'
 
 const Nav = forwardRef<HTMLDivElement, NavProps>((props, ref) => {
@@ -28,6 +29,24 @@ const Nav = forwardRef<HTMLDivElement, NavProps>((props, ref) => {
   useEffect(() => {
     onExpandChange && onExpandChange(isExpandedState)
   }, [isExpandedState])
+
+  // renders
+
+  const renderNavItem = (item: NavItem) => {
+    return (
+      <Link
+        isActive={item.link === activeItem?.link}
+        href={item.link}
+        className={
+          '!justify-start cursor-pointer p-1 gap-1 hover:bg-gray-200 rounded ' +
+          (vertical && isExpandedState ? '!pr-2' : '!justify-center')
+        }
+        icon={item.icon}
+      >
+        {vertical ? (isExpandedState ? item.label : undefined) : item.label}
+      </Link>
+    )
+  }
 
   return (
     <nav className={''}>
@@ -62,23 +81,16 @@ const Nav = forwardRef<HTMLDivElement, NavProps>((props, ref) => {
             }
           >
             {items.map((item) => {
-              return (
-                <Link
-                  key={uuid()}
-                  isActive={item.link === activeItem?.link}
-                  href={item.link}
-                  className={
-                    '!justify-start cursor-pointer p-1 gap-1 hover:bg-gray-200 rounded ' +
-                    (vertical && isExpandedState ? '!pr-2' : '!justify-center')
-                  }
-                  icon={item.icon}
-                >
-                  {vertical
-                    ? isExpandedState
-                      ? item.label
-                      : undefined
-                    : item.label}
-                </Link>
+              return vertical ? (
+                isExpandedState ? (
+                  renderNavItem(item)
+                ) : (
+                  <Tooltip key={uuid()} content={item.label} position="right">
+                    {renderNavItem(item)}
+                  </Tooltip>
+                )
+              ) : (
+                renderNavItem(item)
               )
             })}
           </div>

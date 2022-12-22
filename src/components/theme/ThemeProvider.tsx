@@ -1,31 +1,48 @@
+/* eslint-disable no-prototype-builtins */
 import * as React from 'react'
+import { styles } from '../../utils'
 
 interface Props {
-  colors: { primary: string }
-  showPanel: boolean
+  colors?: { primary: string }
+  showPanel?: boolean
   // Add any props your component may need here
 }
 
-const MyComponent = ({ colors, showPanel }: Props) => {
-  // Use the useState hook to manage state in this functional component
-  const [cssVariable, setCssVariable] = React.useState('initial value')
+// TODO: don't add css variables to head
+// TODO: merge prop settings with styles
+
+const Theme = ({ colors, showPanel = false }: Props) => {
   const [isPanelOpen, setIsPanelOpen] = React.useState(false)
 
+  React.useEffect(() => {
+    if (!styles) return
+    // generate css variables
+    createCssVars(styles)
+  }, [styles])
+
+  // for play with values live from a panel
   React.useEffect(() => {
     setIsPanelOpen(showPanel)
   }, [showPanel])
 
-  // Use the useEffect hook to update the css variable on component mount and update
-  React.useEffect(() => {
-    document.documentElement.style.setProperty('--css-variable', cssVariable)
-  }, [cssVariable])
-
-  // Add an event handler to update the css variable when the button is clicked
-  const handleClick = () => {
-    setCssVariable('new value')
-  }
-
-  return
+  return <></>
 }
 
-export default MyComponent
+export { Theme }
+
+function createCssVars(cssVars: object, parentKey?: string) {
+  for (const key in cssVars) {
+    if (cssVars.hasOwnProperty(key)) {
+      const value = cssVars[key]
+      const varName = parentKey ? `${parentKey}-${key}` : key
+      if (typeof value === 'object') {
+        createCssVars(value, varName)
+      } else {
+        document.documentElement.style.setProperty(
+          `--da-vinci-${varName}`,
+          value,
+        )
+      }
+    }
+  }
+}

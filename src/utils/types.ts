@@ -4,3 +4,5 @@ export type ColorVariants =
   | 'warning'
   | 'danger'
   | 'tertiary'
+  | 'positive'
+  | 'negative'

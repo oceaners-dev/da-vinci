@@ -201,23 +201,17 @@ const calculateClasses = ({
 }) => {
   const positions = {
     left: `${
-      withSideSpace
-        ? 'left-hf-side-padding top-hf-side-padding/2'
-        : 'left-0 top-0'
+      withSideSpace ? 'left-dv-baseLoose top-dv-baseLoose/2' : 'left-0 top-0'
     }`,
     right: `${
-      withSideSpace
-        ? 'right-hf-side-padding top-hf-side-padding/2'
-        : 'right-0 top-0'
+      withSideSpace ? 'right-dv-baseLoose top-dv-baseLoose/2' : 'right-0 top-0'
     }`,
     top: `${
-      withSideSpace
-        ? 'left-hf-side-padding/2 top-hf-side-padding'
-        : 'left-0 top-0'
+      withSideSpace ? 'left-dv-baseLoose/2 top-dv-baseLoose' : 'left-0 top-0'
     }`,
     bottom: `${
       withSideSpace
-        ? 'left-hf-side-padding/2 bottom-hf-side-padding'
+        ? 'left-dv-baseLoose/2 bottom-dv-baseLoose'
         : 'left-0 bottom-0'
     }`,
   }
@@ -229,9 +223,7 @@ const calculateClasses = ({
         ? 'h-[50vw]'
         : 'h-[20vw]') +
       ' ' +
-      (withSideSpace
-        ? 'w-[-webkit-fill-available] mx-hf-side-padding'
-        : 'w-full')
+      (withSideSpace ? 'w-[-webkit-fill-available] mx-dv-baseLoose' : 'w-full')
     }`,
     leftRight: `${
       (size === 'medium'
@@ -240,9 +232,7 @@ const calculateClasses = ({
         ? 'w-[50vw]'
         : 'w-[25vw]') +
       ' max-w-[600px] ' +
-      (withSideSpace
-        ? 'h-[-webkit-fill-available] my-hf-side-padding'
-        : 'h-full')
+      (withSideSpace ? 'h-[-webkit-fill-available] my-dv-baseLoose' : 'h-full')
     }`,
   }
   return `${positions[placement!]} ${

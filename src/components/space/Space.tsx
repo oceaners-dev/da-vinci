@@ -13,8 +13,8 @@ export function Space(props: SpaceProps) {
       className={`${
         !spacing
           ? direction === 'vertical'
-            ? 'h-hf-side-padding w-[-webkit-fill-available]'
-            : 'w-hf-side-padding h-auto'
+            ? 'h-dv-baseLoose w-[-webkit-fill-available]'
+            : 'w-dv-baseLoose h-auto'
           : ''
       }`}
       style={spaceStyle}

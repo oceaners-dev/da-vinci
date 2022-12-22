@@ -99,17 +99,17 @@ export function NotificationProvider({
       innerWrapper.className =
         'flex flex-col gap-5 fixed w-fit z-100' +
         ' ' +
-        'data-[position=bottom]:bottom-hf-side-padding data-[position=bottom]:left-1/2 data-[position=bottom]:-translate-x-1/2' +
+        'data-[position=bottom]:bottom-dv-baseLoose data-[position=bottom]:left-1/2 data-[position=bottom]:-translate-x-1/2' +
         ' ' +
-        'data-[position=top]:top-hf-side-padding data-[position=top]:left-1/2 data-[position=top]:-translate-x-1/2' +
+        'data-[position=top]:top-dv-baseLoose data-[position=top]:left-1/2 data-[position=top]:-translate-x-1/2' +
         ' ' +
-        'data-[position=topLeft]:top-hf-side-padding data-[position=topLeft]:left-hf-side-padding' +
+        'data-[position=topLeft]:top-dv-baseLoose data-[position=topLeft]:left-dv-baseLoose' +
         ' ' +
-        'data-[position=bottomLeft]:bottom-hf-side-padding data-[position=bottomLeft]:left-hf-side-padding' +
+        'data-[position=bottomLeft]:bottom-dv-baseLoose data-[position=bottomLeft]:left-dv-baseLoose' +
         ' ' +
-        'data-[position=topRight]:top-hf-side-padding data-[position=topRight]:right-hf-side-padding' +
+        'data-[position=topRight]:top-dv-baseLoose data-[position=topRight]:right-dv-baseLoose' +
         ' ' +
-        'data-[position=bottomRight]:bottom-hf-side-padding data-[position=bottomRight]:right-hf-side-padding'
+        'data-[position=bottomRight]:bottom-dv-baseLoose data-[position=bottomRight]:right-dv-baseLoose'
       wrapperRef.current.appendChild(innerWrapper)
     }
 
@@ -207,12 +207,12 @@ export interface NotificationSettings {
    */
   className?: string
   /**
-   * @description Duration of notification as ms. Set is `0` for `disable auto closing`.
-   */
-  /**
    * @description Content of the notification.
    */
   content: React.ReactNode
+  /**
+   * @description Duration of notification as ms. Set is `0` for `disable auto closing`.
+   */
   duration?: number
 
   /**

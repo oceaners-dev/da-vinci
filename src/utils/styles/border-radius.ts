@@ -1,7 +1,7 @@
 export const radius = {
-  large: 10,
-  small: 4,
-  full: 99999,
-  medium: 6,
-  xs: 2,
+  large: '10px',
+  small: '4px',
+  full: '99999px',
+  medium: '6px',
+  xs: '2px',
 }

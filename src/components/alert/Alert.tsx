@@ -2,16 +2,26 @@
 import chroma from 'chroma-js'
 import React, { useEffect, useId, useState } from 'react'
 import { SvgX } from '../../utils/svg'
+import { ColorVariants } from '../../utils/types'
 import { Card } from '../card-UNFINISHED/Card'
 import { NotificationIcons } from '../notification/svg'
 
 export interface AlertProps {
-  className?: string
+  classNames?: {
+    card?: string
+    closeBtn?: string
+    closeSvg?: string
+    content?: string
+    contentWrapper?: string
+    svgWrapper?: string
+    title?: string
+    wrapper?: string
+  }
   /**
    * Must be a `HEX` value with #.
    * @example #010101
    */
-  color?: string
+  color?: ColorVariants
   content: React.ReactNode
   icon?: React.ReactNode
   onClose?: () => void
@@ -21,7 +31,16 @@ export interface AlertProps {
 
 const Alert: React.FunctionComponent<AlertProps> = (props) => {
   const {
-    className, // ✅
+    classNames = {
+      card: '',
+      closeBtn: '',
+      closeSvg: '',
+      content: '',
+      contentWrapper: '',
+      svgWrapper: '',
+      title: '',
+      wrapper: '',
+    }, // ✅
     color, // ✅
     content, // ✅
     icon, // ✅ TODO: add html support
@@ -37,48 +56,74 @@ const Alert: React.FunctionComponent<AlertProps> = (props) => {
 
   useEffect(() => {
     if (!color) return
-    setBgColor(chroma.scale([color, 'white']).colors(12)[10])
+    const bgHex = document.documentElement.style.getPropertyValue(
+      `--da-vinci-colors-${color}-base`,
+    )
+    if (bgHex !== '') {
+      setBgColor(chroma.scale([bgHex, 'white']).colors(12)[10])
+    }
   }, [color])
 
   return (bgColor && (
     <Card
-      className={`min-w-[300px] !w-fit ${className || ''}`}
+      data-tag="card"
+      className={`min-w-[300px] !w-fit ${classNames.card}`}
       style={{
         backgroundColor: bgColor,
       }}
       {...rest}
     >
-      <div className="w-full h-fit flex flex-row items-start gap-5 alert">
-        <div className={`leading-none text-lg ${id}`}>
+      <div
+        data-tag="wrapper"
+        className={`w-full h-fit flex flex-row items-start gap-5 alert ${classNames.wrapper}}`}
+      >
+        <div
+          data-tag="svgWrapper"
+          className={`leading-none text-lg ${id} ${classNames.svgWrapper}`}
+        >
           {/* @ts-ignore */}
           <style jsx>{`
             .${id} svg {
-              color: ${color} !important;
+              color: var(--da-vinci-colors-${color}-base);
             }
           `}</style>
           {icon ? icon : NotificationIcons['error']}
         </div>
-        <div className="flex flex-col gap-1 w-full">
+        <div
+          className={`flex flex-col gap-1 w-full ${classNames.contentWrapper}`}
+          data-tag="contentWrapper"
+        >
           <div className="flex flex-row items-center justify-between w-full">
             <div
-              className="leading-none font-semibold text-base"
+              data-tag="title"
+              className={`leading-none font-semibold text-base ${classNames.title}}`}
               style={{
-                color: color,
+                color: `var(--da-vinci-colors-${color}-base)`,
               }}
             >
               {title}
             </div>
             {withCloseButton && (
               <button
+                data-tag="closeBtn"
+                className={classNames.closeBtn}
                 onClick={() => {
                   onClose && onClose()
                 }}
               >
-                <SvgX className="w-4 h-4" />
+                <SvgX
+                  data-tag="closeSvg"
+                  className={`w-4 h-4 ${classNames.closeSvg}`}
+                />
               </button>
             )}
           </div>
-          <div className="text-sm">{content}</div>
+          <div
+            data-tag="content"
+            className={`text-sm text-black ${classNames.content}`}
+          >
+            {content}
+          </div>
         </div>
       </div>
     </Card>
@@ -86,7 +131,7 @@ const Alert: React.FunctionComponent<AlertProps> = (props) => {
 }
 
 Alert.defaultProps = {
-  color: '#DC2626',
+  color: 'warning',
 }
 
 export { Alert }

@@ -18,18 +18,22 @@ export function NotificationCard({
     <Alert
       content={data.content}
       title={data.title}
-      className={data.className}
+      classNames={{
+        // TODO: Share classNames between Notification and Alert
+        wrapper: data.className,
+      }}
       icon={data.icon ? data.icon : NotificationIcons[data.type]}
       onClose={closeNotification}
       withCloseButton={true}
       color={
+        // TODO: notification colors are not safe
         data.type === 'success'
-          ? '#4BB543'
+          ? 'positive'
           : data.type === 'error'
-          ? '#DC2626'
-          : data.type === 'warning'
-          ? '#FFCC00'
-          : '#0284c7'
+          ? 'negative'
+          : data.type === 'info'
+          ? 'tertiary'
+          : 'warning'
       }
     />
   )

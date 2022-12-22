@@ -40,4 +40,7 @@ export const colors = {
   shadow: {
     base: '#0000000a',
   },
+  border: {
+    base: '#8f959e33',
+  },
 }

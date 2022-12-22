@@ -25,10 +25,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     useEffect(() => {
       if (!btnType) return
       const colors = {
-        primary: 'bg-blue-500',
-        secondary: 'bg-gray-100',
-        positive: 'bg-lime-500',
-        negative: 'bg-red-500',
+        primary: 'bg-dv-primary-base',
+        secondary: 'bg-dv-secondary-base',
+        positive: 'bg-dv-positive-base',
+        negative: 'bg-dv-negative-base',
       }
       const color = colors[btnType]
 

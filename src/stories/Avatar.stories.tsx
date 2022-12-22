@@ -22,12 +22,24 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Avatar> = (args) => <Avatar {...args} />
+const Random: ComponentStory<typeof Avatar> = (args) => {
+  const { value, ...rest } = args
+  return (
+    <div className="flex flex-row items-center gap-2">
+      <Avatar value="AB" {...rest} />
+      <Avatar value="DB" {...rest} />
+      <Avatar value="TQ" {...rest} />
+      <Avatar value="HW" {...rest} />
+    </div>
+  )
+}
 
 export const Default = Template.bind({})
 export const Bordered = Template.bind({})
 export const WithImage = Template.bind({})
 export const Color = Template.bind({})
 export const Size = Template.bind({})
+export const RandomColor = Random.bind({})
 
 Default.args = {
   value: 'Fersat Ozcelik',
@@ -90,4 +102,8 @@ Size.parameters = {
         "You can use `size` prop to change the size of the avatar. Add the value like `10`. It's `dynamic` tailwind class. So think it like `w-[size]`",
     },
   },
+}
+
+RandomColor.args = {
+  randomColor: true,
 }

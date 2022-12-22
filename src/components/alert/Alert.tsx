@@ -55,12 +55,12 @@ const Alert: React.FunctionComponent<AlertProps> = (props) => {
   const [bgColor, setBgColor] = useState<string>()
 
   useEffect(() => {
-    if (!color) return
+    if (!color || !document) return
     const bgHex = document.documentElement.style.getPropertyValue(
       `--da-vinci-colors-${color}-base`,
     )
     if (bgHex !== '') {
-      setBgColor(chroma.scale([bgHex, 'white']).colors(12)[10])
+      setBgColor(chroma.scale([bgHex.replace('#', ''), 'white']).colors(12)[10])
     }
   }, [color])
 

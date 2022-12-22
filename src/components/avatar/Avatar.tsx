@@ -1,6 +1,6 @@
 import chroma from 'chroma-js'
 import React, { useEffect, useState } from 'react'
-import colors from 'tailwindcss/colors'
+import { ColorVariants } from '../../utils/types'
 
 // TODO: #134 Use Avatar with next/image or similar (Link)
 // TODO: Color calculations need contrast check.
@@ -8,13 +8,13 @@ import colors from 'tailwindcss/colors'
 export function Avatar(props: AvatarProps) {
   const {
     alt, // ✅
-    bgClassName, // ✅
     className, // 🚨
+    color = 'primary',
     size, // ✅ / 🚨
     radius, // ✅
     imgSrc, // ✅
     value, // ✅
-    randomColor, // 🚨
+    randomColor, // ✅
     withBorder, // ✅
   } = props
 
@@ -30,38 +30,34 @@ export function Avatar(props: AvatarProps) {
   const [colorPalette, setColorPalette] = useState<string[]>()
 
   // effects
-  useEffect(() => {
-    // get hex color
-    if (!bgClassName) return
-    if (bgClassName.startsWith('#')) {
-      setBgHexColor(bgClassName.replace('#', ''))
-    }
-    if (bgClassName.includes('-')) {
-      const colorFamily = bgClassName.split('-')[0]
-      const colorNumber = bgClassName.split('-')[1]
-
-      // @ts-ignore
-      const hex = colors[colorFamily][colorNumber]
-      if (hex && hex.startsWith('#')) {
-        setBgHexColor(hex.replace('#', ''))
-      } else {
-        console.warn(
-          'Color not found. Please check your color name. (Example: green-500',
-        )
-      }
-    }
-  }, [])
 
   useEffect(() => {
     // create color palette to get right color for text. run only if it's text
-    if (!bgHexColor) return
-    const isLight = (chroma('#' + bgHexColor).luminance() as number) > 0.5
-    const palette = isLight
-      ? chroma.scale(['#' + bgHexColor, 'black']).colors(12)
-      : chroma.scale(['#' + bgHexColor, 'white']).colors(12)
+    if (!color || !document) return
+    const bgHex = document.documentElement.style.getPropertyValue(
+      `--da-vinci-colors-${color}-base`,
+    )
+    if (!randomColor) {
+      if (bgHex !== '') {
+        setBgHexColor(bgHex)
+        const isLight = (chroma(bgHex).luminance() as number) > 0.5
+        const palette = isLight
+          ? chroma.scale([bgHex, 'black']).colors(12)
+          : chroma.scale([bgHex, 'white']).colors(12)
 
-    setColorPalette(palette)
-  }, [bgHexColor])
+        setColorPalette(palette)
+      }
+    } else {
+      const randomHex = chroma.random()
+      setBgHexColor(randomHex)
+      const isLight = (chroma(randomHex).luminance() as number) > 0.5
+      const palette = isLight
+        ? chroma.scale([randomHex, 'black']).colors(12)
+        : chroma.scale([randomHex, 'white']).colors(12)
+
+      setColorPalette(palette)
+    }
+  }, [color, randomColor])
 
   // classNames
   const borderRadius = `rounded-${radius}`
@@ -70,21 +66,6 @@ export function Avatar(props: AvatarProps) {
 
   return (
     <>
-      {/* {colorPalette && (
-        <div className="flex flex-row items-center gap-1">
-          {colorPalette.map((color) => {
-            return (
-              <div
-                key={uuid()}
-                className="w-5 h-5 flex relative"
-                style={{
-                  backgroundColor: color,
-                }}
-              />
-            );
-          })}
-        </div>
-      )} */}
       <div
         className={
           `text-semibold flex cursor-pointer items-center justify-center overflow-hidden box-border` +
@@ -94,7 +75,7 @@ export function Avatar(props: AvatarProps) {
           (className ? ' ' + className : '')
         }
         style={{
-          backgroundColor: bgHexColor && '#' + bgHexColor, // @ts-ignore
+          backgroundColor: bgHexColor && bgHexColor, // @ts-ignore
           color: colorPalette && colorPalette[6],
         }}
       >
@@ -112,7 +93,7 @@ export function Avatar(props: AvatarProps) {
 }
 
 Avatar.defaultProps = {
-  bgClassName: 'green-500',
+  color: 'primary',
   radius: 'lg',
   size: '8',
 }
@@ -129,6 +110,7 @@ export interface AvatarProps {
    */
   bgClassName?: string
   className?: React.HTMLAttributes<HTMLElement>['className']
+  color?: ColorVariants
   imgSrc?: string
   /**
    * Enter value for `rounded-*` class. Default value is `md`. You can't add px values.

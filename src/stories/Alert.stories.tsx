@@ -31,5 +31,5 @@ Success.args = {
   title: 'Success',
   content: 'Order delivered',
   icon: NotificationIcons.success,
-  color: '#4BB543',
+  color: 'positive',
 }

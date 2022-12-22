@@ -13,7 +13,7 @@
 
 # production
 /dist
-
+/example
 # misc
 .DS_Store
 *.pem
@@ -30,8 +30,4 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
-
 storybook-static
-example/*
-./example
-/example

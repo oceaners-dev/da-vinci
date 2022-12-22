@@ -1,5 +1,4 @@
 * [ ] Fly
-* [ ] Blockquote
 * [ ] Theme
 * [ ] ColorPicker
 * [ ] Tabs

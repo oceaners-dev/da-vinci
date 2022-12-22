@@ -1,64 +1,70 @@
-import { useRouter } from 'next/router'
-import React, { useState } from 'react'
-import { Button, Code, Layout, Nav, Spin, toast } from 'da-vinci-ui'
-export default function Home() {
-  const router = useRouter()
-  const activeItem = navLinks.find((item) => item.link === router.asPath)
-  const [date, setDate] = useState(new Date())
+import {
+  Blockquote,
+  Button,
+  Fly,
+  Layout,
+  Nav,
+  Text,
+  Tooltip,
+} from 'da-vinci-ui'
+import React from 'react'
+import {
+  IconBasket,
+  IconBuildingStore,
+  IconMoped,
+  IconCalendar,
+  IconMapPins,
+  IconChartArrowsVertical,
+} from '@tabler/icons'
+import { SvgLogo } from '@/~components/svg/logo'
 
+export default function Home() {
   return (
-    <Layout hasSidebar className={'relative m-6 w-full gap-5 '}>
+    <Layout hasSidebar>
       <Nav
-        expanded={true}
-        vertical={true}
         items={navLinks}
-        activeItem={activeItem}
-        className="rounded-3xl bg-blue-500"
-        logo={<div>Logo</div>}
+        logo={<SvgLogo className="w-10 h-10" />}
+        expandedLogo={<SvgLogo className="w-10 h-10" />}
       />
-      <Button
-        onClick={() => {
-          toast.success({
-            title: 'Ey',
-            content: 'Yo',
-          })
-        }}
-      >
-        Trigger Notification
-      </Button>
-      <Spin />
+      <Blockquote
+        author="Fersat"
+        quote="Hello world."
+        source="https://google.com/"
+      />
+      <div className="ml-[400px]">asfasf</div>
     </Layout>
   )
 }
+
 const navLinks = [
   {
     label: 'Harita',
     link: '/',
-    icon: <div>eyyy</div>,
+    icon: <IconMapPins />,
   },
   {
     label: 'Siparişler',
     link: '/orders',
-    // icon: <ClipboardTextRtl24Filled className="text-ui-white" />,
+    icon: <IconBasket />,
   },
   {
     label: 'İşletmeler',
     link: '/company',
-    // icon: <BuildingShop24Filled className="text-ui-white" />,
+    icon: <IconBuildingStore />,
   },
   {
     label: 'Kuryeler',
     link: '/courier',
-    // icon: <IconHelmet className="text-ui-white" />,
+    icon: <IconMoped />,
   },
   {
     label: 'Raporlar',
-    link: '/raporlar',
-    // icon: <ChartMultiple24Filled className="text-ui-white" />,
+    link: '/reports',
+    icon: <IconChartArrowsVertical />,
   },
   {
     label: 'Shift',
-    link: '/',
-    // icon: <IconCalendarEvent className="text-ui-white" />,
+    link: '#',
+    icon: <IconCalendar />,
   },
 ]

@@ -23,6 +23,7 @@
     "watch": "concurrently \"pnpm watch:esm\" \"pnpm watch:cjs\"",
     "watch:esm": "tsc --watch",
     "watch:cjs": "tsc --module CommonJS --outDir dist/cjs --watch",
+    "watch:tailwindcss": "tailwindcss -o dist/styles.css --watch",
     "commit": "cz",
     "storybook": "start-storybook -p 6006 --quiet",
     "build-storybook": "build-storybook",

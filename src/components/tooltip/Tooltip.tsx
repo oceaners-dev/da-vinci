@@ -39,8 +39,6 @@ const Tooltip: React.FunctionComponent<TooltipProps> = ({
   const [displayAnimation, setDisplayAnimation] = React.useState<boolean>()
   const [coordinates, setCoordinates] = React.useState<TooltipCoordinates>()
 
-  console.log({ coordinates })
-
   const ref = React.useRef<HTMLDivElement>(null)
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -76,8 +74,6 @@ const Tooltip: React.FunctionComponent<TooltipProps> = ({
       right,
       left,
     }
-
-    console.log({ dimensions })
 
     setCoordinates(coords[position])
 

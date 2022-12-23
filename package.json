@@ -18,7 +18,7 @@
     "build": "rm -rf ./dist && pnpm run build:esm && pnpm run build:cjs && pnpm run build:tailwindcss",
     "build:esm": "tsc",
     "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
-    "build:tailwindcss": "tailwindcss -o dist/styles.css --minify",
+    "build:tailwindcss": "tailwindcss -o dist/styles.css --minify && cp tailwind.config.js dist/tailwind.config.js",
     "dev": "concurrently \"pnpm build\" \"pnpm storybook\"",
     "watch": "concurrently \"pnpm watch:esm\" \"pnpm watch:cjs\"",
     "watch:esm": "tsc --watch",

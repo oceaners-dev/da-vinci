@@ -27,21 +27,24 @@ const Blockquote: React.FC<BlockquoteProps> = ({
     <blockquote
       data-tag="wrapper"
       className={
-        'text-xl font-semibold leading-tight text-gray-800 border-l-4 border-gray-600 pl-4 my-8 h-fit w-fit ' +
+        'text-dv-h3 font-semibold leading-tight text-dv-text-01 border-l-4 border-dv-border-base pl-4 my-8 h-fit w-fit ' +
         classNames.wrapper
       }
     >
       {quote}
       <footer
         data-tag="footer"
-        className={'text-sm font-light mt-2 text-gray-600 ' + classNames.footer}
+        className={
+          'text-dv-regular font-light mt-2 text-dv-text-02 ' + classNames.footer
+        }
       >
         - {author}
         {source && (
           <span
             data-tag="source"
             className={
-              'ml-2 text-sm font-light text-gray-600 ' + classNames.source
+              'ml-2 text-dv-regular font-light text-dv-text-02 ' +
+              classNames.source
             }
           >
             ({source})

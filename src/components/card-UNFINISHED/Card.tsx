@@ -5,7 +5,11 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     const { children, className, ...rest } = props
 
     return (
-      <div ref={ref} className={`card-classes ${className || ''}`} {...rest}>
+      <div
+        ref={ref}
+        className={`card-classes text-dv-text-01 ${className || ''}`}
+        {...rest}
+      >
         {children}
       </div>
     )

@@ -35,6 +35,10 @@ module.exports = {
         'dv-negative-active': 'var(--da-vinci-colors-negative-active)',
         'dv-shadow-base': 'var(--da-vinci-colors-shadow-base)',
         'dv-border-base': 'var(--da-vinci-colors-border-base)',
+        'dv-text-01': 'var(--da-vinci-colors-text-01)',
+        'dv-text-02': 'var(--da-vinci-colors-text-02)',
+        'dv-text-03': 'var(--da-vinci-colors-text-03)',
+        'dv-text-04': 'var(--da-vinci-colors-text-04)',
       },
       borderRadius: {
         'dv-large': 'var(--da-vinci-radius-large)',

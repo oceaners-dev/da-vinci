@@ -1,10 +1,10 @@
 export const typography = {
-  h1: 67,
-  h2: 63,
-  h3: 20,
-  h4: 18,
-  h5: 26,
-  h6: 16,
-  regular: 14,
-  small: 12,
+  h1: '67px',
+  h2: '63px',
+  h3: '20px',
+  h4: '18px',
+  h5: '26px',
+  h6: '16px',
+  regular: '14px',
+  small: '12px',
 }

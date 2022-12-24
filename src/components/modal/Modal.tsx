@@ -72,10 +72,10 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
                 ${
                   !fullScreen &&
                   (size === 'small'
-                    ? 'w-[400px]'
+                    ? 'w-[400px] h-auto'
                     : size === 'large'
-                    ? 'w-[700px]'
-                    : 'w-[550px]')
+                    ? 'w-[700px] h-auto'
+                    : 'w-[550px] h-auto')
                 }
                 ${className || ''}
                 `}

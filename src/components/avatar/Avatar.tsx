@@ -92,9 +92,7 @@ export function Avatar(props: AvatarProps) {
   )
 }
 
-Avatar.defaultProps = {
-  color: 'primary',
-  radius: 'lg',
+Avatar.defaultProps = { color: 'primary', radius: 'lg',
   size: '8',
 }
 export interface AvatarProps {

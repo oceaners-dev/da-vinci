@@ -67,7 +67,7 @@ const Alert: React.FunctionComponent<AlertProps> = (props) => {
   return (bgColor && (
     <Card
       data-tag="card"
-      className={`min-w-[300px] !w-fit ${classNames.card}`}
+      className={`min-w-[300px] !w-fit ${classNames.card} relative z-[999]`}
       style={{
         backgroundColor: bgColor,
       }}

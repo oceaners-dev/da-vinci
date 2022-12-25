@@ -4,6 +4,7 @@ import { Portal } from '../portal/Portal'
 
 // TODO: Add copy support
 // TODO: stay open if hover over tooltip
+// TODO: positions are wrong
 
 export interface TooltipProps {
   children: React.ReactNode

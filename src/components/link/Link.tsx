@@ -2,6 +2,7 @@ import { default as CustomLink, LinkProps } from 'next/link'
 import React, { forwardRef } from 'react'
 
 // TODO: active classname is not logical
+// FIXME: causing hydration error
 export const Link = forwardRef<HTMLAnchorElement, CustomLinkProps>(
   (props, ref) => {
     const { children, className, icon, isActive, ...rest } = props

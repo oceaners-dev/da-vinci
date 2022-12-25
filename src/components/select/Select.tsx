@@ -8,6 +8,8 @@ import { Input } from '../input/Input'
 import { Tag } from '../tag/Tag'
 
 // TODO: add tag for selected items
+// TODO: on click clear button, submit firing
+
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   (props, ref) => {
     const {

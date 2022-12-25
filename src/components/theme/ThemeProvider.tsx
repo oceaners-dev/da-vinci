@@ -25,7 +25,23 @@ const Theme = ({ tokens, showPanel = false }: Props) => {
     setIsPanelOpen(showPanel)
   }, [showPanel])
 
-  return <></>
+  return (
+    <div
+      className={
+        'hidden h-0 w-0 fixed bottom-0 left-0' +
+        ' ' +
+        'text-dv-primary-base text-dv-primary-hover text-dv-primary-active text-dv-primary-disabled text-dv-secondary-base text-dv-secondary-hover text-dv-secondary-active text-dv-secondary-disabled text-dv-warning-base text-dv-warning-hover text-dv-warning-active text-dv-danger-base text-dv-danger-hover text-dv-danger-active text-dv-tertiary-base text-dv-tertiary-hover text-dv-tertiary-active text-dv-positive-base text-dv-positive-hover text-dv-positive-active text-dv-positive-disabled text-dv-negative-base text-dv-negative-hover text-dv-negative-active text-dv-shadow-base text-dv-border-base text-dv-text-01 text-dv-text-02 text-dv-text-03 text-dv-text-04 ' +
+        ' ' +
+        'rounded-dv-large rounded-dv-small rounded-dv-full rounded-dv-medium rounded-dv-xs ' +
+        ' ' +
+        'shadow-dv-none shadow-dv-sm shadow-dv-md shadow-dv-lg' +
+        ' ' +
+        'p-dv-none p-dv-superTight p-dv-extraTight p-dv-tight p-dv-baseTight p-dv-base p-dv-baseLoose p-dv-loose p-dv-extraLoose p-dv-superLoose' +
+        ' ' +
+        'text-dv-h1 text-dv-h2 text-dv-h3 text-dv-h4 text-dv-h5 text-dv-h6 text-dv-regular text-dv-small'
+      }
+    ></div>
+  )
 }
 
 export { Theme }

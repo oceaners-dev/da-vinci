@@ -1,8 +1,8 @@
 import chroma from 'chroma-js'
+import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { ColorVariants } from '../../utils/types'
 
-// TODO: #134 Use Avatar with next/image or similar (Link)
 // TODO: Color calculations need contrast check.
 
 export function Avatar(props: AvatarProps) {
@@ -30,7 +30,6 @@ export function Avatar(props: AvatarProps) {
   const [colorPalette, setColorPalette] = useState<string[]>()
 
   // effects
-
   useEffect(() => {
     // create color palette to get right color for text. run only if it's text
     if (!color || !document) return
@@ -65,30 +64,31 @@ export function Avatar(props: AvatarProps) {
   const hasBorder = withBorder ? `outline` : ''
 
   return (
-    <>
-      <div
-        className={
-          `text-semibold flex cursor-pointer aspect-square items-center justify-center overflow-hidden box-border` +
-          (avatarSize ? ' ' + avatarSize : '') +
-          (borderRadius ? ' ' + borderRadius : '') +
-          (hasBorder ? ' ' + hasBorder : '') +
-          (className ? ' ' + className : '')
-        }
-        style={{
-          backgroundColor: bgHexColor && bgHexColor, // @ts-ignore
-          color: colorPalette && colorPalette[6],
-        }}
-      >
-        {value && getLetters(value)}
-        {imgSrc && (
-          <img
-            src={imgSrc}
-            alt={alt || 'avatar'}
-            className={`h-full w-full object-cover object-center ${borderRadius}`}
-          />
-        )}
-      </div>
-    </>
+    <div
+      className={
+        `text-semibold flex cursor-pointer aspect-square items-center justify-center overflow-hidden box-border` +
+        (avatarSize ? ' ' + avatarSize : '') +
+        (borderRadius ? ' ' + borderRadius : '') +
+        (hasBorder ? ' ' + hasBorder : '') +
+        (className ? ' ' + className : '')
+      }
+      style={{
+        backgroundColor: bgHexColor && bgHexColor, // @ts-ignore
+        color: colorPalette && colorPalette[6],
+      }}
+    >
+      {value && getLetters(value)}
+      {imgSrc && (
+        <Image
+          src={imgSrc}
+          width={Number(size) * 8}
+          height={Number(size) * 8}
+          alt={alt || 'avatar'}
+          quality={100}
+          className={`h-full w-full aspect-square object-cover object-center ${borderRadius}`}
+        />
+      )}
+    </div>
   )
 }
 

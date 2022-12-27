@@ -68,7 +68,7 @@ export function Avatar(props: AvatarProps) {
     <>
       <div
         className={
-          `text-semibold flex cursor-pointer items-center justify-center overflow-hidden box-border` +
+          `text-semibold flex cursor-pointer aspect-square items-center justify-center overflow-hidden box-border` +
           (avatarSize ? ' ' + avatarSize : '') +
           (borderRadius ? ' ' + borderRadius : '') +
           (hasBorder ? ' ' + hasBorder : '') +
@@ -92,9 +92,7 @@ export function Avatar(props: AvatarProps) {
   )
 }
 
-Avatar.defaultProps = { color: 'primary', radius: 'lg',
-  size: '8',
-}
+Avatar.defaultProps = { color: 'primary', radius: 'lg', size: '8' }
 export interface AvatarProps {
   /**
    * Enter value for `alt` attribute of `img` tag. Use it if you are using `imgSrc` prop.

@@ -2,6 +2,8 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import chroma from 'chroma-js'
 import { useMergedRef } from '../../hooks'
 
+// TODO: Button's background color does not changewith useEffect
+// TODO: Add `icon only`version to Button
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
     const {
@@ -70,11 +72,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...rest}
       >
         {icon && (
-          <div className="pl-2 [&>svg]:w-5 [&>svg]:h-5 leading-none">
+          <div
+            className={
+              '[&>svg]:w-5 [&>svg]:h-5 leading-none ' +
+              (children ? 'pl-2' : 'px-2')
+            }
+          >
             {icon}
           </div>
         )}
-        <div className="w-full max-w-[150px] font-medium px-2">{children}</div>
+        {children && (
+          <div className="w-full max-w-[150px] font-medium px-2">
+            {children}
+          </div>
+        )}
       </button>
     )
   },
@@ -84,14 +95,14 @@ Button.defaultProps = {
   btnType: 'primary',
 }
 
-export interface HtmlButtonProps
+export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Colour type of button.
    * @defaults 'primary'
    */
   btnType?: 'primary' | 'secondary' | 'negative' | 'positive'
-  children: React.ReactNode /* as prop can be Link or Button */
+  children?: React.ReactNode /* as prop can be Link or Button */
   className?:
     | React.HTMLAttributes<HTMLButtonElement>['className']
     | React.HTMLAttributes<HTMLAnchorElement>['className']
@@ -100,5 +111,3 @@ export interface HtmlButtonProps
   isHoverStylesDisabled?: boolean
   onClick?: React.HTMLAttributes<HTMLButtonElement>['onClick']
 }
-
-export type ButtonProps = HtmlButtonProps

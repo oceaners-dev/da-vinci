@@ -1,16 +1,17 @@
 import * as React from 'react'
+import { useId } from 'react'
 import { Card } from '../card-UNFINISHED/Card'
 import { Portal } from '../portal/Portal'
 
 // TODO: Add copy support
 // TODO: stay open if hover over tooltip
-// TODO: positions are wrong
 
 export interface TooltipProps {
   children: React.ReactNode
   classNames?: {
     wrapper?: string
   }
+  closeOnMouseLeave?: boolean // TODO: add closeOnMouseLeave to Tooltip
   content: React.ReactNode
   offset?: number
   position?: 'top' | 'bottom' | 'left' | 'right'
@@ -24,9 +25,6 @@ export interface TooltipCoordinates {
   transform?: string
 }
 
-/**
- * LEFT POSITION DOES NOT WORKING FOR NOW
- */
 const Tooltip: React.FunctionComponent<TooltipProps> = ({
   children, // ✅
   classNames = {
@@ -34,16 +32,19 @@ const Tooltip: React.FunctionComponent<TooltipProps> = ({
   },
   content, // ✅
   offset,
-  position = 'top', // 🚨 TODO: center top/bottom tooltips
+  position = 'top',
 }) => {
+  const id = useId().replaceAll(':', '')
   const [isVisible, setIsVisible] = React.useState(false)
   const [displayAnimation, setDisplayAnimation] = React.useState<boolean>()
   const [coordinates, setCoordinates] = React.useState<TooltipCoordinates>()
+  const [contentWidth, setContentWidth] = React.useState<number>(0)
 
   const ref = React.useRef<HTMLDivElement>(null)
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const target = e.target as HTMLElement
+
     const dimensions = target.getBoundingClientRect()
 
     const top = {
@@ -64,7 +65,7 @@ const Tooltip: React.FunctionComponent<TooltipProps> = ({
     }
 
     const left = {
-      left: dimensions.left - offset,
+      left: dimensions.left - offset - contentWidth,
       top: dimensions.y + dimensions.height / 2, // add half the width of the
       transform: 'translateY(-50%)',
     }
@@ -80,6 +81,12 @@ const Tooltip: React.FunctionComponent<TooltipProps> = ({
 
     setIsVisible(true)
     setTimeout(() => {
+      setContentWidth(
+        document.getElementById('tooltip-' + id)
+          ? document.getElementById('tooltip-' + id).getBoundingClientRect()
+              .width
+          : 0,
+      )
       setDisplayAnimation(true)
     }, 100)
   }
@@ -109,13 +116,15 @@ const Tooltip: React.FunctionComponent<TooltipProps> = ({
 
   return (
     <div
-      ref={ref}
       onMouseEnter={(e) => handleMouseEnter(e)}
       onMouseLeave={handleMouseLeave}
     >
       {isVisible && (
         <Portal>
           <div
+            onMouseEnter={(e) => handleMouseEnter(e)}
+            onMouseLeave={handleMouseLeave}
+            id={'tooltip-' + id}
             style={{
               position: 'fixed',
               top: coordinates?.top,
@@ -134,7 +143,9 @@ const Tooltip: React.FunctionComponent<TooltipProps> = ({
                   (displayAnimation ? 'opacity-1 top-2 ' : 'opacity-0 top-0')
                 : position === 'left'
                 ? lrClasses +
-                  (displayAnimation ? 'opacity-1 right-3' : 'opacity-0 right-0')
+                  (displayAnimation
+                    ? 'opacity-1 right-3 '
+                    : 'opacity-0 right-0 ')
                 : lrClasses +
                   (displayAnimation ? 'opacity-1  left-3 ' : 'opacity-0 left-0')
             }
@@ -142,7 +153,7 @@ const Tooltip: React.FunctionComponent<TooltipProps> = ({
             <Card
               className={'!px-2 !py-1 text-xs !w-max ' + classNames?.wrapper}
             >
-              {content}
+              <div>{content}</div>
             </Card>
           </div>
         </Portal>
@@ -155,6 +166,8 @@ const Tooltip: React.FunctionComponent<TooltipProps> = ({
 
 Tooltip.defaultProps = {
   offset: 15,
+  position: 'right',
+  closeOnMouseLeave: true,
 }
 
 export { Tooltip }

@@ -2,8 +2,6 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import chroma from 'chroma-js'
 import { useMergedRef } from '../../hooks'
 
-// TODO: Button's background color does not changewith useEffect
-// TODO: Add `icon only`version to Button
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
     const {

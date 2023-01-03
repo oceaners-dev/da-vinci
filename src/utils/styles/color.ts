@@ -27,10 +27,10 @@ export const colors = {
     active: '#373c43',
   },
   positive: {
-    base: '#3370ff',
-    hover: '#4e83fd',
-    active: '#245bdb',
-    disabled: '#245bdb',
+    base: '#54B435',
+    hover: '#00A35F',
+    active: '#008E78',
+    disabled: '#00777F',
   },
   negative: {
     base: '#f54a45',

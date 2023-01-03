@@ -35,6 +35,7 @@ module.exports = {
     'react/display-name': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     'react/jsx-wrap-multilines': 'off',
+    'react/react-in-jsx-scope': 'off',
     'react/require-default-props': 'off',
     indent: 'off',
     'import/no-unresolved': 'off',
@@ -47,4 +48,4 @@ module.exports = {
     'unused-imports/no-unused-imports': 'error',
     '@typescript-eslint/no-var-requires': 'warn',
   },
-};
+}

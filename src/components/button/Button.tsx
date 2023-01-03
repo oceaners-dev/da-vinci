@@ -1,6 +1,7 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import chroma from 'chroma-js'
 import { useMergedRef } from '../../hooks'
+import { ColorVariants } from '../../utils/types'
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
@@ -24,13 +25,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     useEffect(() => {
       if (!btnType) return
-      const colors = {
-        primary: 'bg-dv-primary-base',
-        secondary: 'bg-dv-secondary-base',
-        positive: 'bg-dv-positive-base',
-        negative: 'bg-dv-negative-base',
-      }
-      const color = colors[btnType]
+      const color = `bg-dv-${btnType}-base`
 
       if (color) {
         setBackgroundColorClass(color)
@@ -99,7 +94,7 @@ export interface ButtonProps
    * Colour type of button.
    * @defaults 'primary'
    */
-  btnType?: 'primary' | 'secondary' | 'negative' | 'positive'
+  btnType?: ColorVariants
   children?: React.ReactNode /* as prop can be Link or Button */
   className?:
     | React.HTMLAttributes<HTMLButtonElement>['className']

@@ -1,7 +1,6 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Alert } from '../components/alert/Alert'
-import { NotificationIcons } from '../components/notification/svg'
+import SvgIcon from '../components/notification/svg'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -30,6 +29,6 @@ Default.args = {
 Success.args = {
   title: 'Success',
   content: 'Order delivered',
-  icon: NotificationIcons.success,
+  icon: <SvgIcon type={'success'} />,
   color: 'positive',
 }

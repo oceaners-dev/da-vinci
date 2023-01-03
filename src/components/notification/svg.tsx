@@ -1,4 +1,5 @@
-import React, { SVGProps } from 'react'
+import { SVGProps } from 'react'
+import { NotificationType } from './Notification'
 
 export function SvgSuccess(props: SVGProps<SVGSVGElement>) {
   return (
@@ -44,9 +45,27 @@ export function SvgInfo(props: SVGProps<SVGSVGElement>) {
   )
 }
 
-export const NotificationIcons = {
+export const notificationIcons = {
   success: <SvgSuccess className="text-[#4BB543] w-5 h-5" />,
   error: <SvgError className="text-red-600 w-5 h-5" />,
   warning: <SvgWarning className="text-[#FFCC00] w-5 h-5" />,
   info: <SvgInfo className="text-sky-600 w-5 h-5" />,
 }
+
+const SvgIcon = ({ type }: { type: NotificationType }) => {
+  let Icon
+
+  if (type === 'success') {
+    Icon = SvgSuccess
+  } else if (type === 'error') {
+    Icon = SvgError
+  } else if (type === 'warning') {
+    Icon = SvgWarning
+  } else if (type === 'info') {
+    Icon = SvgInfo
+  }
+
+  return <Icon className="w-5 h-5" />
+}
+
+export default SvgIcon

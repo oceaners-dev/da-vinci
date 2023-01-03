@@ -4,7 +4,8 @@ import React, { useEffect, useId, useState } from 'react'
 import { SvgX } from '../../utils/svg'
 import { ColorVariants } from '../../utils/types'
 import { Card } from '../card-UNFINISHED/Card'
-import { NotificationIcons } from '../notification/svg'
+import { NotificationType } from '../notification/Notification'
+import SvgIcon from '../notification/svg'
 
 export interface AlertProps {
   classNames?: {
@@ -26,6 +27,7 @@ export interface AlertProps {
   icon?: React.ReactNode
   onClose?: () => void
   title: React.ReactNode
+  type?: NotificationType
   withCloseButton?: boolean
 }
 
@@ -46,6 +48,7 @@ const Alert: React.FunctionComponent<AlertProps> = (props) => {
     icon, // ✅ TODO: add html support
     onClose, // ✅
     title, // ✅
+    type,
     withCloseButton, // ✅
     ...rest
   } = props
@@ -87,7 +90,7 @@ const Alert: React.FunctionComponent<AlertProps> = (props) => {
               color: var(--da-vinci-colors-${color}-base);
             }
           `}</style>
-          {icon ? icon : NotificationIcons['error']}
+          {icon ? icon : <SvgIcon type={type} />}
         </div>
         <div
           className={`flex flex-col gap-1 w-full ${classNames.contentWrapper}`}

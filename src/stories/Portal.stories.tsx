@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Portal } from '../components/portal/Portal'
 import { Button } from '../components/button/Button'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Overlays/Portal',
   component: Portal,
+  title: 'Overlays/Portal',
 } as ComponentMeta<typeof Portal>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args

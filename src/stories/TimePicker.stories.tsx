@@ -1,10 +1,8 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { TimePicker } from '../components/timepicker/TimePicker'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Form/TimePicker',
   component: TimePicker,
   parameters: {
     docs: {
@@ -14,6 +12,7 @@ export default {
       },
     },
   },
+  title: 'Form/TimePicker',
 } as ComponentMeta<typeof TimePicker>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args

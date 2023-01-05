@@ -17,7 +17,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
 )
 
 Card.defaultProps = {
-  bordered: true,
+  bordered: 'true',
 }
 
 /**
@@ -31,7 +31,7 @@ Card.defaultProps = {
  * @param header - Header component if headerText does not meet your needs
  */
 export interface CardProps {
-  bordered?: boolean
+  bordered?: string
   children: React.ReactNode
   className?: string
   cover?: React.ReactNode

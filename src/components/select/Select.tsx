@@ -14,18 +14,18 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   (props, ref) => {
     const {
       allowDeselect, // ✅
-      bordered, // 🚨
+      // bordered, // 🚨
       classNames, // 🚨
       clearable, // 🚨
-      customOptionComponent, // 🚨
+      // customOptionComponent, // 🚨
       closeOnSelect, // ✅
       defaultSelectedValues, // ✅
-      creatable, // 🚨
+      // creatable, // 🚨
       disabled, // ✅
-      dropdownPosition, // 🚨
-      filter, // 🚨
+      // dropdownPosition, // 🚨
+      // filter, // 🚨
       initiallyOpen, // ✅
-      groups, // 🚨
+      // groups, // 🚨
       helperText, // ✅
       options, // ✅
       hideSelectedOptions, // ✅
@@ -34,11 +34,11 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
       onChange, // ✅
       onDropdownToggle, // ✅
       renderOptions, // ✅
-      required, // 🚨
-      searchable, // 🚨
+      // required, // 🚨
+      // searchable, // 🚨
       withoutDropdownIcon, // ✅
-      zIndex, // 🚨
-      ...rest
+      // zIndex, // 🚨
+      // ...rest
     } = props
 
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>()
@@ -242,7 +242,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
                       {renderOptions ? (
                         renderOptions(option)
                       ) : (
-                        <div className="px-4 py-1 text-sm hover:bg-gray-300 cursor-pointer w-full text-left flex flex-row items-center justify-between w-full">
+                        <div className="px-4 py-1 text-sm hover:bg-gray-300 cursor-pointer  text-left flex flex-row items-center justify-between w-full">
                           <span>{option.label}</span>
                           {isSelected && <SvgTick className="w-4 h-4" />}
                         </div>
@@ -267,11 +267,11 @@ const OptionComponent = React.forwardRef<HTMLDivElement, Option>(
 Select.defaultProps = {
   allowDeselect: true,
   bordered: false,
-  dropdownPosition: 'auto',
-  initiallyOpen: false,
   clearable: true,
-  searchable: false,
+  dropdownPosition: 'auto',
   hideSelectedOptions: false,
+  initiallyOpen: false,
+  searchable: false,
 }
 
 export interface SelectProps {

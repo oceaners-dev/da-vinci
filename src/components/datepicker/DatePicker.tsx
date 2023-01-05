@@ -97,10 +97,10 @@ const DateSelection = ({
     <div
       className="text-gray-800"
       style={{
+        alignItems: 'stretch',
         display: 'grid',
         gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr',
         gridTemplateRows: '2rem auto',
-        alignItems: 'stretch',
       }}
     >
       <button className={buttonClassName} onClick={() => prevMonth()}>
@@ -161,10 +161,10 @@ const MonthSelection: React.FC<{}> = () => {
     <div
       className="h-48"
       style={{
+        alignItems: 'stretch',
         display: 'grid',
         gridTemplateColumns: '1fr 1fr 1fr 1fr',
         gridTemplateRows: '2rem auto',
-        alignItems: 'stretch',
       }}
     >
       <div className="flex" style={{ gridColumn: '1/5' }}>
@@ -208,10 +208,10 @@ const YearSelection: React.FC<{}> = () => {
     <div
       className="h-48"
       style={{
+        alignItems: 'stretch',
         display: 'grid',
         gridTemplateColumns: '1fr 1fr 1fr 1fr',
         gridTemplateRows: '2rem auto',
-        alignItems: 'stretch',
       }}
     >
       <div className="flex" style={{ gridColumn: '1/5' }}>
@@ -269,7 +269,7 @@ const CalButton: React.FC<{
 const Calendar: React.FC<CalendarProps> = React.forwardRef<
   HTMLDivElement,
   CalendarProps
->((props, ref) => {
+>((props) => {
   const { view } = useContext(DatepickerCtx)
   const clickRef = useClickOutside(() => props.closeFunction())
 

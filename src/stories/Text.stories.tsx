@@ -1,15 +1,14 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Text } from '../components/text/Text'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Typography/Text',
   component: Text,
+  title: 'Typography/Text',
 } as ComponentMeta<typeof Text>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Text> = (args) => (
+const Template: ComponentStory<typeof Text> = () => (
   <>
     <Text size="xs">Severus Snape</Text>
     <Text size="xs" decoration="underline">

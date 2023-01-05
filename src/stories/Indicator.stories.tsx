@@ -1,12 +1,11 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Indicator } from '../components/indicator/Indicator'
 import { Avatar } from '../components/avatar/Avatar'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Display/Indicator',
   component: Indicator,
+  title: 'Display/Indicator',
 } as ComponentMeta<typeof Indicator>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
@@ -23,7 +22,7 @@ Default.args = {
 }
 
 Bordered.args = {
+  bordered: true,
   children: <Avatar value="AD" bgClassName="gray-300" />,
   value: 5,
-  bordered: true,
 }

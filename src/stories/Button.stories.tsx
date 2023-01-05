@@ -1,11 +1,9 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Button } from '../components/button/Button'
 import { SvgCalendarOutline } from '../components/datepicker/svg'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Base/Button',
   component: Button,
   parameters: {
     docs: {
@@ -15,6 +13,7 @@ export default {
       },
     },
   },
+  title: 'Base/Button',
 } as ComponentMeta<typeof Button>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args

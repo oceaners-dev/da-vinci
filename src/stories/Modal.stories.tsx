@@ -1,11 +1,9 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Modal } from '../components/modal/Modal'
 import { Button } from '../components/button/Button'
 
 export default {
-  title: 'Overlays/Modal (not finished)',
-  component: Modal,
   argTypes: {
     isOpen: {
       control: {
@@ -13,6 +11,8 @@ export default {
       },
     },
   },
+  component: Modal,
+  title: 'Overlays/Modal (not finished)',
 } as ComponentMeta<typeof Modal>
 
 const Template: ComponentStory<typeof Modal> = (args) => {

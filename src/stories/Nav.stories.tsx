@@ -1,10 +1,9 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Nav } from '../components/nav/Nav'
 
 export default {
-  title: 'Navigation/Nav (not finished)',
   component: Nav,
+  title: 'Navigation/Nav (not finished)',
 } as ComponentMeta<typeof Nav>
 
 const Template: ComponentStory<typeof Nav> = (args) => {
@@ -18,8 +17,6 @@ const Template: ComponentStory<typeof Nav> = (args) => {
 
 const items = [
   {
-    label: 'Home',
-    link: '/',
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24">
         <path
@@ -28,10 +25,10 @@ const items = [
         />
       </svg>
     ),
+    label: 'Home',
+    link: '/',
   },
   {
-    label: 'Home',
-    link: '/',
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24">
         <path
@@ -40,6 +37,8 @@ const items = [
         />
       </svg>
     ),
+    label: 'Home',
+    link: '/',
   },
 ]
 
@@ -53,8 +52,8 @@ Vertical.args = {
 }
 
 Horizontal.args = {
-  vertical: false,
   items: items,
+  vertical: false,
 }
 
 // HeaderWithSidebar.args = {

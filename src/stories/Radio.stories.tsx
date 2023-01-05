@@ -1,13 +1,10 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Radio, RadioComponent } from '../components/radio/Radio'
 import { RadioGroup } from '../components/radio/group'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Form/Radio',
   component: Radio,
-  subcomponents: { RadioGroup },
   parameters: {
     docs: {
       description: {
@@ -15,6 +12,8 @@ export default {
       },
     },
   },
+  subcomponents: { RadioGroup },
+  title: 'Form/Radio',
   //   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //   argTypes: {
   //     backgroundColor: { control: 'color' },
@@ -39,16 +38,16 @@ export const GroupDefaultSelected = GroupTemplate.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 DefaultChecked.args = {
   defaultChecked: true,
-  name: 'Yo',
-  label: 'I have read the terms',
   isLabelSelectable: true,
+  label: 'I have read the terms',
+  name: 'Yo',
 }
 
 isLabelSelectable.args = {
   defaultChecked: true,
-  name: 'Yo',
-  label: 'I have read the terms',
   isLabelSelectable: false,
+  label: 'I have read the terms',
+  name: 'Yo',
 }
 
 Group.args = {

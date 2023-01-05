@@ -1,10 +1,9 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Tabs } from '../components/tabs/Tabs'
 
 export default {
-  title: 'Navigation/Tabs',
   component: Tabs,
+  title: 'Navigation/Tabs',
 } as ComponentMeta<typeof Tabs>
 
 const Template: ComponentStory<typeof Tabs> = (args) => {
@@ -13,7 +12,6 @@ const Template: ComponentStory<typeof Tabs> = (args) => {
 
 const options = [
   {
-    label: 'Tab 1',
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -33,6 +31,7 @@ const options = [
         <circle cx="12" cy="15" r="2"></circle>
       </svg>
     ),
+    label: 'Tab 1',
     // content: <div>Tab 1</div>,
   },
   {

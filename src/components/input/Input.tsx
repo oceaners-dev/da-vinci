@@ -1,4 +1,5 @@
-import React, { useEffect, useId, useState } from 'react'
+import { useEvent } from 'oceaners-hooks'
+import React, { useEffect, useId, useRef, useState } from 'react'
 import { useMergedRef } from '../../hooks'
 import { SvgClear, SvgEyeOff, SvgEyeOn } from '../../utils/svg'
 
@@ -18,6 +19,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       password, // ✅
       onChange, // ✅
       hideInput, // 🚨
+      rightIcon, // 🚨
       showClear, // ✅
       leftComponent, // ✅
       rightComponent, // ✅
@@ -31,7 +33,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true)
     const [isInputEmpty, setIsInputEmpty] = useState<boolean>(true)
-    const [isInputActive, setIsInputActive] = useState<boolean>(false)
 
     const inputId = useId()
 
@@ -49,7 +50,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const renderLabelBox = (position: 'left' | 'right', label: string) => (
       <div
         className={
-          'h-full w-fit flex items-center justify-center px-3 text-gray-400 ' +
+          'flex h-full w-fit items-center justify-center px-3 text-gray-400 ' +
           (bordered ? ' bg-white' : ' bg-gray-300') +
           (position === 'left'
             ? rounded
@@ -66,33 +67,41 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const renderComponentBox = (component: React.ReactNode) => component
 
+    const [isInputActive, setIsInputActive] = useState<boolean>(false)
+
+    const focusRef = useRef(null)
+    useEvent(
+      'click',
+      () => {
+        setIsInputActive(true)
+        inputRef.current?.focus()
+      },
+      focusRef,
+    )
+
     return (
       <div
-        className={'h-auto inline-flex box-border relative gap-[6px] flex-col'}
+        className={'relative box-border inline-flex h-auto flex-col gap-[6px]'}
+        onClick={wrapperOnClick}
       >
-        {label && (
-          <label htmlFor={inputId} className="text-sm ml-3">
-            {label}
-          </label>
-        )}
         <div
           className={
-            'relative min-h-[40px] w-fit flex flex-row items-center box-border ' +
-            ' transform transition duration-200 text-sm ' +
+            'relative box-border flex min-h-[40px] w-fit flex-row items-center ' +
+            ' transform text-sm transition duration-200 ' +
             (disableMoving ? '' : ' focus-within:-translate-y-[2px] ') +
             (rounded ? ' rounded-full' : ' rounded-lg') +
             (wrapperClasses ? ' ' + wrapperClasses : '') +
             (bordered
               ? ' bg-white outline outline-gray-300 focus-within:outline-gray-400 hover:outline-gray-400'
               : ' bg-gray-200') +
-            (disabled ? ' text-gray-400 cursor-not-allowed' : '')
+            (disabled ? ' cursor-not-allowed text-gray-400' : '')
           }
         >
           {labelPlaceholder && (
             <label
               htmlFor={inputId}
               className={
-                'absolute -translate-y-1/2 text-gray-500 transform transition-all duration-150 left-3 ' +
+                'absolute left-3 -translate-y-1/2 transform text-gray-500 transition-all duration-150 ' +
                 (isInputActive ? ' -top-4 text-black' : ' top-1/2 ')
               }
             >
@@ -101,32 +110,35 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
           {/* click helper */}
           <div
+            ref={focusRef}
             data-name="click-helper"
-            className="h-full w-full absolute top-0 left-0 box-border"
-            onClick={() => {
-              inputRef.current?.focus()
-              if (wrapperOnClick) {
-                wrapperOnClick()
-              }
-            }}
+            className="absolute top-0 left-0 box-border h-full w-full"
           />
 
           {labelLeft && !leftComponent && renderLabelBox('left', labelLeft)}
           {leftComponent && !password && renderComponentBox(leftComponent)}
-
+          {label && (
+            <label
+              htmlFor={inputId}
+              className="absolute left-3 -top-5 text-xs font-light"
+            >
+              {label}
+            </label>
+          )}
           <input
             id={inputId}
             aria-labelledby={inputId}
             ref={inputRefs}
             disabled={disabled}
-            onFocus={() => {
-              setIsInputActive(true)
-            }}
-            onBlur={() => {
-              setIsInputActive(false)
-            }}
+            // autoFocus={isFocused}
+            // onFocus={() => {
+            //   setIsInputActive(true)
+            // }}
+            // onBlur={() => {
+            //   setIsInputActive(false)
+            // }}
             className={
-              'relative z-20 w-fit h-full outline-none outline-0 outline-offset-0 bg-transparent pl-4 box-border ' +
+              'relative z-20 box-border h-full w-fit bg-transparent pl-4 outline-none outline-0 outline-offset-0 ' +
               (className ? ' ' + className : '') +
               (disabled ? ' pointer-events-none' : '')
             }
@@ -138,11 +150,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           />
 
           {/* clear button */}
-          {!labelLeft && !labelRight && showClear && (
+          {!labelLeft && !labelRight && (
             <button
               className={
-                'inline-flex h-auto w-auto px-2 transform transition-all duration-150 z-30 ' +
-                (isInputEmpty
+                'z-30 inline-flex h-auto w-auto transform px-2 transition-all duration-150 [&>svg]:z-20 [&>svg]:inline-flex [&>svg]:w-3 ' +
+                (!rightIcon && isInputEmpty
                   ? ' invisible opacity-0'
                   : ' visible opacity-100') +
                 (rightComponent
@@ -154,21 +166,27 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 setIsInputEmpty(true)
               }}
             >
-              <SvgClear className="h-full w-3 relative z-20 inline-flex" />
+              {rightIcon ? (
+                rightIcon
+              ) : showClear ? (
+                <SvgClear className="relative z-20 inline-flex h-full w-3" />
+              ) : (
+                ''
+              )}
             </button>
           )}
 
           {password && (
             <button
-              className="box-border h-full w-fit pr-4 block"
+              className="box-border block h-full w-fit pr-4"
               onClick={() => {
                 setIsPasswordHidden(!isPasswordHidden)
               }}
             >
               {isPasswordHidden ? (
-                <SvgEyeOff className="h-full w-4 relative z-20" />
+                <SvgEyeOff className="relative z-20 h-full w-4" />
               ) : (
-                <SvgEyeOn className="h-full w-4 relative z-20" />
+                <SvgEyeOn className="relative z-20 h-full w-4" />
               )}
             </button>
           )}
@@ -191,9 +209,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 )
 
 Input.defaultProps = {
-  showClear: true,
-  rounded: false,
   bordered: false,
+  rounded: false,
+  showClear: true,
 }
 
 export interface InputProps
@@ -245,6 +263,10 @@ export interface InputProps
    * If you want to add a component to the left of the input, you can use this prop. We don't set `overflow hidden` for Input's wrapper. So if your component overflows, you can use `wrapperClasses` prop to set `overflow-hidden` for wrapper.
    */
   rightComponent?: React.ReactNode
+  /**
+   * If you add a icon to right side, clear button will be deactivated.
+   */
+  rightIcon?: React.ReactNode
   /**
    * @default false
    * Fully rounded input borders

@@ -1,23 +1,22 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Blockquote } from '../components/blockquote/Blockquote'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Typography/Blockquote',
   component: Blockquote,
   parameters: {
-    docs: {
-      description: {
-        component: 'Blockquote component',
-      },
-    },
     LabelPlaceholder: {
       description: {
         component: 'Blockquote component',
       },
     },
+    docs: {
+      description: {
+        component: 'Blockquote component',
+      },
+    },
   },
+  title: 'Typography/Blockquote',
 } as ComponentMeta<typeof Blockquote>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args

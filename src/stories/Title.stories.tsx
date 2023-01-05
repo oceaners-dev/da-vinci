@@ -1,11 +1,10 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Title } from '../components/title/Title'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Typography/Title',
   component: Title,
+  title: 'Typography/Title',
 } as ComponentMeta<typeof Title>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args

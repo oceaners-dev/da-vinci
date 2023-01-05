@@ -1,4 +1,3 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Select } from '../components/select/Select'
 import { faker } from '@faker-js/faker'
@@ -6,20 +5,11 @@ import uuid from 'react-uuid'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Form/Select',
-  component: Select,
-  parameters: {
-    docs: {
-      description: {
-        component: 'Select component',
-      },
-    },
-    Default: {
-      description: {
-        component: 'With `label` and `helperText` options',
-      },
-    },
+  argTypes: {
+    disabled: { control: 'boolean' },
+    onChange: { action: 'onChange' },
   },
+  component: Select,
   decorators: [
     (Story) => (
       <div style={{ marginBottom: '14em' }}>
@@ -27,10 +17,19 @@ export default {
       </div>
     ),
   ],
-  argTypes: {
-    onChange: { action: 'onChange' },
-    disabled: { control: 'boolean' },
+  parameters: {
+    Default: {
+      description: {
+        component: 'With `label` and `helperText` options',
+      },
+    },
+    docs: {
+      description: {
+        component: 'Select component',
+      },
+    },
   },
+  title: 'Form/Select',
 } as ComponentMeta<typeof Select>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
@@ -43,12 +42,12 @@ export const CustomOptionComponent = Template.bind({})
 export const HideSelectedOptions = Template.bind({})
 
 Default.args = {
-  options: Array.from({ length: 10 }, (_, i) => ({
-    value: uuid(),
-    label: faker.name.firstName(),
-  })),
-  label: "Dumbledore's Army",
   helperText: 'Join the army',
+  label: "Dumbledore's Army",
+  options: Array.from({ length: 10 }, (_) => ({
+    label: faker.name.firstName(),
+    value: uuid(),
+  })),
 }
 
 Default.parameters = {
@@ -61,13 +60,13 @@ Default.parameters = {
 
 ////////////////////////
 Multiple.args = {
-  multiple: true,
-  options: Array.from({ length: 10 }, (_, i) => ({
-    value: uuid(),
-    label: faker.name.firstName(),
-  })),
-  label: "Dumbledore's Army",
   helperText: 'Join the army',
+  label: "Dumbledore's Army",
+  multiple: true,
+  options: Array.from({ length: 10 }, (_) => ({
+    label: faker.name.firstName(),
+    value: uuid(),
+  })),
 }
 Multiple.parameters = {
   docs: {
@@ -80,13 +79,13 @@ Multiple.parameters = {
 ////////////////////////
 Disabled.args = {
   disabled: true,
-  multiple: true,
-  options: Array.from({ length: 10 }, (_, i) => ({
-    value: uuid(),
-    label: faker.name.firstName(),
-  })),
-  label: "Dumbledore's Army",
   helperText: 'Join the army',
+  label: "Dumbledore's Army",
+  multiple: true,
+  options: Array.from({ length: 10 }, (_) => ({
+    label: faker.name.firstName(),
+    value: uuid(),
+  })),
 }
 Disabled.parameters = {
   docs: {
@@ -98,14 +97,14 @@ Disabled.parameters = {
 
 ////////////////////////
 CustomOptionComponent.args = {
-  multiple: true,
-  options: Array.from({ length: 10 }, (_, i) => ({
-    value: uuid(),
-    label: faker.name.firstName(),
-  })),
-  label: "Dumbledore's Army",
   helperText: 'Join the army',
-  renderOptions: ({ label, value }) => (
+  label: "Dumbledore's Army",
+  multiple: true,
+  options: Array.from({ length: 10 }, (_) => ({
+    label: faker.name.firstName(),
+    value: uuid(),
+  })),
+  renderOptions: ({ label }) => (
     <div className="bg-blue-500 w-full flex justify-between hover:bg-black text-white px-3 py-1">
       <div>{label}</div>
       <div>Fersat</div>
@@ -122,14 +121,14 @@ CustomOptionComponent.parameters = {
 
 ////////////////////////
 HideSelectedOptions.args = {
-  hideSelectedOptions: true,
-  multiple: true,
-  options: Array.from({ length: 10 }, (_, i) => ({
-    value: uuid(),
-    label: faker.name.firstName(),
-  })),
-  label: "Dumbledore's Army",
   helperText: 'Join the army',
+  hideSelectedOptions: true,
+  label: "Dumbledore's Army",
+  multiple: true,
+  options: Array.from({ length: 10 }, (_) => ({
+    label: faker.name.firstName(),
+    value: uuid(),
+  })),
 }
 HideSelectedOptions.parameters = {
   docs: {

@@ -1,10 +1,9 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Link } from '../components/link/Link'
 
 export default {
-  title: 'Base/Link (not finished)',
   component: Link,
+  title: 'Base/Link (not finished)',
 } as ComponentMeta<typeof Link>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args

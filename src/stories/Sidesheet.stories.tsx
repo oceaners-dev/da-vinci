@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { SideSheet } from '../components/sidesheet/SideSheet'
 import { Button } from '../components/button/Button'
 
 export default {
-  title: 'Overlays/SideSheet',
   component: SideSheet,
+  title: 'Overlays/SideSheet',
   //   argTypes: {
   //     isOpen: {
   //       control: {
@@ -41,14 +41,14 @@ Default.args = {
   children: <div>Privacy Policies</div>,
   footerButtons: [
     {
-      text: 'Save',
-      onClick: () => console.log('ey'),
       buttonClasses: 'bg-blue-500 text-white',
+      onClick: () => console.log('ey'),
+      text: 'Save',
     },
     {
-      text: 'Cancel',
-      onClick: () => console.log('yo'),
       buttonClasses: 'bg-red-500 text-white',
+      onClick: () => console.log('yo'),
+      text: 'Cancel',
     },
   ],
 }

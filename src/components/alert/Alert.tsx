@@ -84,8 +84,7 @@ const Alert: React.FunctionComponent<AlertProps> = (props) => {
           data-tag="svgWrapper"
           className={`leading-none text-lg ${id} ${classNames.svgWrapper}`}
         >
-          {/* @ts-ignore */}
-          <style jsx>{`
+          <style>{`
             .${id} svg {
               color: var(--da-vinci-colors-${color}-base);
             }

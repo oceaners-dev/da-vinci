@@ -1,23 +1,22 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Avatar } from '../components/avatar/Avatar'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Display/Avatar',
   component: Avatar,
   parameters: {
-    docs: {
-      description: {
-        component: 'Avatar component',
-      },
-    },
     LabelPlaceholder: {
       description: {
         component: 'Avatar component',
       },
     },
+    docs: {
+      description: {
+        component: 'Avatar component',
+      },
+    },
   },
+  title: 'Display/Avatar',
 } as ComponentMeta<typeof Avatar>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
@@ -58,9 +57,9 @@ Bordered.parameters = {
 }
 
 WithImage.args = {
+  alt: 'Arthur Schopenhauer',
   imgSrc:
     'https://cdn.britannica.com/59/9459-050-0B1E273F/Arthur-Schopenhauer-1855.jpg?w=400&h=300&c=crop',
-  alt: 'Arthur Schopenhauer',
   withBorder: true,
 }
 
@@ -74,9 +73,9 @@ WithImage.parameters = {
 }
 
 Color.args = {
+  bgClassName: 'red-500',
   value: 'Arthur Schopenhauer',
   withBorder: true,
-  bgClassName: 'red-500',
 }
 
 Color.parameters = {
@@ -89,10 +88,10 @@ Color.parameters = {
 }
 
 Size.args = {
-  value: 'Friedrich Nietzsche',
-  withBorder: true,
   bgClassName: 'blue-500',
   size: '10',
+  value: 'Friedrich Nietzsche',
+  withBorder: true,
 }
 
 Size.parameters = {

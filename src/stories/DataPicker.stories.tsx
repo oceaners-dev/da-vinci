@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { DatePicker } from '../components/datepicker/DatePicker'
 
 export default {
-  title: 'Form/DatePicker',
   component: DatePicker,
   parameters: {
     docs: {
@@ -13,6 +12,7 @@ export default {
       },
     },
   },
+  title: 'Form/DatePicker',
 } as ComponentMeta<typeof DatePicker>
 
 const Template: ComponentStory<typeof DatePicker> = () => {
@@ -28,7 +28,7 @@ const Template: ComponentStory<typeof DatePicker> = () => {
   )
 }
 
-const WithoutPortalTemplate: ComponentStory<typeof DatePicker> = (args) => {
+const WithoutPortalTemplate: ComponentStory<typeof DatePicker> = () => {
   const [date, setDate] = useState<Date>(new Date())
 
   return (

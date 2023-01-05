@@ -10,7 +10,7 @@
   "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "files.exclude": {
-    "node_modules/": true,
+    // "node_modules/": true,
     // ".github/": true,
     // ".next/": true,
     "**/._*": true,
@@ -26,7 +26,7 @@
     "source.fixAll": true,
     "source.fixAll.eslint": true
   },
-  "editor.lineNumbers": "off",
+  // "editor.lineNumbers": "off",
   "eslint.format.enable": true,
   "eslint.alwaysShowStatus": true,
   "docthis.includeDescriptionTag": true,

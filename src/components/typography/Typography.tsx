@@ -24,8 +24,8 @@ export function Title(props: TitleProps) {
         copyable ? 'pr-5' : ''
       }${HeadingColor(color as string)}`}
       style={style}
-      onMouseOver={(e) => setonMouse(true)}
-      onMouseOut={(e) => setonMouse(false)}
+      onMouseOver={() => setonMouse(true)}
+      onMouseOut={() => setonMouse(false)}
     >
       {children}
       {copyable && onMouse && (

@@ -1,11 +1,10 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Fly } from '../components/fly/Fly'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Display/Fly',
   component: Fly,
+  title: 'Display/Fly',
 } as ComponentMeta<typeof Fly>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args

@@ -1,27 +1,26 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Input } from '../components/input/Input'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Form/Input',
+  argTypes: {
+    disabled: { control: 'boolean' },
+    onChange: { action: 'onChange' },
+  },
   component: Input,
   parameters: {
-    docs: {
-      description: {
-        component: 'Input component',
-      },
-    },
     LabelPlaceholder: {
       description: {
         component: 'Input component',
       },
     },
+    docs: {
+      description: {
+        component: 'Input component',
+      },
+    },
   },
-  argTypes: {
-    onChange: { action: 'onChange' },
-    disabled: { control: 'boolean' },
-  },
+  title: 'Form/Input',
 } as ComponentMeta<typeof Input>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
@@ -38,8 +37,8 @@ Default.args = {
 }
 
 LabelPlaceholder.args = {
-  labelPlaceholder: 'Title',
   helperText: 'Title must be happy.',
+  labelPlaceholder: 'Title',
 }
 
 LabelPlaceholder.parameters = {
@@ -64,8 +63,8 @@ Components.args = {
 }
 
 Disabled.args = {
+  defaultValue: 'google',
   disabled: true,
   labelLeft: 'https://',
   labelRight: '.com',
-  defaultValue: 'google',
 }

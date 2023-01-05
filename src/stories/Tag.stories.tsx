@@ -1,16 +1,15 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Tag } from '../components/tag/Tag'
 import { TagGroup } from '../components/tag/Group'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Display/Tag',
   component: Tag,
+  title: 'Display/Tag',
 } as ComponentMeta<typeof Tag>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Tag> = (args) => {
+const Template: ComponentStory<typeof Tag> = () => {
   return <Tag>Tag</Tag>
 }
 const Group: ComponentStory<typeof TagGroup> = (args) => {
@@ -41,9 +40,9 @@ GroupShowMore.args = {
 GroupShowMore.argTypes = {
   maxTagCount: {
     control: {
-      type: 'number',
-      min: 1,
       max: 100,
+      min: 1,
+      type: 'number',
     },
   },
   showMore: {

@@ -1,4 +1,4 @@
-import { useClickOutside, useSafeEffect } from 'oceaners-hooks'
+import { isObject, useClickOutside, useSafeEffect } from 'oceaners-hooks'
 import { useCallback, useRef, useState } from 'react'
 import uuid from 'react-uuid'
 import { useSelect } from '../../hooks'
@@ -61,23 +61,17 @@ export default function SelectNew(props: ISelect) {
 
   return (
     <div>
-      <div
-        className="inline-block h-min w-min"
-        ref={clickRef}
-        //   onMouseDown={() => {
-        //     console.log('down')
-        //     setIsDropdownOpened(true)
-        //     inputRef.current?.focus()
-        //   }}
-      >
+      <div className="inline-block h-min w-min" ref={clickRef}>
         <Input
           ref={inputRef}
           placeholder={
-            values && values.length > 0
+            values && Array.isArray(values) && values.length > 0
               ? values.length + ' selected'
+              : isObject(values) && (values as unknown as IOption).label
+              ? (values as unknown as IOption).label
               : placeholder
               ? placeholder
-              : 'Select values'
+              : 'Select an option'
           }
           autoComplete="off"
           label={label}
@@ -89,16 +83,16 @@ export default function SelectNew(props: ISelect) {
           onChange={(e) => {
             const searchingLabel = e.target.value
             if (searchable) {
-              //search in options
               const searchResults = options.filter(
                 (a) => a.label.toLowerCase().search(searchingLabel) !== -1,
               )
               setListingOptions(searchResults)
-              //   console.log({ searchResults })
             }
           }}
           onBlur={() => {
-            isDropdownOpened && inputRef.current?.focus()
+            if (multiple && closeOnSelect !== true) {
+              inputRef.current?.focus()
+            }
           }}
           helperText={helperText}
           wrapperOnClick={() => {
@@ -109,7 +103,10 @@ export default function SelectNew(props: ISelect) {
           rightIcon={
             clearable ? (
               values &&
-              values.length > 0 && <SvgClear onClick={() => clearValues()} />
+              (isObject(values) ||
+                (Array.isArray(values) && values.length > 0)) && (
+                <SvgClear onClick={() => clearValues()} />
+              )
             ) : (
               <SvgBottomArrow
                 className={isDropdownOpened === true ? 'rotate-180' : ''}
@@ -142,9 +139,14 @@ export default function SelectNew(props: ISelect) {
                     key={uuid()}
                     onClick={() => {
                       setValues(option)
-                      inputRef.current?.focus()
-                      if (closeOnSelect) {
+
+                      if (
+                        (!multiple && typeof closeOnSelect === 'undefined') ||
+                        closeOnSelect
+                      ) {
                         setIsDropdownOpened(false)
+                      } else {
+                        inputRef.current?.focus()
                       }
                     }}
                     className={`cursor-pointer px-4 py-1 hover:bg-gray-300 ${

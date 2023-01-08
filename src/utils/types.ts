@@ -6,3 +6,5 @@ export type ColorVariants =
   | 'tertiary'
   | 'positive'
   | 'negative'
+
+export type shadowVariants = 'sm' | 'md' | 'lg' | 'none'

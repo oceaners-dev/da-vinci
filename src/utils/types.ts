@@ -8,3 +8,5 @@ export type ColorVariants =
   | 'negative'
 
 export type shadowVariants = 'sm' | 'md' | 'lg' | 'none'
+
+export type RadiusVariants = 'large' | 'medium' | 'small' | 'full' | 'xs'

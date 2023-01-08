@@ -1,4 +1,5 @@
-import React, { forwardRef, useEffect, useState } from 'react'
+import { usePagination } from 'oceaners-hooks'
+import { forwardRef } from 'react'
 import { SvgLeftArrow, SvgRightArrow } from '../../utils/svg'
 import { Button } from '../button/Button'
 
@@ -7,110 +8,67 @@ import { Button } from '../button/Button'
 export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
   (props, ref) => {
     const { className, current, total, perPage, maxPageCount, onChange } = props
+    const { pagination } = usePagination({
+      currentPage: current,
+      maxPaginationCount: maxPageCount,
+      perPage,
+      totalPageCount: total,
+    })
 
-    const [currentPage, setCurrentPage] = useState<number>(
-      current ? current : 1,
-    )
-
-    useEffect(() => {
-      if (!current) return
-      setCurrentPage(current ? current : 1)
-    }, [current])
-
-    /**
-     * How many pages are there in pagination
-     */
-    const paginationCount = Math.ceil(total / (perPage ? perPage : 1))
-    const paginationArray = Array.from(
-      { length: paginationCount },
-      (_, i) => i + 1,
-    )
-
-    /**
-     * Generate dynamic list for map
-     */
-    const [dynamicPaginationList, setDynamicPaginationList] =
-      useState<number[]>()
-
-    useEffect(() => {
-      // If pagination count is less than max page count
-      let maxPage = maxPageCount!
-      if (maxPage % 2 === 0) {
-        maxPage = maxPage - 1
-      }
-      if (paginationCount >= maxPage!) {
-        if (currentPage <= maxPage! / 2) {
-          setDynamicPaginationList(paginationArray.slice(0, maxPage))
-        } else if (currentPage > paginationCount - maxPage! / 2) {
-          setDynamicPaginationList(
-            paginationArray.slice(paginationCount - maxPage!, paginationCount),
-          )
-        } else {
-          setDynamicPaginationList(
-            paginationArray.slice(
-              currentPage - maxPage! / 2,
-              currentPage + maxPage! / 2,
-            ),
-          )
+    const goNext = () => {
+      if (pagination && pagination.hasNext) {
+        if (onChange) {
+          onChange(pagination.currentPage + 1)
         }
-      } else {
-        setDynamicPaginationList(paginationArray)
       }
-    }, [currentPage])
+    }
+
+    const goPrev = () => {
+      if (pagination && pagination.hasPrev) {
+        if (onChange) {
+          onChange(pagination.currentPage - 1)
+        }
+      }
+    }
 
     return (
       <div
         ref={ref}
         className={`flex flex-row items-center justify-center gap-1 ${className}`}
       >
-        <Button
-          disabled={currentPage === 1}
-          onClick={() => {
-            if (currentPage !== 1) {
-              setCurrentPage(currentPage - 1)
-              if (onChange) {
-                onChange(currentPage - 1)
-              }
-            }
-          }}
-        >
-          <SvgLeftArrow />
-        </Button>
-        {dynamicPaginationList &&
-          dynamicPaginationList.map((page, index) => {
-            const idx = index + 1
+        {pagination && (
+          <Button disabled={!pagination.hasPrev} onClick={() => goPrev()}>
+            <SvgLeftArrow />
+          </Button>
+        )}
+
+        {pagination &&
+          pagination.pages.map((page) => {
             return (
               <Button
                 key={page}
                 className={`${
-                  page === currentPage
-                    ? 'bg-gray-200 text-gray-800'
-                    : 'bg-gray-100 text-gray-700'
+                  page === pagination.currentPage
+                    ? '!bg-gray-200 text-gray-800'
+                    : '!bg-gray-100 text-gray-700'
                 } w-10 `}
                 onClick={() => {
                   if (onChange) {
                     onChange(Number(page))
                   }
-                  setCurrentPage(Number(page))
+                  onChange(Number(page))
                 }}
               >
                 {page}
               </Button>
             )
           })}
-        <Button
-          disabled={currentPage === paginationCount}
-          onClick={() => {
-            if (currentPage < paginationCount) {
-              setCurrentPage(currentPage + 1)
-              if (onChange) {
-                onChange(currentPage + 1)
-              }
-            }
-          }}
-        >
-          <SvgRightArrow />
-        </Button>
+
+        {pagination && (
+          <Button disabled={!pagination.hasNext} onClick={() => goNext()}>
+            <SvgRightArrow />
+          </Button>
+        )}
       </div>
     )
   },

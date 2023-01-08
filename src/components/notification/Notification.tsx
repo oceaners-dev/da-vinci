@@ -88,10 +88,11 @@ const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
       position: 'bottomRight',
     }
     const _notification = { ...defaultValues, ...notification }
-    console.log({ _notification })
     const { position } = _notification
     const wrapperDiv = state[position]
-    if (!wrapperDiv) throw new Error('Invalid position')
+
+    console.log({ wrapperDiv })
+    // if (!wrapperDiv) throw new Error('Invalid position')
 
     const id = uuid()
     const notificationDiv = document.createElement('div')

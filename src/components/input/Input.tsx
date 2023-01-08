@@ -1,7 +1,9 @@
 import { useEvent } from 'oceaners-hooks'
 import React, { useEffect, useId, useRef, useState } from 'react'
 import { useMergedRef } from '../../hooks'
+import { dvStyles } from '../../utils/styles'
 import { SvgClear, SvgEyeOff, SvgEyeOn } from '../../utils/svg'
+import { RadiusVariants, shadowVariants } from '../../utils/types'
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (props, ref) => {
@@ -19,13 +21,14 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       password, // ✅
       onChange, // ✅
       hideInput, // 🚨
+      radius, // ✅
       rightIcon, // 🚨
+      shadow, // ✅
       showClear, // ✅
       leftComponent, // ✅
       rightComponent, // ✅
       label, // ✅
       labelPlaceholder, // ✅
-      rounded, // ✅
       wrapperClasses, // ✅
       wrapperOnClick,
       ...rest
@@ -51,14 +54,15 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <div
         className={
           'flex h-full w-fit items-center justify-center px-3 text-gray-400 ' +
-          (bordered ? ' bg-white' : ' bg-gray-300') +
-          (position === 'left'
-            ? rounded
-              ? ' rounded-l-full'
-              : ' rounded-l-lg'
-            : rounded
-            ? ' rounded-r-full'
-            : ' rounded-r-lg')
+          (bordered ? ' bg-white' : ' bg-gray-300')
+          // +
+          // (position === 'left'
+          //   ? rounded
+          //     ? ' rounded-l-full'
+          //     : ' rounded-l-lg'
+          //   : rounded
+          //   ? ' rounded-r-full'
+          //   : ' rounded-r-lg')
         }
       >
         {label}
@@ -89,13 +93,15 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             'relative box-border flex w-fit flex-row items-center ' +
             ' transform text-sm transition duration-200 ' +
             (disableMoving ? '' : ' focus-within:-translate-y-[2px] ') +
-            (rounded ? ' rounded-full' : ' rounded-lg') +
             (wrapperClasses ? ' ' + wrapperClasses : '') +
             (bordered
               ? ' bg-white outline outline-gray-300 focus-within:outline-gray-400 hover:outline-gray-400'
               : ' bg-gray-200') +
             (disabled ? ' cursor-not-allowed text-gray-400' : '')
           }
+          style={{
+            ...dvStyles({ radius, shadow }),
+          }}
         >
           {labelPlaceholder && (
             <label
@@ -210,7 +216,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
 Input.defaultProps = {
   bordered: false,
-  rounded: false,
+  radius: 'medium',
   showClear: true,
 }
 
@@ -259,6 +265,7 @@ export interface InputProps
 
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   password?: boolean
+  radius?: RadiusVariants
   /**
    * If you want to add a component to the left of the input, you can use this prop. We don't set `overflow hidden` for Input's wrapper. So if your component overflows, you can use `wrapperClasses` prop to set `overflow-hidden` for wrapper.
    */
@@ -267,11 +274,7 @@ export interface InputProps
    * If you add a icon to right side, clear button will be deactivated.
    */
   rightIcon?: React.ReactNode
-  /**
-   * @default false
-   * Fully rounded input borders
-   */
-  rounded?: boolean
+  shadow?: shadowVariants
   /**
    * Show clear button at right side of input when it's not empty.
    * @default true

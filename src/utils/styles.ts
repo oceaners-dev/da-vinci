@@ -4,8 +4,8 @@ export const dvStyles = ({
   radius,
   shadow,
 }: {
-  radius: RadiusVariants
-  shadow: shadowVariants
+  radius?: RadiusVariants
+  shadow?: shadowVariants
 }) => {
   return {
     borderRadius: radius ? `var(--da-vinci-radius-${radius})` : 'none',

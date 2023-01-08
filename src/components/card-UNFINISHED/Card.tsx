@@ -1,10 +1,11 @@
 import React from 'react'
-import { shadowVariants } from '../../utils/types'
+import { RadiusVariants, shadowVariants } from '../../utils/types'
 import { Title } from '../title/Title'
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   (props, ref) => {
-    const { children, bordered, shadow, title, className, ...rest } = props
+    const { children, bordered, shadow, radius, title, className, ...rest } =
+      props
 
     return (
       <div
@@ -14,6 +15,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
         } ${bordered ? '' : '!outline-none'}`}
         style={{
           ...rest.style,
+          borderRadius: radius ? `var(--da-vinci-radius-${radius})` : 'none',
           boxShadow: shadow ? `var(--da-vinci-shadow-${shadow})` : 'none',
         }}
         {...rest}
@@ -27,6 +29,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
 
 Card.defaultProps = {
   bordered: true,
+  radius: 'medium',
 }
 
 /**
@@ -46,6 +49,7 @@ export interface CardProps {
   cover?: React.ReactNode
   header?: React.ReactNode
   headerLine?: boolean
+  radius?: RadiusVariants
   shadow?: shadowVariants // ✅
   style?: React.CSSProperties // ✅
   title?: string // ✅

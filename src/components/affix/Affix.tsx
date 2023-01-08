@@ -1,5 +1,5 @@
+import { useWindowScroll } from 'oceaners-hooks'
 import React, { useEffect, useState } from 'react'
-import { useEventListener } from '../../hooks'
 import { Portal } from '../portal/Portal'
 
 export interface AffixProps {
@@ -32,8 +32,6 @@ const Affix: React.FunctionComponent<AffixProps> = (props) => {
     zIndex, // ✅
   } = props
 
-  const [topY, setTopY] = useState<number>(0)
-
   const _position = position || {
     bottom: 20,
     right: 20,
@@ -46,8 +44,8 @@ const Affix: React.FunctionComponent<AffixProps> = (props) => {
         onClick: () => {
           if (scrollToTopOnClick) {
             window.scrollTo({
-              top: 0,
               behavior: 'smooth',
+              top: 0,
             })
           }
           child.props.onClick && child.props.onClick()
@@ -57,27 +55,15 @@ const Affix: React.FunctionComponent<AffixProps> = (props) => {
     return child
   })
 
-  useEventListener(
-    'scroll',
-    (a) => {
-      const offsetTop = Math.abs(
-        // @ts-ignore
-        a.target.body // @ts-ignore
-          ? a.target.body.getBoundingClientRect().y // @ts-ignore
-          : a.target.scrollTop,
-      )
-      setTopY(offsetTop)
-    },
-    target!,
-  )
+  const { y } = useWindowScroll()
 
   const [showAffix, setShowAffix] = useState<boolean>(false)
 
   useEffect(() => {
-    if (!topY || !displayPosition) return
-    if (topY > displayPosition) setShowAffix(true)
+    if (!y || !displayPosition) return
+    if (y > displayPosition) setShowAffix(true)
     else setShowAffix(false)
-  }, [displayPosition, topY])
+  }, [displayPosition, y])
 
   return (showAffix && (
     <Portal className="fixed" style={{ ..._position, zIndex }} target={target}>

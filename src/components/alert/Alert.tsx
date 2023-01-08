@@ -70,7 +70,7 @@ const Alert: React.FunctionComponent<AlertProps> = (props) => {
   return (bgColor && (
     <Card
       data-tag="card"
-      className={`min-w-[300px] !w-fit ${classNames.card} relative z-[999]`}
+      className={`!w-fit min-w-[300px] ${classNames.card} relative z-[999]`}
       style={{
         backgroundColor: bgColor,
       }}
@@ -78,11 +78,11 @@ const Alert: React.FunctionComponent<AlertProps> = (props) => {
     >
       <div
         data-tag="wrapper"
-        className={`w-full h-fit flex flex-row items-start gap-5 alert ${classNames.wrapper}}`}
+        className={`alert flex h-fit w-full flex-row items-start gap-5 ${classNames.wrapper}}`}
       >
         <div
           data-tag="svgWrapper"
-          className={`leading-none text-lg ${id} ${classNames.svgWrapper}`}
+          className={`text-lg leading-none ${id} ${classNames.svgWrapper}`}
         >
           <style>{`
             .${id} svg {
@@ -92,13 +92,13 @@ const Alert: React.FunctionComponent<AlertProps> = (props) => {
           {icon ? icon : <SvgIcon type={type} />}
         </div>
         <div
-          className={`flex flex-col gap-1 w-full ${classNames.contentWrapper}`}
+          className={`flex w-full flex-col gap-1 ${classNames.contentWrapper}`}
           data-tag="contentWrapper"
         >
-          <div className="flex flex-row items-center justify-between w-full">
+          <div className="flex w-full flex-row items-center justify-between">
             <div
               data-tag="title"
-              className={`leading-none font-semibold text-base ${classNames.title}}`}
+              className={`text-base font-semibold leading-none ${classNames.title}}`}
               style={{
                 color: `var(--da-vinci-colors-${color}-base)`,
               }}
@@ -115,7 +115,7 @@ const Alert: React.FunctionComponent<AlertProps> = (props) => {
               >
                 <SvgX
                   data-tag="closeSvg"
-                  className={`w-4 h-4 ${classNames.closeSvg}`}
+                  className={`h-4 w-4 ${classNames.closeSvg}`}
                 />
               </button>
             )}

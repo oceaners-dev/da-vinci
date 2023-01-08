@@ -66,7 +66,7 @@ export function Avatar(props: AvatarProps) {
   return (
     <div
       className={
-        `text-semibold flex cursor-pointer aspect-square items-center justify-center overflow-hidden box-border` +
+        `text-semibold box-border flex aspect-square cursor-pointer items-center justify-center overflow-hidden` +
         (avatarSize ? ' ' + avatarSize : '') +
         (borderRadius ? ' ' + borderRadius : '') +
         (hasBorder ? ' ' + hasBorder : '') +
@@ -74,7 +74,7 @@ export function Avatar(props: AvatarProps) {
       }
       style={{
         backgroundColor: bgHexColor && bgHexColor, // @ts-ignore
-        color: colorPalette && colorPalette[6],
+        color: colorPalette && colorPalette[7],
       }}
     >
       {value && getLetters(value)}
@@ -85,7 +85,7 @@ export function Avatar(props: AvatarProps) {
           height={Number(size) * 8}
           alt={alt || 'avatar'}
           quality={100}
-          className={`h-full w-full aspect-square object-cover object-center ${borderRadius}`}
+          className={`aspect-square h-full w-full object-cover object-center ${borderRadius}`}
         />
       )}
     </div>

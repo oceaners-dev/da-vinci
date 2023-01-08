@@ -10,15 +10,19 @@ const useNotificationContext = () => useContext(NotificationContext)
 
 const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, setState] = useObjectState<{
+    bottomCenter?: HTMLElement
     bottomLeft?: HTMLElement
     bottomRight?: HTMLElement
+    topCenter?: HTMLElement
     topLeft?: HTMLElement
     topRight?: HTMLElement
   }>({
-    topLeft: undefined,
-    topRight: undefined,
+    bottomCenter: undefined,
     bottomLeft: undefined,
     bottomRight: undefined,
+    topCenter: undefined,
+    topLeft: undefined,
+    topRight: undefined,
   })
 
   const [notifications, setNotifications] = useState<Notification[]>([])
@@ -50,6 +54,15 @@ const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
         case 'bottomRight':
           wrapperClass += 'bottom-dv-baseLoose right-dv-baseLoose'
           break
+
+        case 'bottomCenter':
+          wrapperClass += 'bottom-dv-baseLoose left-1/2 -translate-x-1/2'
+          break
+
+        case 'topCenter':
+          wrapperClass += 'top-dv-baseLoose left-1/2 -translate-x-1/2'
+          break
+
         default:
           break
       }
@@ -75,6 +88,7 @@ const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
       position: 'bottomRight',
     }
     const _notification = { ...defaultValues, ...notification }
+    console.log({ _notification })
     const { position } = _notification
     const wrapperDiv = state[position]
     if (!wrapperDiv) throw new Error('Invalid position')
@@ -104,7 +118,7 @@ const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
       removeNotification(notification)
       wrapperDiv.removeChild(notificationDiv)
       root.unmount()
-    }, notification.duration)
+    }, _notification.duration)
   }
 
   const removeNotification = (notification: Notification) => {
@@ -115,7 +129,7 @@ const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <NotificationContext.Provider
-      value={{ notifications, addNotification, removeNotification }}
+      value={{ addNotification, notifications, removeNotification }}
     >
       {children}
     </NotificationContext.Provider>
@@ -136,21 +150,25 @@ export interface Notification {
 export type NotificationPosition =
   | 'topLeft'
   | 'topRight'
+  | 'bottomCenter'
+  | 'topCenter'
   | 'bottomLeft'
   | 'bottomRight'
 
 const notificationPosition: NotificationPosition[] = [
   'topLeft',
   'topRight',
+  'bottomCenter',
+  'topCenter',
   'bottomLeft',
   'bottomRight',
 ]
 
 const notificationColors: { [key in NotificationType]: ColorVariants } = {
-  success: 'positive',
   error: 'negative',
-  warning: 'warning',
   info: 'primary',
+  success: 'positive',
+  warning: 'warning',
 }
 
 export type NotificationType = 'success' | 'error' | 'warning' | 'info'
@@ -162,7 +180,7 @@ interface NotificationContext {
 }
 
 const NotificationContext = createContext<NotificationContext>({
-  notifications: [],
   addNotification: () => {},
+  notifications: [],
   removeNotification: () => {},
 })

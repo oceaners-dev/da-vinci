@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import uuid from 'react-uuid'
 import { createRoot } from 'react-dom/client'
 import { Alert } from '../alert/Alert'
@@ -26,6 +32,7 @@ const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
   })
 
   const [notifications, setNotifications] = useState<Notification[]>([])
+  const [allWrappersCreated, setAllWrappersCreated] = useState<boolean>(false)
 
   useEffect(() => {
     if (!window) return
@@ -72,55 +79,69 @@ const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
     })
   }, [])
 
-  const addNotification = (notification: Notification) => {
-    const allWrappersCreated =
+  useEffect(() => {
+    //check if all wrappers are created
+    const _allWrappersCreated =
       notificationPosition.filter((a) => {
         if (state[a]) return true
       }).length === notificationPosition.length
 
-    if (!allWrappersCreated) {
+    setAllWrappersCreated(_allWrappersCreated)
+  }, [state])
+
+  const addNotification = useCallback(
+    (notification: Notification) => {
+      // wait for all wrappers to be created, then add notification
+      let interval: NodeJS.Timeout | undefined
+      if (!allWrappersCreated) {
+        interval = setInterval(() => {
+          if (allWrappersCreated) {
+            clearInterval(interval)
+            addNotification(notification)
+          }
+        }, 300)
+        return console.log('waiting for all wrappers to be created...')
+      }
+
+      const defaultValues = {
+        duration: 4000,
+        position: 'bottomRight',
+      }
+      const _notification = { ...defaultValues, ...notification }
+      const { position } = _notification
+      const wrapperDiv = state[position]
+
+      if (!wrapperDiv) throw new Error('Invalid position')
+
+      const id = uuid()
+      const notificationDiv = document.createElement('div')
+      notificationDiv.setAttribute('id', id)
+
+      wrapperDiv.appendChild(notificationDiv)
+      const root = createRoot(notificationDiv)
+      root.render(
+        <Alert
+          content={notification.content}
+          title={notification.title}
+          data-position={notification.position}
+          color={notificationColors[notification.type]}
+          type={notification.type}
+        />,
+      )
+
+      setNotifications((notifications) => [
+        ...notifications,
+        { ...notification, id },
+      ])
+
       setTimeout(() => {
-        addNotification(notification)
-      }, 300)
-    }
-    const defaultValues = {
-      duration: 4000,
-      position: 'bottomRight',
-    }
-    const _notification = { ...defaultValues, ...notification }
-    const { position } = _notification
-    const wrapperDiv = state[position]
-
-    console.log({ wrapperDiv })
-    // if (!wrapperDiv) throw new Error('Invalid position')
-
-    const id = uuid()
-    const notificationDiv = document.createElement('div')
-    notificationDiv.setAttribute('id', id)
-
-    wrapperDiv.appendChild(notificationDiv)
-    const root = createRoot(notificationDiv)
-    root.render(
-      <Alert
-        content={notification.content}
-        title={notification.title}
-        data-position={notification.position}
-        color={notificationColors[notification.type]}
-        type={notification.type}
-      />,
-    )
-
-    setNotifications((notifications) => [
-      ...notifications,
-      { ...notification, id },
-    ])
-
-    setTimeout(() => {
-      removeNotification(notification)
-      wrapperDiv.removeChild(notificationDiv)
-      root.unmount()
-    }, _notification.duration)
-  }
+        removeNotification(notification)
+        wrapperDiv.removeChild(notificationDiv)
+        root.unmount()
+      }, _notification.duration)
+    },
+    [allWrappersCreated],
+  )
 
   const removeNotification = (notification: Notification) => {
     setNotifications((notifications) =>

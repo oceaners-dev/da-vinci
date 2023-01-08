@@ -1,4 +1,5 @@
 import React from 'react'
+import { dvStyles } from '../../utils/styles'
 import { RadiusVariants, shadowVariants } from '../../utils/types'
 import { Title } from '../title/Title'
 
@@ -15,8 +16,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
         } ${bordered ? '' : '!outline-none'}`}
         style={{
           ...rest.style,
-          borderRadius: radius ? `var(--da-vinci-radius-${radius})` : 'none',
-          boxShadow: shadow ? `var(--da-vinci-shadow-${shadow})` : 'none',
+          ...dvStyles({ radius, shadow }),
         }}
         {...rest}
       >

@@ -86,7 +86,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       >
         <div
           className={
-            'relative box-border flex min-h-[40px] w-fit flex-row items-center ' +
+            'relative box-border flex w-fit flex-row items-center ' +
             ' transform text-sm transition duration-200 ' +
             (disableMoving ? '' : ' focus-within:-translate-y-[2px] ') +
             (rounded ? ' rounded-full' : ' rounded-lg') +
@@ -138,7 +138,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             //   setIsInputActive(false)
             // }}
             className={
-              'relative z-20 box-border h-full w-fit bg-transparent pl-4 outline-none outline-0 outline-offset-0 ' +
+              'relative z-20 box-border h-full w-fit bg-transparent py-2  pl-4 outline-none outline-0 outline-offset-0 ' +
               (className ? ' ' + className : '') +
               (disabled ? ' pointer-events-none' : '')
             }

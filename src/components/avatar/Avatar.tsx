@@ -1,7 +1,12 @@
 import chroma from 'chroma-js'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import { ColorVariants } from '../../utils/types'
+import { dvStyles } from '../../utils/styles'
+import {
+  ColorVariants,
+  RadiusVariants,
+  shadowVariants,
+} from '../../utils/types'
 
 // TODO: Color calculations need contrast check.
 
@@ -14,6 +19,7 @@ export function Avatar(props: AvatarProps) {
     radius, // ✅
     imgSrc, // ✅
     value, // ✅
+    shadow, // ✅
     randomColor, // ✅
     withBorder, // ✅
   } = props
@@ -59,7 +65,6 @@ export function Avatar(props: AvatarProps) {
   }, [color, randomColor])
 
   // classNames
-  const borderRadius = `rounded-${radius}`
   const avatarSize = `h-${size} w-${size}`
   const hasBorder = withBorder ? `outline` : ''
 
@@ -68,13 +73,13 @@ export function Avatar(props: AvatarProps) {
       className={
         `text-semibold box-border flex aspect-square cursor-pointer items-center justify-center overflow-hidden` +
         (avatarSize ? ' ' + avatarSize : '') +
-        (borderRadius ? ' ' + borderRadius : '') +
         (hasBorder ? ' ' + hasBorder : '') +
         (className ? ' ' + className : '')
       }
       style={{
         backgroundColor: bgHexColor && bgHexColor, // @ts-ignore
         color: colorPalette && colorPalette[7],
+        ...dvStyles({ radius, shadow }),
       }}
     >
       {value && getLetters(value)}
@@ -85,14 +90,14 @@ export function Avatar(props: AvatarProps) {
           height={Number(size) * 8}
           alt={alt || 'avatar'}
           quality={100}
-          className={`aspect-square h-full w-full object-cover object-center ${borderRadius}`}
+          className={`aspect-square h-full w-full object-cover object-center`}
         />
       )}
     </div>
   )
 }
 
-Avatar.defaultProps = { color: 'primary', radius: 'lg', size: '8' }
+Avatar.defaultProps = { color: 'primary', radius: 'medium', size: '8' }
 export interface AvatarProps {
   /**
    * Enter value for `alt` attribute of `img` tag. Use it if you are using `imgSrc` prop.
@@ -112,8 +117,9 @@ export interface AvatarProps {
    * Enter value for `rounded-*` class. Default value is `md`. You can't add px values.
    * @default "md"
    */
-  radius?: string
+  radius?: RadiusVariants
   randomColor?: boolean
+  shadow?: shadowVariants
   /**
    * Enter value for `h-*` and `w-*` class.
    * @default "8"

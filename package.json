@@ -9,7 +9,7 @@
     "dist"
   ],
   "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "module": "dist/bundle.js",
   "repository": {
     "type": "git",
     "url": ""

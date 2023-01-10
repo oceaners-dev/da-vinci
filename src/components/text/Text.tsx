@@ -37,7 +37,7 @@ const Text: React.FC<TextProps> = ({
 }) => {
   const classes = classNames(
     `text-${size}`,
-    color && `text-${color}`,
+    color && `text-${color}-base`,
     decoration && `${decoration}`,
     className,
   )
